@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgrey"
+    tools:context=".User.UserFragment">
+
+    <RelativeLayout
+        android:id="@+id/top_relative"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/user"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/account"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/top_relative"
+        android:background="@drawable/border"
+        android:text="User"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/user_left"
+        android:layout_margin="5dp"/>
+
+    <EditText
+        android:id="@+id/purchase"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/account"
+        android:background="@drawable/border"
+        android:text="Purchase List"
+        android:textSize="25dp"
+        android:drawableLeft="@drawable/purchase_left"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:layout_margin="5dp"/>
+
+    <EditText
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:layout_below="@+id/purchase"
+        android:background="@drawable/border"
+        android:textSize="25dp"
+        android:text=" About"
+        android:drawableLeft="@drawable/about_left"
+        android:padding="10dp"
+        android:layout_margin="5dp"/>
+    <EditText
+        android:id="@+id/logout"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/red_cell"
+        android:text="Logout"
+        android:textSize="25dp"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/logout_left"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:layout_margin="5dp"/>
+
+
+
+
+</RelativeLayout>
