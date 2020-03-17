@@ -1,4 +1,4 @@
-package com.example.furnitureapp.BrowseItem
+package com.example.furnitureapp.Cart
 
 
 import android.content.Context
@@ -15,14 +15,14 @@ import kotlinx.android.synthetic.main.browse_cell.view.*
 
 
 
-class BrowseAdapter(
+class CartAdapter(
     val product: ArrayList<Product>,
-    val context: BrowseItemFragment
-) : RecyclerView.Adapter<BrowseAdapter.CustomViewHolder>() {
+    val context: CartFragment
+) : RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
 
 
-    private val clickHandler: ClickEventHandler = context
-    var bundle = Bundle()
+//    private val clickHandler: ClickEventHandler = context
+//    var bundle = Bundle()
 
 
     override fun onCreateViewHolder(
@@ -49,11 +49,11 @@ class BrowseAdapter(
         holder.itemView.price.text = product.price.toString()
         holder.itemView.item_img.setImageResource(product.image)
 
-        holder.itemView.setOnClickListener {
-            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
-
-
-        }
+//        holder.itemView.setOnClickListener {
+//            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
+//
+//
+//        }
 
 
     }

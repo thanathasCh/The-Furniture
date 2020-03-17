@@ -30,6 +30,7 @@
         android:layout_height="200dp"
         android:layout_below="@+id/back"
         android:layout_margin="10dp"
+        android:padding="10dp"
         android:background="@drawable/border"/>
     <TextView
         android:id="@+id/description"

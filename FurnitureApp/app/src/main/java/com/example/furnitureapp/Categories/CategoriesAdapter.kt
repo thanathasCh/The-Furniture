@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.Catergories
 import com.example.furnitureapp.ClickEventHandler
+import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
 import kotlinx.android.synthetic.main.catergories_cell.view.*
 
@@ -18,16 +19,16 @@ class CategoriesAdapter(
     val context: CategoriesFragment
 ) : RecyclerView.Adapter<CategoriesAdapter.CustomViewHolder>() {
 
-    private val clickHandler: ClickEventHandler = context as ClickEventHandler
+    private val clickHandler: Communicator = context
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.catergories_cell, parent, false)
         return CustomViewHolder(
-            cellForRow
-        ).also {
-            cellForRow.setOnClickListener{clickHandler.forwardClick(it)}
-        }
+            cellForRow)
+//        ).also {
+//            cellForRow.setOnClickListener{clickHandler.forwardClick(it,"hello")}
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +40,9 @@ class CategoriesAdapter(
         holder.itemView.item_name.text = catergory.name
         holder.itemView.item_icon.setImageResource(catergory.image)
         e("Item are:", holder.itemView.item_name.toString())
-
+        holder.itemView.setOnClickListener{
+            clickHandler.clickListener(it)
+        }
 
     }
 

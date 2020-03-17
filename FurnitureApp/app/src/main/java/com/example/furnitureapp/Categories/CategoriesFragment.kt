@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
+import java.text.FieldPosition
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class CategoriesFragment : Fragment(),
-    ClickEventHandler {
+    Communicator {
 
     var catergory = ArrayList<Catergories>()
 
@@ -89,13 +90,14 @@ class CategoriesFragment : Fragment(),
     }
 
 
-    override fun forwardClick(holder: View) {
+
+    override fun clickListener(holder: View) {
         val item = BrowseItemFragment()
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout,item)
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
 
 

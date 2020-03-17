@@ -3,6 +3,7 @@ package com.example.furnitureapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
+import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.User.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -59,4 +60,5 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
 }

@@ -9,3 +9,8 @@ class Catergories{
         this.image = image
     }
 }
+
+//data class Catergories (
+//    var name: String? = null,
+//    var image: Int
+//)
