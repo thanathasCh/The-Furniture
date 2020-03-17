@@ -1,15 +1,13 @@
 package com.example.furnitureapp.BrowseItem
 
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.ClickEventHandler
-import com.example.furnitureapp.Product
+import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.R
 import kotlinx.android.synthetic.main.browse_cell.view.*
 

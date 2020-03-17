@@ -2,12 +2,12 @@ package com.example.furnitureapp
 
 
 
-import android.content.Context
 import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.furnitureapp.models.Catergories
 import kotlinx.android.synthetic.main.catergories_cell.view.*
 
 

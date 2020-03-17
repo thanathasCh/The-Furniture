@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import java.text.FieldPosition
+import com.example.furnitureapp.models.Catergories
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.furnitureapp
+package com.example.furnitureapp.models
 
 class Product{
     var name : String? = null

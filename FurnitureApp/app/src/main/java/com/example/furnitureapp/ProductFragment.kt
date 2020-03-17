@@ -1,17 +1,15 @@
 package com.example.furnitureapp
 
 
-import android.R.attr.key
 import android.content.Context
 import android.os.Bundle
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
+import com.example.furnitureapp.models.Product
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 
@@ -62,8 +60,12 @@ class ProductFragment : Fragment() {
             fragmentTransaction.commit()
         }
         addToCart.setOnClickListener {
-            mApp.globalVar.add(Product(name.toString(),size.toString(),code.toString(),
-                price!!,image!!,material.toString(),available!!))
+            mApp.globalVar.add(
+                Product(
+                    name.toString(), size.toString(), code.toString(),
+                    price!!, image!!, material.toString(), available!!
+                )
+            )
         }
 
 
