@@ -19,6 +19,3 @@ class Product{
         this.available = available
     }
 }
-
-data class ProductViewModel (
-)
