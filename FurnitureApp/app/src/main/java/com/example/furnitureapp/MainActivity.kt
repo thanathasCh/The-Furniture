@@ -2,9 +2,12 @@ package com.example.furnitureapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.User.UserFragment
+import com.example.furnitureapp.api.CategoryApi
+import com.example.furnitureapp.api.Examples
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +20,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val api = CategoryApi()
+        api.getCategories {
+            Log.d("DEBUG", it.toString())
+        }
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
 
 

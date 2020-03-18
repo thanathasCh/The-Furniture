@@ -1,16 +1,12 @@
 package com.example.furnitureapp.models
 
-class Catergories{
-    var name : String? = null
-    var image:Int
+class Catergories(name: String, var image: Int) {
+    var name : String? = name
 
-    constructor(name:String, image:Int){
-        this.name = name
-        this.image = image
-    }
 }
 
-//data class Catergories (
-//    var name: String? = null,
-//    var image: Int
-//)
+data class CategoryViewModel (
+    var Name: String? = null,
+    var Description: String? = null,
+    var UmageUrl: String? = null
+)
