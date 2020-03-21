@@ -1,19 +1,24 @@
 package com.example.furnitureapp.api
 
+import android.util.Log
+import com.example.furnitureapp.models.CategoryViewModel
+import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().collection("Products")) {
-    fun getCategories(callback: (ArrayList<CategoryViewModel>) -> Unit) {
-        val categories = ArrayList<CategoryViewModel>()
+    fun getProducts(callback: (ArrayList<ProductViewModel>) -> Unit) {
+        val products = ArrayList<ProductViewModel>()
         db.get().addOnCompleteListener {
             if (it.isSuccessful) {
                 for (item in it.result!!) {
-                    categories.add(item.toObject(CategoryViewModel::class.java))
+                    val bufferProduct = item.toObject(ProductViewModel::class.java)
+                    bufferProduct.Id = item.id
+                    products.add(bufferProduct)
                 }
-                callback(categories)
+                callback(products)
             } else {
-                callback(categories)
+                callback(products)
             }
         }
     }
