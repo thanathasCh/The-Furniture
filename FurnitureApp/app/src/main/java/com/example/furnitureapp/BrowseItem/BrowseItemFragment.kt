@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.Categories.CategoriesFragment
+import com.example.furnitureapp.Product.ProductFragment
 import com.example.furnitureapp.models.Product
 
 /**
@@ -19,6 +20,7 @@ class BrowseItemFragment : Fragment(),
     ClickEventHandler {
 
     var product = ArrayList<Product>()
+    var singleton = Singleton()
 
     protected lateinit var rootView: View
     lateinit var recyclerView: RecyclerView
@@ -40,35 +42,35 @@ class BrowseItemFragment : Fragment(),
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
-        product.add(
-            Product(
-                "Sofa Table",
-                "100 x 20 x 30",
-                "A02",
-                1500.0F,
-                R.drawable.table_product,
-                "Glass, Wood",
-                4
-            )
-        )
-        product.add(
-            Product(
-                "Desk",
-                "150 x 65 x 50",
-                "A01",
-                2000.0F,
-                R.drawable.desk_product,
-                "Wood",
-                2
-            )
-        )
+//        product.add(
+//            Product(
+//                "Sofa Table",
+//                "100 x 20 x 30",
+//                "A02",
+//                1500.0F,
+//                R.drawable.table_product,
+//                "Glass, Wood",
+//                4
+//            )
+//        )
+//        product.add(
+//            Product(
+//                "Desk",
+//                "150 x 65 x 50",
+//                "A01",
+//                2000.0F,
+//                R.drawable.desk_product,
+//                "Wood",
+//                2
+//            )
+//        )
 //
 ////        TODO bind data in to recycler view
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recyclerview_list_of_product) as RecyclerView
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =
             BrowseAdapter(
-                product,
+                singleton.createMockUp(),
                 this
             )
 
@@ -76,8 +78,19 @@ class BrowseItemFragment : Fragment(),
     }
 
 
-    override fun forwardClick(holder: View,name: String, size: String, code: String, price: Float,image: Int, material: String, available: Int) {
+    override fun forwardClick(
+        holder: View,
+        id: String,
+        name: String,
+        size: String,
+        code: String,
+        price: Float,
+        image: Int,
+        material: String,
+        available: Int
+    ) {
         val bundle = Bundle()
+        bundle.putString("id",id)
         bundle.putString("name",name)
         bundle.putString("size",size)
         bundle.putString("code",code)

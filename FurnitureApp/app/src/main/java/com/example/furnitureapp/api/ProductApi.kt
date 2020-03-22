@@ -1,5 +1,6 @@
 package com.example.furnitureapp.api
 
+import com.example.furnitureapp.models.CategoryViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 

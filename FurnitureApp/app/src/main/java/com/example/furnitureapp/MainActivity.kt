@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val api = CategoryApi()
         api.getCategories {
-            Log.d("DEBUG", it.toString())
+            Log.e("DEBUG", it.toString())
         }
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
 

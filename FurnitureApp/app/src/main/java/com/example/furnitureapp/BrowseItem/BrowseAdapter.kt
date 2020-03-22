@@ -2,6 +2,8 @@ package com.example.furnitureapp.BrowseItem
 
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.ClickEventHandler
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.R
+import com.example.furnitureapp.api.CategoryApi
+import com.example.furnitureapp.models.Catergories
 import kotlinx.android.synthetic.main.browse_cell.view.*
 
 
@@ -29,6 +33,7 @@ class BrowseAdapter(
     ): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.browse_cell, parent, false)
+
         return CustomViewHolder(
             cellForRow
         )
@@ -48,7 +53,7 @@ class BrowseAdapter(
         holder.itemView.item_img.setImageResource(product.image)
 
         holder.itemView.setOnClickListener {
-            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
+            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
 
 
         }

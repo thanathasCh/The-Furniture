@@ -1,6 +1,7 @@
 package com.example.furnitureapp.models
 
 class Product{
+    var id: String? = null
     var name : String? = null
     var size : String? = null
     var code : String? = null
@@ -9,7 +10,8 @@ class Product{
     var material: String? = null
     var available: Int
 
-    constructor(name:String, size:String, code:String, price:Float, image:Int, material: String, available: Int){
+    constructor(id:String,name:String, size:String, code:String, price:Float, image:Int, material: String, available: Int){
+        this.id = id
         this.name = name
         this.size = size
         this.code = code
