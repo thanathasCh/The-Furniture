@@ -33,14 +33,22 @@ class CartFragment : Fragment() {
         getAllSharePref()
 //        e("global: ", getSharePref("t1"))
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
+        val arrayKey = currentKey.split(",")
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
-        for (i in singleton.createMockUp()){
-            if (currentKey.substring(5,7).equals(i.id)){
-                cartProduct.add(i)
-//                cartProduct.distinct()
-                e("cart product is:", cartProduct[0].name)
-            }
-        }
+        e("array key is:", arrayKey.toString())
+//        for (j in arrayKey){
+//            e("array key is:", j)
+//        }
+//        for (i in singleton.createMockUp()){
+//            for (j in arrayKey){
+//                if (j.substring(4,6).equals(i.id)){
+//                    cartProduct.add(i)
+////                cartProduct.distinct()
+//                    e("cart product is:", cartProduct[0].name)
+//                }
+//            }
+//
+//        }
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =
             CartAdapter(

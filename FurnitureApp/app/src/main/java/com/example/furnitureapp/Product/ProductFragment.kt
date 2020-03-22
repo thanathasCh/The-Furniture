@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
+import com.example.furnitureapp.PurchaseFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.Singleton
 import com.example.furnitureapp.models.Product
@@ -35,6 +36,7 @@ class ProductFragment : Fragment() {
         val back = view.findViewById<View>(R.id.back_product_btn)
         val img = view.findViewById<View>(R.id.prod_img) as ImageView
         val addToCart = view.findViewById<View>(R.id.add_to_cart)
+        val purchase = view.findViewById<View>(R.id.purchase)
         var mApp = Singleton()
         var id = arguments?.getString("id")
         var name = arguments?.getString("name")
@@ -68,7 +70,15 @@ class ProductFragment : Fragment() {
                 storeSharePref(id)
 //                clearSharePref()
             }
-
+        }
+        purchase.setOnClickListener{
+            val purchase =
+                PurchaseFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, purchase)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
         }
 
 
@@ -77,7 +87,7 @@ class ProductFragment : Fragment() {
     fun storeSharePref(name: String) {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
-        editor?.putString("key", name)
+        editor?.putString(name, name)
         editor?.apply()
     }
 //    fun clearSharePref() {
