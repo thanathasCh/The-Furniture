@@ -10,9 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.BrowseItem.BrowseAdapter
 import com.example.furnitureapp.R
-import com.example.furnitureapp.Singleton
+import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.Product
 
 /**
@@ -20,9 +19,11 @@ import com.example.furnitureapp.models.Product
  */
 class CartFragment : Fragment() {
 
-    var singleton = Singleton()
+    var singleton = ProductController()
     var currentKey:String = ""
     var cartProduct = ArrayList<Product>()
+//    lateinit var recyclerView: RecyclerView
+//    lateinit var adapter: CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,20 +36,19 @@ class CartFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         val arrayKey = currentKey.split(",")
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
-        e("array key is:", arrayKey.toString())
-//        for (j in arrayKey){
-//            e("array key is:", j)
-//        }
-//        for (i in singleton.createMockUp()){
-//            for (j in arrayKey){
-//                if (j.substring(4,6).equals(i.id)){
-//                    cartProduct.add(i)
-////                cartProduct.distinct()
-//                    e("cart product is:", cartProduct[0].name)
-//                }
-//            }
-//
-//        }
+
+        for (i in 0 until arrayKey.size-1){
+            for (j in singleton.createMockUp()){
+                if (arrayKey[i].substring(0,2).equals(j.id)){
+                    if (!cartProduct.contains(j)){
+                        cartProduct.add(j)
+                        e("cart product is:",j.name )
+                    }
+//                cartProduct.distinct()
+
+                }
+            }
+        }
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =
             CartAdapter(
@@ -66,16 +66,20 @@ class CartFragment : Fragment() {
     fun getAllSharePref() {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         var key = sharedPref?.all
-        e("work","yes")
+
         if (key != null) {
             for (entry in key) {
-                currentKey = "$key,"
+                currentKey += "$entry,"
                 e("global is", currentKey)
             }
         }
-
-
     }
+
+//    fun refreshAdapter() {
+//        adapter = CartAdapter(cater, R.layout., dateList, selectIndex)
+//        countryListView.adapter = adapter
+//        adapter.notifyDataSetChanged()
+//    }
 
 
 

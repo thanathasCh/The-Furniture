@@ -3,7 +3,6 @@ package com.example.furnitureapp.Product
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.PurchaseFragment
+import com.example.furnitureapp.Purchase.PurchaseFragment
 import com.example.furnitureapp.R
-import com.example.furnitureapp.Singleton
-import com.example.furnitureapp.models.Product
+import com.example.furnitureapp.models.ProductController
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 
@@ -37,7 +35,7 @@ class ProductFragment : Fragment() {
         val img = view.findViewById<View>(R.id.prod_img) as ImageView
         val addToCart = view.findViewById<View>(R.id.add_to_cart)
         val purchase = view.findViewById<View>(R.id.purchase)
-        var mApp = Singleton()
+        var mApp = ProductController()
         var id = arguments?.getString("id")
         var name = arguments?.getString("name")
         var code = arguments?.getString("code")
@@ -57,13 +55,8 @@ class ProductFragment : Fragment() {
 
 
         back.setOnClickListener {
-            val browse =
-                BrowseItemFragment()
             val fragmentManager = activity!!.supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, browse)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            fragmentManager.popBackStack()
         }
         addToCart.setOnClickListener {
             if (id != null) {
@@ -72,10 +65,13 @@ class ProductFragment : Fragment() {
             }
         }
         purchase.setOnClickListener{
+            val bundle = Bundle()
             val purchase =
                 PurchaseFragment()
+            bundle.putString("id",id)
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
+            purchase.arguments = bundle
             fragmentTransaction.replace(R.id.frame_layout, purchase)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
@@ -90,6 +86,7 @@ class ProductFragment : Fragment() {
         editor?.putString(name, name)
         editor?.apply()
     }
+
 //    fun clearSharePref() {
 //        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
 //        val editor = sharedPref?.edit()?.clear()

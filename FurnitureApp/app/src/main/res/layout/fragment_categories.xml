@@ -22,6 +22,7 @@
         android:layout_toRightOf="@id/back"
         android:padding="10dp"
         android:hint="Search ..."
+        android:fontFamily="@font/custom"
         android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

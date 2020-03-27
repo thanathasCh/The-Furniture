@@ -17,6 +17,7 @@
         android:textStyle="bold"
         android:layout_below="@+id/back_btn"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/custom"
         android:textSize="50dp"/>
 
     <EditText
@@ -29,6 +30,7 @@
         android:padding="10dp"
         android:layout_margin="5dp"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/custom"
         android:drawableLeft="@drawable/email_left"/>
 
     <EditText
@@ -42,6 +44,7 @@
         android:layout_margin="5dp"
         android:inputType="textPassword"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/custom"
         android:drawableLeft="@drawable/password_left"/>
 
     <EditText
@@ -58,6 +61,7 @@
         android:text="Login"
         android:textSize="20dp"
         android:textColor="@color/white"
+        android:fontFamily="@font/custom"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
     <TextView
@@ -70,6 +74,7 @@
         android:layout_below="@id/login_btn"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
+        android:fontFamily="@font/custom"
         android:layout_margin="10dp"/>
 
     <EditText
@@ -87,6 +92,7 @@
         android:textSize="20dp"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/custom"
         android:layout_marginTop="5dp"/>
 
 

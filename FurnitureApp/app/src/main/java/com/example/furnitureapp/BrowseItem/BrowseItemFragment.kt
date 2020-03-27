@@ -12,6 +12,7 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.Categories.CategoriesFragment
 import com.example.furnitureapp.Product.ProductFragment
 import com.example.furnitureapp.models.Product
+import com.example.furnitureapp.models.ProductController
 
 /**
  * A simple [Fragment] subclass.
@@ -20,10 +21,8 @@ class BrowseItemFragment : Fragment(),
     ClickEventHandler {
 
     var product = ArrayList<Product>()
-    var singleton = Singleton()
+    var singleton = ProductController()
 
-    protected lateinit var rootView: View
-    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +33,8 @@ class BrowseItemFragment : Fragment(),
 
         val back = view.findViewById<View>(R.id.back_btn_browse)
         back.setOnClickListener{
-            val categories =
-                CategoriesFragment()
             val fragmentManager = activity!!.supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout,categories)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            fragmentManager.popBackStack()
         }
 //        product.add(
 //            Product(

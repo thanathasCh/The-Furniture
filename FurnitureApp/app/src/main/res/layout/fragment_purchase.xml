@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_img"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/custom"
             android:text="Name: " />
 
         <TextView
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/name"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/custom"
             android:text="Code: " />
 
         <TextView
@@ -42,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/code"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/custom"
             android:text="Price: " />
 
         <TextView
@@ -51,7 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/price"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/custom"
             android:text="Amount: " />
 
         <TextView
@@ -60,8 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_img"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/name"
+            android:fontFamily="@font/custom"
             android:text="" />
 
         <TextView
@@ -70,8 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_name"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/name"
+            android:fontFamily="@font/custom"
             android:text="" />
 
         <TextView
@@ -80,19 +86,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_code"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/name"
+            android:fontFamily="@font/custom"
             android:text="" />
 
-        <Button
-            android:id="@+id/reduce"
+        <EditText
+            android:id="@+id/pur_reduce"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@id/pur_price"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:layout_toRightOf="@id/amount"
-            android:background="@drawable/circle_button"
+            android:gravity="center"
+            android:focusable="false"
+            android:fontFamily="@font/custom"
+            android:background="@drawable/border"
             android:text="-" />
 
         <EditText
@@ -101,20 +111,26 @@
             android:layout_height="20dp"
             android:layout_below="@id/pur_price"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/reduce"
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@id/pur_reduce"
+            android:gravity="center"
+            android:text="1"
+            android:fontFamily="@font/custom"
             android:background="@drawable/border"
             android:inputType="number" />
 
-        <Button
-            android:id="@+id/increase"
+        <EditText
+            android:id="@+id/pur_increase"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@id/pur_price"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:fontFamily="@font/custom"
             android:layout_toRightOf="@id/buy_amount"
-            android:background="@drawable/circle_button"
+            android:background="@drawable/border"
             android:text="+" />
 
 
@@ -129,6 +145,7 @@
             android:padding="5dp"
             android:text="Cancel"
             android:textAllCaps="false"
+            android:fontFamily="@font/custom"
             android:textColor="@color/white" />
 
         <Button
@@ -143,6 +160,7 @@
             android:padding="5dp"
             android:text="Next"
             android:textAllCaps="false"
+            android:fontFamily="@font/custom"
             android:textColor="@color/white" />
     </RelativeLayout>
 

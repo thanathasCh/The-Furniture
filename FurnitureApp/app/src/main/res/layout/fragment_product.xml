@@ -18,10 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Back"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:fontFamily="@font/custom"
         android:layout_toRightOf="@+id/back_product_btn"/>
 
     <ImageView
@@ -41,6 +42,7 @@
         android:text="Description:"
         android:textStyle="bold"
         android:textSize="30dp"
+        android:fontFamily="@font/custom"
         android:layout_marginLeft="10dp"/>
     <LinearLayout
         android:id="@+id/detail"
@@ -52,43 +54,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/custom"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black"
                 android:text="Name         :"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:fontFamily="@font/custom"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:text="Code          :"/>
             <TextView
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
-                android:text="Material     :"/>
+                android:fontFamily="@font/custom"
+                android:text="Material      :"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
-                android:text="Size            :"/>
+                android:text="Size             : "/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/custom"
                 android:text="Price          :"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
-                android:text="Available   :"/>
+                android:fontFamily="@font/custom"
+                android:text="Available    :"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -100,36 +109,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/item_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/item_material"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/item_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/item_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/item_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/custom"
                 android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
@@ -145,6 +160,7 @@
         android:textColor="@color/white"
         android:drawableLeft="@drawable/add_to_cart_left"
         android:padding="5dp"
+        android:fontFamily="@font/custom"
         android:text="Add to Cart" />
     <Button
         android:id="@+id/purchase"
@@ -159,6 +175,7 @@
         android:padding="5dp"
         android:layout_marginRight="10dp"
         android:drawableLeft="@drawable/buy_left"
+        android:fontFamily="@font/custom"
         android:text="Purchase" />
 
 

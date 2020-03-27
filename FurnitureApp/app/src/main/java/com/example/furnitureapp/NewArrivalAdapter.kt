@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.models.Catergories
+import com.example.furnitureapp.models.Categories
 import kotlinx.android.synthetic.main.catergories_cell.view.*
 
 
-class NewArrivalAdapter(val catergories: ArrayList<Catergories>) : RecyclerView.Adapter<NewArrivalAdapter.CustomViewHolder>() {
+class NewArrivalAdapter(val catergories: ArrayList<Categories>) : RecyclerView.Adapter<NewArrivalAdapter.CustomViewHolder>() {
 
 
 

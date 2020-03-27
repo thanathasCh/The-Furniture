@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.models.Catergories
+import com.example.furnitureapp.Cart.CartAdapter
+import com.example.furnitureapp.models.Categories
+import com.example.furnitureapp.models.CategoriesController
 
 
 /**
@@ -20,7 +22,8 @@ import com.example.furnitureapp.models.Catergories
 class CategoriesFragment : Fragment(),
     Communicator {
 
-    var catergory = ArrayList<Catergories>()
+    var categoriesList = CategoriesController()
+
 
 
     override fun onCreateView(
@@ -32,56 +35,15 @@ class CategoriesFragment : Fragment(),
 
         val back = view.findViewById<View>(R.id.back) as ImageView
         back.setOnClickListener{
-            val home = HomeFragment()
             val fragmentManager = activity!!.supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout,home)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            fragmentManager.popBackStack()
         }
 
-
-        catergory.add(
-            Catergories(
-                "Table",
-                R.drawable.desk
-            )
-        )
-        catergory.add(
-            Catergories(
-                "Chair",
-                R.drawable.chair
-            )
-        )
-        catergory.add(
-            Catergories(
-                "Matress",
-                R.drawable.mattress
-            )
-        )
-        catergory.add(
-            Catergories(
-                "Closet",
-                R.drawable.closet
-            )
-        )
-        catergory.add(
-            Catergories(
-                "Bed",
-                R.drawable.bed
-            )
-        )
-        catergory.add(
-            Catergories(
-                "More",
-                R.drawable.more
-            )
-        )
         val catergoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         catergoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
         catergoriesView.adapter =
             CategoriesAdapter(
-                catergory,
+                categoriesList.getCategories(),
                 this
             )
 
@@ -99,6 +61,7 @@ class CategoriesFragment : Fragment(),
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
+
 
 
 }

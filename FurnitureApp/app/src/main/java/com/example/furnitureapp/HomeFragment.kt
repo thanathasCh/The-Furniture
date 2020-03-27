@@ -22,9 +22,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val seach = view.findViewById<View>(R.id.search_icon) as ImageView
+        val search = view.findViewById<View>(R.id.search_icon) as ImageView
 
-        seach.setOnClickListener{
+        search.setOnClickListener{
             val categories =
                 CategoriesFragment()
             val fragmentManager = activity!!.supportFragmentManager

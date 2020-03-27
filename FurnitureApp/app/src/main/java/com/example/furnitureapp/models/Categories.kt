@@ -1,6 +1,6 @@
 package com.example.furnitureapp.models
 
-class Catergories(name: String, var image: Int) {
+class Categories(name: String, var image: Int) {
     var name : String? = name
 
 }
