@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.Cart.CartAdapter
 import com.example.furnitureapp.models.Categories
 import com.example.furnitureapp.models.CategoriesController
 
@@ -22,7 +21,7 @@ import com.example.furnitureapp.models.CategoriesController
 class CategoriesFragment : Fragment(),
     Communicator {
 
-    var categoriesList = CategoriesController()
+    var categories = CategoriesController()
 
 
 
@@ -32,6 +31,7 @@ class CategoriesFragment : Fragment(),
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_categories, container, false)
+        createCategories()
 
         val back = view.findViewById<View>(R.id.back) as ImageView
         back.setOnClickListener{
@@ -41,11 +41,7 @@ class CategoriesFragment : Fragment(),
 
         val catergoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         catergoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
-        catergoriesView.adapter =
-            CategoriesAdapter(
-                categoriesList.getCategories(),
-                this
-            )
+        catergoriesView.adapter = CategoriesAdapter(categories.getCategories(),this)
 
         return view
 
@@ -61,4 +57,51 @@ class CategoriesFragment : Fragment(),
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
+
+
+
+    fun createCategories(){
+        categories.categoriesList.clear()
+        categories.setCategories(
+            Categories(
+                "Table",
+                R.drawable.desk
+            )
+        )
+        categories.setCategories(
+            Categories(
+                "Chair",
+                R.drawable.chair
+            )
+        )
+        categories.setCategories(
+            Categories(
+                "Matress",
+                R.drawable.mattress
+            )
+        )
+        categories.setCategories(
+            Categories(
+                "Closet",
+                R.drawable.closet
+            )
+        )
+        categories.setCategories(
+            Categories(
+                "Bed",
+                R.drawable.bed
+            )
+        )
+        categories.setCategories(
+            Categories(
+                "More",
+                R.drawable.more
+            )
+        )
+    }
+
+
+
+
+
 }

@@ -46,12 +46,6 @@ class ConfirmPurchaseAdapter(
         holder.itemView.con_total.text = (product.price*product.available).toString()
         holder.itemView.con_img.setImageResource(product.image)
 
-//        holder.itemView.setOnClickListener {
-//            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
-//
-//
-//        }
-
 
     }
 

@@ -2,6 +2,7 @@ package com.example.furnitureapp.BrowseItem
 
 
 import android.os.Bundle
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.Categories.CategoriesFragment
 import com.example.furnitureapp.Product.ProductFragment
+import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
 
@@ -22,6 +24,7 @@ class BrowseItemFragment : Fragment(),
 
     var product = ArrayList<Product>()
     var singleton = ProductController()
+    var categories = CategoriesController()
 
 
     override fun onCreateView(
@@ -36,29 +39,9 @@ class BrowseItemFragment : Fragment(),
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
-//        product.add(
-//            Product(
-//                "Sofa Table",
-//                "100 x 20 x 30",
-//                "A02",
-//                1500.0F,
-//                R.drawable.table_product,
-//                "Glass, Wood",
-//                4
-//            )
-//        )
-//        product.add(
-//            Product(
-//                "Desk",
-//                "150 x 65 x 50",
-//                "A01",
-//                2000.0F,
-//                R.drawable.desk_product,
-//                "Wood",
-//                2
-//            )
-//        )
-//
+
+        e("the categories is", categories.getCategories()[0].name)
+
 ////        TODO bind data in to recycler view
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recyclerview_list_of_product) as RecyclerView
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
