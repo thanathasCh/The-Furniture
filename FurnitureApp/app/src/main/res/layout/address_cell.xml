@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/border"
+    android:layout_margin="5dp"
+    android:layout_height="90dp">
+    <TextView
+        android:id="@+id/address_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="@font/custom"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Home" />
+
+    <TextView
+        android:id="@+id/con_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/address_type"
+        android:text="012-3456"
+        android:fontFamily="@font/custom"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/address_detail"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/custom"
+        android:layout_below="@+id/address_type"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        />
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/address_type"
+        android:src="@drawable/grey_back"/>
+<!--    <TextView-->
+<!--        android:id="@+id/address_road"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/address_type"-->
+<!--        android:layout_toRightOf="@+id/address_name"-->
+<!--        android:fontFamily="@font/custom"/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/address_house"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/address_type"-->
+<!--        android:layout_toRightOf="@+id/address_road"-->
+<!--        android:fontFamily="@font/custom"/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/address_subdistrict"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/address_type"-->
+<!--        android:layout_toRightOf="@+id/address_house"-->
+<!--        android:fontFamily="@font/custom"/>-->
+
+
+
+</RelativeLayout>

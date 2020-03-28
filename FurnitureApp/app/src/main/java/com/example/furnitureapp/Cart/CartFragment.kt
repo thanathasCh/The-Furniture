@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.R
+import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.Product
 
@@ -22,6 +23,7 @@ class CartFragment : Fragment() {
     var singleton = ProductController()
     var currentKey:String = ""
     var cartProduct = ArrayList<Product>()
+    var categories = CategoriesController()
 //    lateinit var recyclerView: RecyclerView
 //    lateinit var adapter: CartAdapter
 
