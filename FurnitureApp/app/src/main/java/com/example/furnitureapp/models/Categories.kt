@@ -6,7 +6,8 @@ class Categories(name: String, var image: Int) {
 }
 
 data class CategoryViewModel (
+    var Id: String? = null,
     var Name: String? = null,
     var Description: String? = null,
-    var UmageUrl: String? = null
+    var ImageUrl: String? = null
 )
