@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.models.Catergories
+import com.example.furnitureapp.models.Categories
 import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
 import kotlinx.android.synthetic.main.catergories_cell.view.*
 
 
 class CategoriesAdapter(
-    val catergories: ArrayList<Catergories>,
+    val catergories: ArrayList<Categories>,
     val context: CategoriesFragment
 ) : RecyclerView.Adapter<CategoriesAdapter.CustomViewHolder>() {
 
     private val clickHandler: Communicator = context
+
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -39,6 +40,7 @@ class CategoriesAdapter(
         holder.itemView.item_name.text = catergory.name
         holder.itemView.item_icon.setImageResource(catergory.image)
         e("Item are:", holder.itemView.item_name.toString())
+        val check = false
         holder.itemView.setOnClickListener{
             clickHandler.clickListener(it)
         }

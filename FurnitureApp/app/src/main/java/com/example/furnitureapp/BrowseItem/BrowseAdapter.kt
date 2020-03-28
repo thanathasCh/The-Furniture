@@ -29,6 +29,7 @@ class BrowseAdapter(
     ): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.browse_cell, parent, false)
+
         return CustomViewHolder(
             cellForRow
         )
@@ -48,7 +49,7 @@ class BrowseAdapter(
         holder.itemView.item_img.setImageResource(product.image)
 
         holder.itemView.setOnClickListener {
-            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
+            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
 
 
         }
