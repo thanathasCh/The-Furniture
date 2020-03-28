@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.Address.AddressFragment
 import com.example.furnitureapp.Product.ProductFragment
 import com.example.furnitureapp.R
+import com.example.furnitureapp.addressData
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressController
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
+import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.address_cell.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
@@ -31,7 +33,6 @@ class ConfirmPurchaseFragment : Fragment() {
     var currentPurchaseItem = ArrayList<Product>()
     var product = ProductController()
     var isPickUp = true
-    var addressList = AddressController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +49,11 @@ class ConfirmPurchaseFragment : Fragment() {
 
         var id = arguments?.getString("id")
         var amount = arguments?.getInt("amount")
+        var listOfID = arguments?.getStringArrayList("cart product")
+        var listOfAmount = arguments?.getIntegerArrayList("cart amount")
 
-        for(address in addressList.getAddress()){
+
+        for(address in addressData){
             e("address",address.isCurrentAddress.toString())
             if(address.isCurrentAddress!!){
                 view.customer.text = address.name
@@ -57,11 +61,29 @@ class ConfirmPurchaseFragment : Fragment() {
                 view.con_address_detail.text = address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province+"."
             }
         }
+        //Find and Create the in confirm purchase
+        if (id!=null){
+            findProduct(id.toString(),amount!!)
+        }else{
+            for (i in 0 until listOfID!!.size){
+                e("list of id", listOfID[i])
+                findProduct(listOfID[i], listOfAmount!![i])
+            }
+        }
 
-        findProduct(id.toString(),amount!!)
+
+
+
+
+
+
+
+        //RecyclerView
         val listOfConfirmPurchase = view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
         listOfConfirmPurchase.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
         listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem,this)
+
+        //set button
         delivery.setBackgroundResource(R.drawable.grey_border)
         pick_up.setOnClickListener {
             isPickUp = true
@@ -84,22 +106,21 @@ class ConfirmPurchaseFragment : Fragment() {
             fragmentTransaction.commit()
         }
 
-
-
-
-
         back.setOnClickListener {
             val fragment = activity!!.supportFragmentManager
             fragment.popBackStack()
         }
         return view
     }
+
+
     fun findProduct(id:String,amount:Int){
-        for (i in product.createMockUp()){
+//        currentPurchaseItem.clear()
+            for (i in productData){
             if (i.id.equals(id)){
-                currentPurchaseItem.clear()
                 currentPurchaseItem.add(Product(i.id.toString(),i.name.toString(),i.size.toString(),i.code.toString(),i.price,i.image,i.material.toString(),amount))
-                i.available -= amount
+                i.available -=  amount
+
             }
         }
     }

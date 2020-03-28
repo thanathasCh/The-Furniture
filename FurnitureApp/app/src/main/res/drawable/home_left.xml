@@ -5,7 +5,7 @@
         android:width="30dp"
         android:height="30dp"
         android:gravity="center"
-        android:drawable="@drawable/work"/>
+        android:drawable="@drawable/home"/>
 
 
 </layer-list>

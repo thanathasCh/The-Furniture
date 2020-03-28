@@ -18,6 +18,7 @@ import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
 import com.example.furnitureapp.SwipeToDeleteCallback
+import com.example.furnitureapp.addressData
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressController
 import com.google.android.material.snackbar.Snackbar
@@ -47,12 +48,25 @@ class AddressFragment : Fragment(),Communicator {
         // Inflate the layout for this fragment
         var view =  inflater.inflate(R.layout.fragment_address, container, false)
         var back = view.findViewById<View>(R.id.address_back) as ImageView
+        var add = view.findViewById<View>(R.id.add_address) as ImageView
 
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
+        add.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putBoolean("add",true)
+            val editAddress = EditAddressFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            editAddress.arguments = bundle
+            fragmentTransaction.replace(R.id.frame_layout,editAddress)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
 
 
 
@@ -61,7 +75,7 @@ class AddressFragment : Fragment(),Communicator {
 //  Recycler View
         val listOfAddress =  view.findViewById<RecyclerView>(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
-        listOfAddress.adapter = AddressAdapter(addressList.getAddress(),this)
+        listOfAddress.adapter = AddressAdapter(addressData,this)
 
         val swipeHandler = object : SwipeToDeleteCallback(this.activity!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -76,18 +90,20 @@ class AddressFragment : Fragment(),Communicator {
         return view
     }
 
-//    fun createAddress(){
-//        addressList.setAddress(Address("Xell","Road 123", "House 456","Bang Bo","Bang Bo", "Samut Prakarn",true,"012-345-6789"))
-//        addressList.setAddress(Address("Menh","Road 2004", "House 576","Thong Lor","Thong Lor", "Bangkok",false,"098-765-4321"))
-//    }
 
     override fun clickListener(holder: View) {
+    }
+
+    override fun clickWithDataTransfer(holder: View, id: String) {
+        val bundle = Bundle()
+        bundle.putString("id",id)
         val editAddress = EditAddressFragment()
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+        editAddress.arguments = bundle
         fragmentTransaction.replace(R.id.frame_layout,editAddress)
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
+        fragmentTransaction.commit()
     }
 
 

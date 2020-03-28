@@ -25,6 +25,7 @@ class BrowseItemFragment : Fragment(),
     var product = ArrayList<Product>()
     var singleton = ProductController()
     var categories = CategoriesController()
+    
 
 
     override fun onCreateView(
@@ -40,14 +41,13 @@ class BrowseItemFragment : Fragment(),
             fragmentManager.popBackStack()
         }
 
-        e("the categories is", categories.getCategories()[0].name)
 
 ////        TODO bind data in to recycler view
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recyclerview_list_of_product) as RecyclerView
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =
             BrowseAdapter(
-                singleton.createMockUp(),
+                productData,
                 this
             )
 
@@ -82,6 +82,7 @@ class BrowseItemFragment : Fragment(),
         fragmentTransaction.replace(R.id.frame_layout,product)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+
     }
 
 }

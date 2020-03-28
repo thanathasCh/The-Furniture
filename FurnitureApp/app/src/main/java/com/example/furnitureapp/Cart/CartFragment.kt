@@ -10,10 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.furnitureapp.Communicator
+import com.example.furnitureapp.Purchase.ConfirmPurchaseAdapter
+import com.example.furnitureapp.Purchase.ConfirmPurchaseFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.Product
+import com.example.furnitureapp.productData
 
 /**
  * A simple [Fragment] subclass.
@@ -38,9 +42,10 @@ class CartFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         val arrayKey = currentKey.split(",")
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
+        val placeOrder = view.findViewById<View>(R.id.place_order)
 
         for (i in 0 until arrayKey.size-1){
-            for (j in singleton.createMockUp()){
+            for (j in productData){
                 if (arrayKey[i].substring(0,2).equals(j.id)){
                     if (!cartProduct.contains(j)){
                         cartProduct.add(j)
@@ -51,16 +56,33 @@ class CartFragment : Fragment() {
                 }
             }
         }
+        var adapter = CartAdapter(cartProduct,this)
+
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =
-            CartAdapter(
-                cartProduct,
-                this
-            )
+            adapter
+
+
+        placeOrder.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putStringArrayList("cart product",adapter.selectProductCode)
+            bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
+            val confirmPurchse = ConfirmPurchaseFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            confirmPurchse.arguments = bundle
+            fragmentTransaction.replace(R.id.frame_layout,confirmPurchse)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
         return view
     }
+
+
+
     fun getSharePref(name: String): String {
-        val sharedPref = this.activity?.getSharedPreferences("VanBooking", Context.MODE_PRIVATE)
+        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
         editor?.apply()
         return sharedPref?.getString(name, null).toString()
@@ -76,6 +98,8 @@ class CartFragment : Fragment() {
             }
         }
     }
+
+
 
 //    fun refreshAdapter() {
 //        adapter = CartAdapter(cater, R.layout., dateList, selectIndex)

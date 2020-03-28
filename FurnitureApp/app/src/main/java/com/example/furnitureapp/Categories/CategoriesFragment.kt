@@ -31,7 +31,7 @@ class CategoriesFragment : Fragment(),
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_categories, container, false)
-        createCategories()
+//        createCategories()
 
         val back = view.findViewById<View>(R.id.back) as ImageView
         back.setOnClickListener{
@@ -41,7 +41,7 @@ class CategoriesFragment : Fragment(),
 
         val catergoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         catergoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
-        catergoriesView.adapter = CategoriesAdapter(categories.getCategories(),this)
+        catergoriesView.adapter = CategoriesAdapter(categoriesData,this)
 
         return view
 
@@ -58,48 +58,51 @@ class CategoriesFragment : Fragment(),
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
 
-
-
-    fun createCategories(){
-        categories.categoriesList.clear()
-        categories.setCategories(
-            Categories(
-                "Table",
-                R.drawable.desk
-            )
-        )
-        categories.setCategories(
-            Categories(
-                "Chair",
-                R.drawable.chair
-            )
-        )
-        categories.setCategories(
-            Categories(
-                "Matress",
-                R.drawable.mattress
-            )
-        )
-        categories.setCategories(
-            Categories(
-                "Closet",
-                R.drawable.closet
-            )
-        )
-        categories.setCategories(
-            Categories(
-                "Bed",
-                R.drawable.bed
-            )
-        )
-        categories.setCategories(
-            Categories(
-                "More",
-                R.drawable.more
-            )
-        )
+    override fun clickWithDataTransfer(holder: View, id: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
+//    fun createCategories(){
+//        categories.categoriesList.clear()
+//        categories.setCategories(
+//            Categories(
+//                "Table",
+//                R.drawable.desk
+//            )
+//        )
+//        categories.setCategories(
+//            Categories(
+//                "Chair",
+//                R.drawable.chair
+//            )
+//        )
+//        categories.setCategories(
+//            Categories(
+//                "Matress",
+//                R.drawable.mattress
+//            )
+//        )
+//        categories.setCategories(
+//            Categories(
+//                "Closet",
+//                R.drawable.closet
+//            )
+//        )
+//        categories.setCategories(
+//            Categories(
+//                "Bed",
+//                R.drawable.bed
+//            )
+//        )
+//        categories.setCategories(
+//            Categories(
+//                "More",
+//                R.drawable.more
+//            )
+//        )
+//    }
+//
 
 
 

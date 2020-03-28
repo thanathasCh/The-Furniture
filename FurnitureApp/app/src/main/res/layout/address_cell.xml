@@ -6,7 +6,7 @@
     android:layout_margin="5dp"
     android:layout_height="90dp">
     <TextView
-        android:id="@+id/address_type"
+        android:id="@+id/address_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
@@ -17,10 +17,10 @@
         android:text="Home" />
 
     <TextView
-        android:id="@+id/con_phone_number"
+        android:id="@+id/address_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/address_type"
+        android:layout_toRightOf="@+id/address_name"
         android:text="012-3456"
         android:fontFamily="@font/custom"
         android:layout_marginTop="10dp"
@@ -31,15 +31,16 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/custom"
-        android:layout_below="@+id/address_type"
+        android:layout_below="@+id/address_name"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         />
     <ImageView
+        android:id="@+id/btn_edit"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/address_type"
+        android:layout_below="@+id/address_name"
         android:src="@drawable/grey_back"/>
 <!--    <TextView-->
 <!--        android:id="@+id/address_road"-->

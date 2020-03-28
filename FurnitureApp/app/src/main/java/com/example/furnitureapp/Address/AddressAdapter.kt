@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.ClickEventHandler
+import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.Address
 import kotlinx.android.synthetic.main.address_cell.view.*
+import kotlinx.android.synthetic.main.fragment_create_new.view.*
 
 class AddressAdapter(
     val address: ArrayList<Address>,
@@ -16,8 +18,8 @@ class AddressAdapter(
 ) : RecyclerView.Adapter<AddressAdapter.CustomViewHolder>() {
 
 
-//    private val clickHandler: ClickEventHandler = context
     var bundle = Bundle()
+    private val clickHandler: Communicator = context
 
 
     override fun onCreateViewHolder(
@@ -45,8 +47,12 @@ class AddressAdapter(
     }
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
-        holder.itemView.address_type.text  = address.name
-        holder.itemView.address_detail.text = address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province
+        holder.itemView.address_name.text  = address.name
+        holder.itemView.address_phone_number.text = address.phoneNumber
+        holder.itemView.address_detail.text = address.type+", "+ address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province
+        holder.itemView.btn_edit.setOnClickListener {
+            clickHandler.clickWithDataTransfer(it,address.id!!)
+        }
 
 
 

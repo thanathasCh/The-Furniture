@@ -5,7 +5,7 @@
         android:width="30dp"
         android:height="30dp"
         android:gravity="center"
-        android:drawable="@drawable/home"/>
+        android:drawable="@drawable/delete_white"/>
 
 
 </layer-list>

@@ -1,14 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Address.EditAddressFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/edit_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/back" />
+
+    <TextView
+        android:id="@+id/edit_text_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/edit_back"
+        android:fontFamily="@font/custom"
+        android:text="Back"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
+
+    <ImageView
+        android:id="@+id/edit_save"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/tick" />
+    <TextView
+        android:id="@+id/address_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/custom"
+        android:text="Address Detail"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/edit_back"/>
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/address_info"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/border"
+        android:fontFamily="@font/custom"
+        android:hint="Name..."
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/edit_name"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/border"
+        android:fontFamily="@font/custom"
+        android:hint="Phone Number..."
+        android:inputType="number"
+        android:paddingLeft="10dp" />
+
+    <LinearLayout
+        android:id="@+id/road_house"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edit_phone"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_road"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="Road"
+            android:paddingLeft="10dp" />
+
+        <EditText
+            android:id="@+id/edit_house"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="House"
+            android:paddingLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/subdistrict_district"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/road_house"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_subdistrict"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="Sub-District"
+            android:paddingLeft="10dp" />
+
+        <EditText
+            android:id="@+id/edit_district"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="District"
+            android:paddingLeft="10dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_province"
+        android:layout_width="195dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/subdistrict_district"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/border"
+        android:fontFamily="@font/custom"
+        android:hint="Province/City"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_province"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/edit_type_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_margin="5dp"
+        android:fontFamily="@font/custom"
+        android:text="Address Type:"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/edit_home"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/edit_type_selection"
+        android:layout_margin="5dp"
+        android:background="@drawable/border"
+        android:drawableLeft="@drawable/home_left"
+        android:paddingLeft="5dp"
+        android:text="Home" />
+    <Button
+        android:id="@+id/edit_office"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/edit_type_selection"
+        android:layout_margin="5dp"
+        android:background="@drawable/border"
+        android:layout_toRightOf="@id/edit_home"
+        android:drawableLeft="@drawable/work_left"
+        android:paddingLeft="5dp"
+        android:text="Office"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/edit_delete"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:background="@drawable/red_cell"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:text="Delete"-->
+<!--        android:drawableLeft="@drawable/delete_left"/>-->
+
+
+    </RelativeLayout>
+</ScrollView>

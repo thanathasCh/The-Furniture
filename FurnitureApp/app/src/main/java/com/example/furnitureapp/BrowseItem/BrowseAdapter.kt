@@ -50,8 +50,6 @@ class BrowseAdapter(
 
         holder.itemView.setOnClickListener {
             clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
-
-
         }
 
 

@@ -3,11 +3,12 @@ package com.example.furnitureapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import androidx.fragment.app.FragmentTransaction
 import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.User.UserFragment
 import com.example.furnitureapp.api.CategoryApi
-import com.example.furnitureapp.api.Examples
+//import com.example.furnitureapp.api.Examples
 import com.example.furnitureapp.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("DEBUG", it.toString())
         }
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
-        createAddress()
 
 
         homeFragment = HomeFragment()
@@ -69,10 +69,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-    }
-    fun createAddress(){
-        addressList.setAddress(Address("Xell","Road 123", "House 456","Bang Bo","Bang Bo", "Samut Prakarn",true,"012-345-6789"))
-        addressList.setAddress(Address("Menh","Road 2004", "House 576","Thong Lor","Thong Lor", "Bangkok",false,"098-765-4321"))
     }
 
 

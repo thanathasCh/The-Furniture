@@ -1,8 +1,10 @@
 package com.example.furnitureapp
 
+import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Categories
+import com.example.furnitureapp.models.Product
 
-val categories = arrayListOf(
+val categoriesData = arrayListOf(
     Categories(
         "Table",
         R.drawable.desk
@@ -28,3 +30,54 @@ val categories = arrayListOf(
         R.drawable.more
     )
 )
+
+val addressData = arrayListOf(
+    Address(
+        "a1",
+        "Home",
+        "Xell",
+        "Road 123",
+        "House 456",
+        "Bang Bo",
+        "Bang Bo",
+        "Samut Prakarn",
+        true,
+        "012-345-6789"
+    ),
+    Address(
+        "a2",
+        "Office",
+        "Menh",
+        "Road 2004",
+        "House 576",
+        "Thong Lor",
+        "Thong Lor",
+        "Bangkok",
+        false,
+        "098-765-4321"
+    )
+)
+val productData = arrayListOf(
+    Product(
+        "t1",
+        "Sofa Table",
+        "100 x 20 x 30",
+        "A02",
+        1500.0F,
+        R.drawable.table_product,
+        "Glass, Wood",
+        4
+    ),
+
+    Product(
+        "t2",
+        "Desk",
+        "150 x 65 x 50",
+        "A01",
+        2000.0F,
+        R.drawable.desk_product,
+        "Wood",
+        2
+    )
+)
+
