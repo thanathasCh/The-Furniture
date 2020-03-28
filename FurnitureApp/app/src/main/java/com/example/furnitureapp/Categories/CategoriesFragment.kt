@@ -61,7 +61,4 @@ class CategoriesFragment : Fragment(),
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
-
-
-
 }
