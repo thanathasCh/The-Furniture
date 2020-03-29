@@ -39,7 +39,6 @@ class CategoriesAdapter(
         val catergory = catergories[position]
         holder.itemView.item_name.text = catergory.name
         holder.itemView.item_icon.setImageResource(catergory.image)
-        e("Item are:", holder.itemView.item_name.toString())
         val check = false
         holder.itemView.setOnClickListener{
             clickHandler.clickListener(it)

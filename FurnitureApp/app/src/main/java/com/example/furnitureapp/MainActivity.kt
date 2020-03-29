@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
 
 
+
         homeFragment = HomeFragment()
         supportFragmentManager
             .beginTransaction()

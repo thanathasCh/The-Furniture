@@ -1,5 +1,7 @@
 package com.example.furnitureapp.Purchase
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log.e
 import androidx.fragment.app.Fragment
@@ -12,15 +14,13 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.furnitureapp.*
 import com.example.furnitureapp.Address.AddressFragment
 import com.example.furnitureapp.Product.ProductFragment
-import com.example.furnitureapp.R
-import com.example.furnitureapp.addressData
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressController
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
-import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.address_cell.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
@@ -44,6 +44,7 @@ class ConfirmPurchaseFragment : Fragment() {
         var pick_up = view.findViewById<View>(R.id.pick_up) as Button
         var delivery = view.findViewById<View>(R.id.delivery) as Button
         var address = view.findViewById<View>(R.id.address) as RelativeLayout
+        var placeOrder  = view.findViewById<View>(R.id.btn_confirm_place_order)
         currentPurchaseItem.clear()
 //        createAddress()
 
@@ -53,7 +54,7 @@ class ConfirmPurchaseFragment : Fragment() {
         var listOfAmount = arguments?.getIntegerArrayList("cart amount")
 
 
-        for(address in addressData){
+        for(address in allUser[userIndex!!].addressList){
             e("address",address.isCurrentAddress.toString())
             if(address.isCurrentAddress!!){
                 view.customer.text = address.name
@@ -76,8 +77,28 @@ class ConfirmPurchaseFragment : Fragment() {
         listOfConfirmPurchase.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
         listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem,this)
 
+
+
+
+        //Button Action
         //set button
-        delivery.setBackgroundResource(R.drawable.grey_border)
+        placeOrder.setOnClickListener {
+            for (i in currentPurchaseItem){
+                allUser[userIndex!!].productList.add(i)
+                val builder = AlertDialog.Builder(this.activity)
+                builder.setTitle("Purchase Successful")
+                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                    val home = HomeFragment()
+                    val fragmentManager = activity!!.supportFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.frame_layout, home)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+
+                }
+                builder.show()
+            }
+        }
         pick_up.setOnClickListener {
             isPickUp = true
             delivery.setBackgroundResource(R.drawable.grey_border)
@@ -107,6 +128,8 @@ class ConfirmPurchaseFragment : Fragment() {
     }
 
 
+
+    // implement Function
     fun findProduct(id:String,amount:Int){
 //        currentPurchaseItem.clear()
             for (i in productData){

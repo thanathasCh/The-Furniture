@@ -6,7 +6,8 @@ import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
 
 var isLogin = false
-val currentUser = arrayListOf<User>()
+var userIndex: Int? = null
+
 
 val categoriesData = arrayListOf(
     Categories(

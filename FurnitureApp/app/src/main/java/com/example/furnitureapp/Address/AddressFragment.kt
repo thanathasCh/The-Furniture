@@ -14,11 +14,8 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.Communicator
-import com.example.furnitureapp.R
-import com.example.furnitureapp.SwipeToDeleteCallback
-import com.example.furnitureapp.addressData
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressController
 import com.google.android.material.snackbar.Snackbar
@@ -75,7 +72,7 @@ class AddressFragment : Fragment(),Communicator {
 //  Recycler View
         val listOfAddress =  view.findViewById<RecyclerView>(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
-        listOfAddress.adapter = AddressAdapter(addressData,this)
+        listOfAddress.adapter = AddressAdapter(allUser[userIndex!!].addressList,this)
 
         val swipeHandler = object : SwipeToDeleteCallback(this.activity!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

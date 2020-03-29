@@ -2,6 +2,7 @@ package com.example.furnitureapp.User
 
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log.e
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.example.furnitureapp.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
@@ -24,12 +26,18 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        var isFromUser = false
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
+        if(arguments?.getBoolean("from user") != null) {
+            isFromUser = arguments?.getBoolean("from user")!!
+        }else{
+            isFromUser = false
+        }
+        e("is from ", isFromUser.toString())
         val create_new = view.findViewById<View>(R.id.create_new_btn)
         val login = view.findViewById<View>(R.id.login_btn)
-//        val userName = view.findViewById<View>(R.id.email) as EditText
-//        val password = view.findViewById<View>(R.id.password) as EditText
+
 
         create_new.setOnClickListener {
             val createnew = CreateNewFragment()
@@ -42,25 +50,37 @@ class LoginFragment : Fragment() {
 
         login.setOnClickListener {
             var success = false
-            for (i in allUser) {
-                e("input User name:", (view.login_email.text.toString() == i.UserName).toString())
-                e("input password:", (view.login_password.text.toString()==i.password).toString())
-                e("all user name:", i.UserName)
-                e("all user password:", i.password)
-                if (i.UserName!!.equals(view.login_email.text.toString()) && i.password!!.equals(view.login_password.text.toString())) {
+            view.hideKeyboard()
+            for (i in 0 until allUser.size) {
+                if (allUser[i].UserName!!.equals(view.login_email.text.toString()) && allUser[i].password!!.equals(view.login_password.text.toString())) {
                     isLogin = true
-                    currentUser.add(i)
+                    userIndex = i
                     success = true
                 }
             }
             if (success) {
                 val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Login Success")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                    val fragmentManager = activity!!.supportFragmentManager
-                    fragmentManager.popBackStack()
+                if (isFromUser!!){
+                    builder.setTitle("Login Success")
+                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                        val home = HomeFragment()
+                        val fragmentManager = activity!!.supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(R.id.frame_layout, home)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
+                    }
+                    builder.show()
+
+                }else{
+                    builder.setTitle("Login Success")
+                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                        val fragmentManager = activity!!.supportFragmentManager
+                        fragmentManager.popBackStack()
+                    }
+                    builder.show()
                 }
-                builder.show()
+
             }else{
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Wrong User or Password")
@@ -70,10 +90,12 @@ class LoginFragment : Fragment() {
             }
         }
 
-
-
             return view
         }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 
 
     }

@@ -21,7 +21,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/account"
+        android:id="@+id/user_account"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:clickable="false"
@@ -39,14 +39,14 @@
         android:layout_margin="5dp"/>
 
     <EditText
-        android:id="@+id/purchase"
+        android:id="@+id/user_purchase_list"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:clickable="false"
         android:cursorVisible="false"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/account"
+        android:layout_below="@+id/user_account"
         android:background="@drawable/border"
         android:text="Purchase List"
         android:textSize="25dp"
@@ -64,7 +64,7 @@
         android:focusableInTouchMode="false"
         android:clickable="false"
         android:cursorVisible="false"
-        android:layout_below="@+id/purchase"
+        android:layout_below="@+id/user_purchase_list"
         android:background="@drawable/border"
         android:textSize="25dp"
         android:text=" About"

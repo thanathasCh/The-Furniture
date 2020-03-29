@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.furnitureapp.R
+import kotlin.math.log
 
 /**
  * A simple [Fragment] subclass.
@@ -23,9 +24,12 @@ class UnRegisterFragment : Fragment() {
         val login_create = view.findViewById<View>(R.id.login_or_register)
 
         login_create.setOnClickListener{
+            var bundle = Bundle()
+            bundle.putBoolean("from user", true)
             val login = LoginFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
+            login.arguments = bundle
             fragmentTransaction.replace(R.id.frame_layout,login)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
