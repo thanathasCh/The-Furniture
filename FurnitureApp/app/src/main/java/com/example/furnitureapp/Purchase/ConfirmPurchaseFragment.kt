@@ -71,13 +71,6 @@ class ConfirmPurchaseFragment : Fragment() {
             }
         }
 
-
-
-
-
-
-
-
         //RecyclerView
         val listOfConfirmPurchase = view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
         listOfConfirmPurchase.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)

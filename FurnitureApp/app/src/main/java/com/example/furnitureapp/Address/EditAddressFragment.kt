@@ -88,19 +88,19 @@ class EditAddressFragment : Fragment(){
         }
 
         //Delete Button
-//        view.edit_delete.setOnClickListener {
-//            val builder = AlertDialog.Builder(this.activity)
-//            builder.setTitle("Please Fill All the Information")
-//            builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
-//                addressData.removeAt(currentIndex)
-//                val fragmentManager = activity!!.supportFragmentManager
-//                fragmentManager.popBackStack()
-//            }
-//            builder.setNegativeButton("No"){ dialogInterface: DialogInterface?, i: Int ->
-//
-//            }
-//            builder.show()
-//        }
+        view.edit_delete.setOnClickListener {
+            val builder = AlertDialog.Builder(this.activity)
+            builder.setTitle("DELETE ?")
+            builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
+                addressData.removeAt(currentIndex)
+                val fragmentManager = activity!!.supportFragmentManager
+                fragmentManager.popBackStack()
+            }
+            builder.setNegativeButton("No"){ dialogInterface: DialogInterface?, i: Int ->
+
+            }
+            builder.show()
+        }
 
         //Add Button
 

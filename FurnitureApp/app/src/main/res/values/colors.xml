@@ -12,5 +12,6 @@
     <color name="orange">#E19D39</color>
     <color name="red">#FF0000</color>
     <color name="light_grey">#B3B3B3</color>
+    <color name="fade">#CCFF9191</color>
 
 </resources>

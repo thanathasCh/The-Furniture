@@ -6,6 +6,7 @@ import android.util.Log
 import android.util.Log.e
 import androidx.fragment.app.FragmentTransaction
 import com.example.furnitureapp.Cart.CartFragment
+import com.example.furnitureapp.User.UnRegisterFragment
 import com.example.furnitureapp.User.UserFragment
 import com.example.furnitureapp.api.CategoryApi
 //import com.example.furnitureapp.api.Examples
@@ -58,12 +59,21 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.user -> {
-                    userFragment = UserFragment()
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.frame_layout, userFragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
+                    if (isLogin) {
+                        userFragment = UserFragment()
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.frame_layout, userFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                    } else {
+                        var unRegiterUser = UnRegisterFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.frame_layout, unRegiterUser)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                    }
+
                 }
 
             }

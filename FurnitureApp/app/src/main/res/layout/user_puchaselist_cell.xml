@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/border"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="150dp">
+
+    <ImageView
+        android:id="@+id/purchase_list_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="5dp"/>
+    <TextView
+        android:id="@+id/upurchase_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/purchase_list_image"
+        android:text="Name        :"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/upurchase_title_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/purchase_list_image"
+        android:layout_below="@id/upurchase_title_name"
+        android:text="Code         :"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/upurchase_title_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/purchase_list_image"
+        android:layout_below="@id/upurchase_title_code"
+        android:text="Quantitiy   :"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/upurchase_title_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/purchase_list_image"
+        android:layout_below="@id/upurchase_title_quantity"
+        android:text="Total          :"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/upurchase_title_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/purchase_list_image"
+        android:layout_below="@id/upurchase_title_price"
+        android:text="Delivery     :"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="10dp"/>
+
+
+
+    <TextView
+        android:id="@+id/upurchase_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/upurchase_title_name"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/upurchase_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/upurchase_title_name"
+        android:layout_below="@id/upurchase_title_name"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="15dp"/>
+    <TextView
+        android:id="@+id/upurchase_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/upurchase_title_name"
+        android:layout_below="@id/upurchase_title_code"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="15dp"/>
+    <TextView
+        android:id="@+id/upurchase_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/upurchase_title_name"
+        android:layout_below="@id/upurchase_title_quantity"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="15dp"/>
+    <TextView
+        android:id="@+id/upurchase_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/upurchase_title_name"
+        android:layout_below="@id/upurchase_title_price"
+        android:text=""
+        android:textColor="@color/red"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/custom"
+        android:layout_marginLeft="15dp"/>
+
+
+</RelativeLayout>

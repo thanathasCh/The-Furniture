@@ -196,16 +196,19 @@
         android:paddingLeft="5dp"
         android:text="Office"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/edit_delete"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_margin="5dp"-->
-<!--        android:background="@drawable/red_cell"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:text="Delete"-->
-<!--        android:drawableLeft="@drawable/delete_left"/>-->
+    <Button
+        android:id="@+id/edit_delete"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/red_cell"
+        android:textColor="@color/white"
+        android:text="Delete"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/edit_office"
+        android:layout_marginTop="125dp"
+        android:drawableLeft="@drawable/delete_left"/>
 
 
     </RelativeLayout>

@@ -3,6 +3,10 @@ package com.example.furnitureapp
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Categories
 import com.example.furnitureapp.models.Product
+import com.example.furnitureapp.models.User
+
+var isLogin = false
+val currentUser = arrayListOf<User>()
 
 val categoriesData = arrayListOf(
     Categories(
@@ -30,8 +34,21 @@ val categoriesData = arrayListOf(
         R.drawable.more
     )
 )
+val purchaseList = arrayListOf<Product>()
 
-val addressData = arrayListOf(
+val allUser: ArrayList<User>
+    get() = arrayListOf(User(
+        "u1",
+        "Menh",
+        "Keo",
+        "menhk",
+        "Menhk168",
+        "menhk@gmail.com",
+        addressData,
+        purchaseList)
+    )
+
+val addressData = arrayListOf<Address>(
     Address(
         "a1",
         "Home",
