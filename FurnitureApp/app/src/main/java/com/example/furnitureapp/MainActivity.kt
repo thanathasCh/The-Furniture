@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragment: HomeFragment
     lateinit var cartFragment: CartFragment
     lateinit var userFragment: UserFragment
-    var addressList = AddressController()
+
     var categories = CategoriesController()
 
 
@@ -82,5 +82,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+}
+
+private fun <E> ArrayList<E>.add(element: ArrayList<E>) {
 
 }

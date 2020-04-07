@@ -1,86 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".User.UserNameFragment">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+    tools:context=".User.PasswordSettingFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
     <ImageView
-        android:id="@+id/user_name_back"
+        android:id="@+id/phone_setting_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:src="@drawable/back" />
+        android:src="@drawable/back"
+        android:layout_margin="5dp"/>
     <TextView
-        android:id="@+id/user_name_back_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/user_name_back"
+        android:text="Phone Number"
         android:textSize="20dp"
-        android:textColor="@color/black"
-        android:text="User Name"
+        android:layout_toRightOf="@id/phone_setting_back"
         android:fontFamily="@font/custom"
-        android:layout_marginTop="10dp"/>
-    </LinearLayout>
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
     <ImageView
-        android:id="@+id/user_name_img"
+        android:id="@+id/phone_setting_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/user"
-        android:layout_below="@id/user_name_back"
-        android:layout_marginLeft="170dp"
+        android:layout_below="@id/phone_setting_back"
+        android:layout_centerInParent="true"
         android:layout_marginTop="20dp"/>
     <EditText
-        android:id="@+id/user_name_firstname"
-        android:layout_width="match_parent"
+        android:id="@+id/phone_setting_new_phone"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:background="@drawable/border"
-        android:layout_below="@id/user_name_img"
+        android:layout_below="@id/phone_setting_img"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:hint="First Name"
+        android:hint="New Phone Number"
         android:fontFamily="@font/custom"
         android:padding="10dp"/>
 
+    <TextView
+        android:id="@+id/verification_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/phone_setting_new_phone"
+        android:layout_below="@id/phone_setting_img"
+        android:layout_marginTop="60dp"
+        android:text="Get Code"
+        android:textSize="18dp"
+        android:textColor="@color/btm_navgi"
+        android:fontFamily="@font/custom"/>
+
     <EditText
-        android:id="@+id/user_name_lastname"
+        android:id="@+id/phone_setting_password"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/border"
-        android:layout_below="@id/user_name_firstname"
+        android:layout_below="@id/phone_setting_new_phone"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:hint="Last Name"
+        android:hint="Verification Code"
         android:fontFamily="@font/custom"
+        android:inputType="number"
         android:padding="10dp"/>
+
     <EditText
-        android:id="@+id/user_name_password"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/border"
-        android:layout_below="@id/user_name_lastname"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:fontFamily="@font/custom"
-        android:hint="Password"
-        android:padding="10dp"/>
-    <Button
-        android:id="@+id/user_name_save"
+        android:id="@+id/phone_save"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/border"
@@ -88,16 +78,15 @@
         android:layout_marginRight="10dp"
         android:fontFamily="@font/custom"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/verification_code"
+        android:layout_marginTop="310dp"
         android:text="Save"
         android:focusable="false"
         android:layout_marginBottom="10dp"
         android:focusableInTouchMode="false"
         android:clickable="false"
-        android:textAllCaps="false"
         android:cursorVisible="false"
-        android:layout_marginTop="180dp"
         android:padding="10dp"/>
 
-    </LinearLayout>
-</ScrollView>
+
+</RelativeLayout>

@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.example.furnitureapp.R
 import com.example.furnitureapp.addressData
+import com.example.furnitureapp.addressList
+import com.example.furnitureapp.allUser
 import com.example.furnitureapp.models.Address
 import kotlinx.android.synthetic.main.fragment_edit_address.view.*
 
@@ -39,17 +41,17 @@ class EditAddressFragment : Fragment(){
         var district = view.edit_district
         var province = view.edit_province
         for (i in 0 until  addressData.size){
-            if(addressData[i].id.equals(id)){
+            if(addressData[i].id.equals(id)&& allUser[i].id.equals(addressData[i].id)){
                 currentIndex = i
-                currentType = addressData[i].type.toString()
-                name.setText(addressData[i].name)
-                phone.setText(addressData[i].phoneNumber)
-                road.setText(addressData[i].road)
-                house.setText(addressData[i].house)
-                subDistrict.setText(addressData[i].sub_district)
-                district.setText(addressData[i].district)
-                province.setText(addressData[i].province)
-                if (addressData[i].type.equals("Office")){
+                currentType = addressList[i].type.toString()
+                name.setText(addressList[i].name)
+                phone.setText(addressList[i].phoneNumber)
+                road.setText(addressList[i].road)
+                house.setText(addressList[i].house)
+                subDistrict.setText(addressList[i].sub_district)
+                district.setText(addressList[i].district)
+                province.setText(addressList[i].province)
+                if (addressList[i].type.equals("Office")){
                     view.edit_home.setBackgroundResource(R.drawable.grey_border)
                 }else{
                     view.edit_office.setBackgroundResource(R.drawable.grey_border)
@@ -74,9 +76,13 @@ class EditAddressFragment : Fragment(){
             if (check){
                 val fragmentManager = activity!!.supportFragmentManager
                 val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Address Have Been Updated!")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                builder.setTitle("Save ?")
+                builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
+                    val fragmentManager = activity!!.supportFragmentManager
                     fragmentManager.popBackStack()
+                }
+                builder.setNegativeButton("No"){ dialogInterface: DialogInterface?, i: Int ->
+
                 }
                 builder.show()
             }else{
@@ -92,7 +98,7 @@ class EditAddressFragment : Fragment(){
             val builder = AlertDialog.Builder(this.activity)
             builder.setTitle("DELETE ?")
             builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
-                addressData.removeAt(currentIndex)
+                addressList.removeAt(currentIndex)
                 val fragmentManager = activity!!.supportFragmentManager
                 fragmentManager.popBackStack()
             }
@@ -119,7 +125,12 @@ class EditAddressFragment : Fragment(){
     fun checkAddress(name:EditText,phone:EditText,road:EditText,house:EditText,subDistrict:EditText,district:EditText,province:EditText,currentType:String,isAdd:Boolean):Boolean{
         var check  = false
         if (isAdd){
-            var currentID = addressData[addressData.size-1].id?.substring(1,2)?.toInt()?.plus(1)
+            var currentID = 0
+            if (addressList.size == 0){
+                currentID = 0
+            }else {
+                currentID = addressList[addressList.size - 1].id?.substring(1, 2)?.toInt()?.plus(1)!!
+            }
             var currentName = ""
             var currentPhone = ""
             var currentRoad = ""
@@ -175,52 +186,53 @@ class EditAddressFragment : Fragment(){
                 check = false
             }
             if (check){
-                addressData.add(Address("a$currentID",currentType,currentName,currentRoad,currentHouse,currentSubstrict,currentDistrict,currentProvince,false,currentPhone))
+                addressList.add(Address("a$currentID",
+                    allUser[currentIndex].id!!,currentType,currentName,currentRoad,currentHouse,currentSubstrict,currentDistrict,currentProvince,false,currentPhone))
             }
         }else {
             if (name.text.toString() != "") {
-                addressData[currentIndex].name = name.text.toString()
+                addressList[currentIndex].name = name.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (phone.text.toString() != "") {
-                addressData[currentIndex].phoneNumber = phone.text.toString()
+                addressList[currentIndex].phoneNumber = phone.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (road.text.toString() != "") {
-                addressData[currentIndex].road = road.text.toString()
+                addressList[currentIndex].road = road.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (house.text.toString() != "") {
-                addressData[currentIndex].house = house.text.toString()
+                addressList[currentIndex].house = house.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (subDistrict.text.toString() != "") {
-                addressData[currentIndex].sub_district = subDistrict.text.toString()
+                addressList[currentIndex].sub_district = subDistrict.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (district.text.toString() != "") {
-                addressData[currentIndex].district = district.text.toString()
+                addressList[currentIndex].district = district.text.toString()
                 check = true
             } else {
                 check = false
             }
             if (province.text.toString() != "") {
-                addressData[currentIndex].province = province.text.toString()
+                addressList[currentIndex].province = province.text.toString()
                 check = true
             } else {
                 check = false
             }
-            addressData[currentIndex].type = currentType
+            addressList[currentIndex].type = currentType
         }
         return check
     }

@@ -32,7 +32,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 class AddressFragment : Fragment(),Communicator {
 
-    var addressList =AddressController()
+
+    var currentUserAddress = ArrayList<Address>()
     var adapter: AddressAdapter? = null
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private var colorDrawableBackground = ColorDrawable(parseColor("#f7f7f7"))
@@ -46,7 +47,7 @@ class AddressFragment : Fragment(),Communicator {
         var view =  inflater.inflate(R.layout.fragment_address, container, false)
         var back = view.findViewById<View>(R.id.address_back) as ImageView
         var add = view.findViewById<View>(R.id.add_address) as ImageView
-
+        getAddress()
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
@@ -72,7 +73,7 @@ class AddressFragment : Fragment(),Communicator {
 //  Recycler View
         val listOfAddress =  view.findViewById<RecyclerView>(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
-        listOfAddress.adapter = AddressAdapter(allUser[userIndex!!].addressList,this)
+        listOfAddress.adapter = AddressAdapter(currentUserAddress,this)
 
         val swipeHandler = object : SwipeToDeleteCallback(this.activity!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -86,9 +87,30 @@ class AddressFragment : Fragment(),Communicator {
 
         return view
     }
+    fun getAddress(){
+        currentUserAddress.clear()
+        for (i in allUser[userIndex!!].addressList){
+            if (allUser[userIndex!!].id.equals(i.uid)){
+                currentUserAddress.add(i)
+            }
+        }
+    }
 
+
+    override fun clickToSelect(holder: View, id: String) {
+        for(i in currentUserAddress){
+            if (i.id.equals(id)){
+                i.isCurrentAddress = true
+            }else{
+                i.isCurrentAddress = false
+            }
+        }
+        var fragment = activity!!.supportFragmentManager
+        fragment.popBackStack()
+    }
 
     override fun clickListener(holder: View) {
+        TODO("Not yet implemented")
     }
 
     override fun clickWithDataTransfer(holder: View, id: String) {

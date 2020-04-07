@@ -1,7 +1,9 @@
 package com.example.furnitureapp.Cart
 
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log.e
 import androidx.fragment.app.Fragment
@@ -10,14 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.Communicator
+import com.example.furnitureapp.*
 import com.example.furnitureapp.Purchase.ConfirmPurchaseAdapter
 import com.example.furnitureapp.Purchase.ConfirmPurchaseFragment
-import com.example.furnitureapp.R
+import com.example.furnitureapp.User.LoginFragment
 import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.Product
-import com.example.furnitureapp.productData
 
 /**
  * A simple [Fragment] subclass.
@@ -44,6 +45,7 @@ class CartFragment : Fragment() {
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
 
+
         for (i in 0 until arrayKey.size-1){
             for (j in productData){
                 if (arrayKey[i].substring(0,2).equals(j.id)){
@@ -51,8 +53,6 @@ class CartFragment : Fragment() {
                         cartProduct.add(j)
                         e("cart product is:",j.name )
                     }
-//                cartProduct.distinct()
-
                 }
             }
         }
@@ -64,16 +64,32 @@ class CartFragment : Fragment() {
 
 
         placeOrder.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putStringArrayList("cart product",adapter.selectProductCode)
-            bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
-            val confirmPurchse = ConfirmPurchaseFragment()
-            val fragmentManager = activity!!.supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            confirmPurchse.arguments = bundle
-            fragmentTransaction.replace(R.id.frame_layout,confirmPurchse)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            if (!isLogin){
+                val builder = AlertDialog.Builder(this.activity)
+                builder.setTitle("Please Login Before Make Purchase")
+                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                    val login = LoginFragment()
+                    val fragmentManager = activity!!.supportFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.frame_layout, login)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+
+                }
+                builder.show()
+            }else{
+                val bundle = Bundle()
+                bundle.putStringArrayList("cart product",adapter.selectProductCode)
+                bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
+                val confirmPurchse = ConfirmPurchaseFragment()
+                val fragmentManager = activity!!.supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                confirmPurchse.arguments = bundle
+                fragmentTransaction.replace(R.id.frame_layout,confirmPurchse)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
+            }
+
         }
 
         return view

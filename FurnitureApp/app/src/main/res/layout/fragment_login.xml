@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".User.LoginFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/login"
@@ -15,10 +20,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"
+        android:layout_marginLeft="5dp"
         android:layout_below="@+id/back_btn"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/custom"
-        android:textSize="50dp"/>
+        android:textSize="30dp"/>
 
     <EditText
         android:id="@+id/login_email"
@@ -26,12 +32,15 @@
         android:layout_height="50dp"
         android:background="@drawable/border"
         android:layout_below="@id/login"
-        android:hint="Email"
+        android:hint="User Name"
         android:padding="10dp"
-        android:layout_margin="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
         android:drawablePadding="10dp"
         android:fontFamily="@font/custom"
-        android:drawableLeft="@drawable/email_left"/>
+        android:drawableLeft="@drawable/user_left"/>
 
     <EditText
         android:id="@+id/login_password"
@@ -41,7 +50,9 @@
         android:layout_below="@id/login_email"
         android:hint="Password"
         android:padding="10dp"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
         android:inputType="textPassword"
         android:drawablePadding="10dp"
         android:fontFamily="@font/custom"
@@ -56,11 +67,11 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@id/login_password"
-        android:background="@drawable/red_cell"
+        android:background="@drawable/border"
         android:textAlignment="center"
+        android:layout_marginLeft="150dp"
         android:text="Login"
         android:textSize="20dp"
-        android:textColor="@color/white"
         android:fontFamily="@font/custom"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
@@ -70,12 +81,14 @@
         android:layout_height="25dp"
         android:textSize="20dp"
         android:textColor="@color/black"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="10dp"
         android:text="Or"
         android:layout_below="@id/login_btn"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:fontFamily="@font/custom"
-        android:layout_margin="10dp"/>
+       />
 
     <EditText
         android:id="@+id/create_new_btn"
@@ -86,16 +99,17 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_below="@id/or"
-        android:background="@drawable/red_cell"
+        android:background="@drawable/border"
         android:textAlignment="center"
+        android:layout_marginLeft="125dp"
         android:text="Create New"
         android:textSize="20dp"
-        android:textColor="@color/white"
+
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/custom"
         android:layout_marginTop="5dp"/>
 
+    </LinearLayout>
 
 
-
-</RelativeLayout>
+</ScrollView>

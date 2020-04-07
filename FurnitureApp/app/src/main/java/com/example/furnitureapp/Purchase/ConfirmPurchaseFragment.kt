@@ -33,18 +33,20 @@ class ConfirmPurchaseFragment : Fragment() {
     var currentPurchaseItem = ArrayList<Product>()
     var product = ProductController()
     var isPickUp = true
+    var index = ArrayList<Int>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_confirm_purchase, container, false)
+        val view = inflater.inflate(R.layout.fragment_confirm_purchase, container, false)
         var back = view.findViewById<View>(R.id.con_back) as ImageView
         var pick_up = view.findViewById<View>(R.id.pick_up) as Button
         var delivery = view.findViewById<View>(R.id.delivery) as Button
         var address = view.findViewById<View>(R.id.address) as RelativeLayout
-        var placeOrder  = view.findViewById<View>(R.id.btn_confirm_place_order)
+        var placeOrder = view.findViewById<View>(R.id.btn_confirm_place_order)
         currentPurchaseItem.clear()
 //        createAddress()
 
@@ -54,37 +56,43 @@ class ConfirmPurchaseFragment : Fragment() {
         var listOfAmount = arguments?.getIntegerArrayList("cart amount")
 
 
-        for(address in allUser[userIndex!!].addressList){
-            e("address",address.isCurrentAddress.toString())
-            if(address.isCurrentAddress!!){
+        for (address in allUser[userIndex!!].addressList) {
+            e("address", address.isCurrentAddress.toString())
+            if (address.isCurrentAddress!!) {
                 view.customer.text = address.name
                 view.con_phone_number.text = address.phoneNumber
-                view.con_address_detail.text = address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province+"."
+                view.con_address_detail.text =
+                    address.road + ", " + address.house + ", " + address.sub_district + ", " + address.district + ", " + address.province + "."
             }
         }
         //Find and Create the in confirm purchase
-        if (id!=null){
-            findProduct(id.toString(),amount!!)
-        }else{
-            for (i in 0 until listOfID!!.size){
+        if (id != null) {
+            findProduct(id.toString(), amount!!)
+        } else {
+            for (i in 0 until listOfID!!.size) {
                 e("list of id", listOfID[i])
                 findProduct(listOfID[i], listOfAmount!![i])
             }
         }
 
         //RecyclerView
-        val listOfConfirmPurchase = view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
-        listOfConfirmPurchase.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
-        listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem,this)
-
-
+        val listOfConfirmPurchase =
+            view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
+        listOfConfirmPurchase.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+        listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem, this)
 
 
         //Button Action
         //set button
         placeOrder.setOnClickListener {
-            for (i in currentPurchaseItem){
+            for (i in currentPurchaseItem) {
                 allUser[userIndex!!].productList.add(i)
+                for (j in productData){
+                    if (j.id!!.equals(i.id)){
+                        j.available -= amount!!
+                    }
+                }
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Purchase Successful")
                 builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
@@ -103,7 +111,6 @@ class ConfirmPurchaseFragment : Fragment() {
             isPickUp = true
             delivery.setBackgroundResource(R.drawable.grey_border)
             pick_up.setBackgroundResource(R.drawable.border)
-            address.setBackgroundResource(R.drawable.grey_border)
         }
         delivery.setOnClickListener {
             isPickUp = false
@@ -115,7 +122,7 @@ class ConfirmPurchaseFragment : Fragment() {
             val address = AddressFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout,address)
+            fragmentTransaction.replace(R.id.frame_layout, address)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
@@ -128,23 +135,31 @@ class ConfirmPurchaseFragment : Fragment() {
     }
 
 
-
     // implement Function
-    fun findProduct(id:String,amount:Int){
+    fun findProduct(id: String, amount: Int) {
 //        currentPurchaseItem.clear()
-            for (i in productData){
-            if (i.id.equals(id)){
-                currentPurchaseItem.add(Product(i.id.toString(),i.name.toString(),i.size.toString(),i.code.toString(),i.price,i.image,i.material.toString(),amount))
-                i.available -=  amount
-
+        for (i in productData) {
+            if (i.id.equals(id)) {
+                currentPurchaseItem.add(
+                    Product(
+                        i.id.toString(),
+                        i.name.toString(),
+                        i.size.toString(),
+                        i.code.toString(),
+                        i.price,
+                        i.image,
+                        i.material.toString(),
+                        amount
+                    )
+                )
+            }
+        }
+        for (i in 0 until productData.size-1){
+            if (productData[i].id.equals(id)){
+                index.add(i)
             }
         }
     }
-//    fun createAddress(){
-//        addressList.setAddress(Address("Xell","Road 123", "House 456","Bang Bo","Bang Bo", "Samut Prakarn",true,"012-345-6789"))
-//        addressList.setAddress(Address("Menh","Road 2004", "House 576","Thong Lor","Thong Lor", "Bangkok",false,"098-765-4321"))
-//    }
-
 
 
 }

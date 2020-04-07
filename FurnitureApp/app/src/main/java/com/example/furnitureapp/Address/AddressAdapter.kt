@@ -22,6 +22,7 @@ class AddressAdapter(
     private val clickHandler: Communicator = context
 
 
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         position: Int
@@ -52,6 +53,9 @@ class AddressAdapter(
         holder.itemView.address_detail.text = address.type+", "+ address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province
         holder.itemView.btn_edit.setOnClickListener {
             clickHandler.clickWithDataTransfer(it,address.id!!)
+        }
+        holder.itemView.address_name.setOnClickListener {
+            clickHandler.clickToSelect(it,address.id!!)
         }
 
 

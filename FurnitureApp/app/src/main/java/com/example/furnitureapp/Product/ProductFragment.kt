@@ -17,6 +17,7 @@ import com.example.furnitureapp.R
 import com.example.furnitureapp.User.LoginFragment
 import com.example.furnitureapp.isLogin
 import com.example.furnitureapp.models.ProductController
+import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 
@@ -68,41 +69,50 @@ class ProductFragment : Fragment() {
             }
         }
 
-        purchase.setOnClickListener{
-            if (!isLogin){
+
+        purchase.setOnClickListener {
+            if (available!!.equals(0)) {
                 val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Please Login Before Making Purchase")
-                builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
-                    val login =
-                        LoginFragment()
+                builder.setTitle("Product is Not Available at The moment")
+                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                }
+                builder.show()
+            } else {
+                if (!isLogin) {
+                    val builder = AlertDialog.Builder(this.activity)
+                    builder.setTitle("Please Login Before Making Purchase")
+                    builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
+                        val login =
+                            LoginFragment()
+                        val fragmentManager = activity!!.supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(R.id.frame_layout, login)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
+                    }
+                    builder.setNegativeButton("No") { dialogInterface: DialogInterface?, i: Int ->
+                    }
+                    builder.show()
+
+                } else {
+                    val bundle = Bundle()
+                    val purchase =
+                        PurchaseFragment()
+                    bundle.putString("id", id)
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.frame_layout, login)
+                    purchase.arguments = bundle
+                    fragmentTransaction.replace(R.id.frame_layout, purchase)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
                 }
-                builder.setNegativeButton("No"){ dialogInterface: DialogInterface?, i: Int ->
-                }
-                builder.show()
-
-            }else{
-                val bundle = Bundle()
-                val purchase =
-                    PurchaseFragment()
-                bundle.putString("id",id)
-                val fragmentManager = activity!!.supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                purchase.arguments = bundle
-                fragmentTransaction.replace(R.id.frame_layout, purchase)
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
             }
-
         }
 
 
         return view
     }
+
     fun storeSharePref(name: String) {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()

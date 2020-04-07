@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/background"
     tools:context=".Product.ProductFragment">
 
     <RelativeLayout
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_img"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/name"
             android:fontFamily="@font/custom"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_name"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/name"
             android:fontFamily="@font/custom"
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pur_code"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/name"
             android:fontFamily="@font/custom"
@@ -141,12 +141,12 @@
             android:layout_below="@id/amount"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/red_cell"
+            android:background="@drawable/border"
             android:padding="5dp"
             android:text="Cancel"
             android:textAllCaps="false"
             android:fontFamily="@font/custom"
-            android:textColor="@color/white" />
+             />
 
         <Button
             android:id="@+id/purchase"
@@ -156,12 +156,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/red_cell"
+            android:background="@drawable/border"
             android:padding="5dp"
             android:text="Next"
             android:textAllCaps="false"
             android:fontFamily="@font/custom"
-            android:textColor="@color/white" />
+            />
     </RelativeLayout>
 
 

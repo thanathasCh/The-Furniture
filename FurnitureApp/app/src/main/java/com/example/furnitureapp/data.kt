@@ -7,6 +7,7 @@ import com.example.furnitureapp.models.User
 
 var isLogin = false
 var userIndex: Int? = null
+var userID: String? = null
 
 
 val categoriesData = arrayListOf(
@@ -36,22 +37,25 @@ val categoriesData = arrayListOf(
     )
 )
 val purchaseList = arrayListOf<Product>()
+val addressList = arrayListOf<Address>()
 
-val allUser: ArrayList<User>
-    get() = arrayListOf(User(
-        "u1",
-        "Menh",
-        "Keo",
-        "menhk",
-        "Menhk168",
-        "menhk@gmail.com",
-        addressData,
-        purchaseList)
-    )
+val allUser = arrayListOf(User(
+            "u1",
+            "Male",
+            "Menh",
+            "Keo",
+            "menhk",
+            "Menhk168",
+        "012-345-6789",
+            "menhk@gmail.com",
+        addressList,
+            purchaseList)
+        )
 
 val addressData = arrayListOf<Address>(
     Address(
         "a1",
+        "u1",
         "Home",
         "Xell",
         "Road 123",
@@ -64,6 +68,7 @@ val addressData = arrayListOf<Address>(
     ),
     Address(
         "a2",
+        "u1",
         "Office",
         "Menh",
         "Road 2004",

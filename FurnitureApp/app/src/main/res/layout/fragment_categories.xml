@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".Categories.CategoriesFragment">
 
     <ImageView
@@ -14,9 +15,9 @@
         android:layout_marginLeft="5dp"
         android:src="@drawable/back" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
         android:id="@+id/search_bar"
-        android:layout_width="match_parent"
+        android:layout_width="290dp"
         android:layout_height="40dp"
         android:background="@drawable/border"
         android:layout_toRightOf="@id/back"
@@ -24,6 +25,14 @@
         android:hint="Search ..."
         android:fontFamily="@font/custom"
         android:layout_margin="10dp"/>
+    <ImageView
+        android:id="@+id/search_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/search"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/search_bar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="5dp"

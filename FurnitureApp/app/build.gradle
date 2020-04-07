@@ -44,6 +44,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.karumi:dexter:5.0.0'
+    compile ('com.github.JakeWharton:ViewPagerIndicator:2.4.1')  {
+        exclude group: 'com.android.support'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
+    }
 
 
     implementation 'com.google.firebase:firebase-firestore:21.4.0'

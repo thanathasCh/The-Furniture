@@ -13,6 +13,7 @@ import com.example.furnitureapp.Product.ProductFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
+import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_purchase.*
 import kotlinx.android.synthetic.main.fragment_purchase.view.*
@@ -24,7 +25,8 @@ class PurchaseFragment : Fragment() {
     val product =  ProductController()
     var currentProduct: Product? = null
     var id = ""
-    var currentAmount = 1
+    var currentAmount =1
+    var productIndex:Int? = null
 
 
     override fun onCreateView(
@@ -44,13 +46,16 @@ class PurchaseFragment : Fragment() {
         var cancel = view.findViewById<View>(R.id.cancel) as Button
 
 ////      set property
-        img.setImageResource(currentProduct!!.image)
-        view.pur_name.text = currentProduct!!.name
-        view.pur_code.text = currentProduct!!.code
-        view.pur_price.text = currentProduct!!.price.toString()
+
+                img.setImageResource(productData[productIndex!!].image)
+                view.pur_name.text = productData[productIndex!!].name
+                view.pur_code.text = productData[productIndex!!].code
+                view.pur_price.text = productData[productIndex!!].price.toString()
+
+
 
         increase.setOnClickListener {
-            if (currentAmount.equals(currentProduct!!.available)){
+            if (currentAmount.equals(productData[productIndex!!].available)){
                 increase.isEnabled = false
             }else{
                 currentAmount += 1
@@ -91,9 +96,9 @@ class PurchaseFragment : Fragment() {
         return view
     }
     fun findProduct(id:String){
-        for (i in product.createMockUp()){
-            if (i.id.equals(id)){
-                currentProduct = i
+        for (i in 0 until productData.size){
+            if (productData[i].id.equals(id)){
+                productIndex = i
             }
         }
     }

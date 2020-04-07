@@ -26,7 +26,7 @@ class UserSettingFragment : Fragment() {
         //Set View Info
         view.welcome_txt.text = "Hello, "+allUser[userIndex!!].firstName+" "+allUser[userIndex!!].lastName
         view.setting_name.text = allUser[userIndex!!].firstName+" "+allUser[userIndex!!].lastName
-        view.setting_phone.text = allUser[userIndex!!].addressList[0].phoneNumber
+        view.setting_phone.text = allUser[userIndex!!].phoneNumber
         view.setting_email.text = allUser[userIndex!!].email
 
         //Button Action
@@ -38,9 +38,41 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+        view.img_setting_name.setOnClickListener {
+            val userName = UserNameFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout,userName)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         view.setting_back.setOnClickListener {
             val fragment = activity!!.supportFragmentManager
             fragment.popBackStack()
+        }
+        view.img_setting_password.setOnClickListener {
+            val password = PasswordSettingFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout,password)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+        view.img_setting_email.setOnClickListener {
+            val email = EmailSettingFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout,email)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+        view.img_setting_phone.setOnClickListener {
+            val phone = PhoneNumberFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout,phone)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
         }
 
 

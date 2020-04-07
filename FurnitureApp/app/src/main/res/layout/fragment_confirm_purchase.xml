@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".Purchase.ConfirmPurchaseFragment">
 
     <ImageView
@@ -85,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/customer"
-            android:text="012-3456"
+            android:text="Phone Number"
             android:fontFamily="@font/custom"
             android:layout_marginTop="13dp"
             android:layout_marginLeft="5dp"/>
@@ -101,7 +102,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Road 123, Home 456,Bangbo, Bangbo, Samuth Prakarn."
+                android:text="No Address Yet"
                 app:fontFamily="@font/custom"
                 android:layout_marginTop="10dp"
                 android:textSize="15dp"/>
