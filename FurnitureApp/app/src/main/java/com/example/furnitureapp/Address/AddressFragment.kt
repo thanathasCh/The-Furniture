@@ -1,11 +1,9 @@
 package com.example.furnitureapp.Address
 
-import android.graphics.Canvas
 import android.graphics.Color.parseColor
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +13,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
-import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.models.Address
-import com.example.furnitureapp.models.AddressController
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.address_cell.view.*
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
-import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
-import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
-import kotlinx.android.synthetic.main.fragment_create_new.view.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * A simple [Fragment] subclass.
@@ -109,7 +98,7 @@ class AddressFragment : Fragment(),Communicator {
         fragment.popBackStack()
     }
 
-    override fun clickListener(holder: View) {
+    override fun clickListener(holder: View, id: String?) {
         TODO("Not yet implemented")
     }
 

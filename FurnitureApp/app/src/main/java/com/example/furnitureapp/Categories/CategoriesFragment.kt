@@ -2,21 +2,19 @@ package com.example.furnitureapp.Categories
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.models.Categories
-import com.example.furnitureapp.models.CategoriesController
 import kotlinx.android.synthetic.main.fragment_categories.view.*
-import android.widget.AdapterView
 import com.example.furnitureapp.data.repository.CategoryRepository
+import com.example.furnitureapp.data.repository.ProductRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,6 +27,9 @@ class CategoriesFragment : Fragment(),
 //    var categories = CategoriesController()
 //    val adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,
 //        productData)
+    companion object Category {
+        lateinit var categoryAdapter: CategoriesAdapter
+    }
 
 
     override fun onCreateView(
@@ -50,11 +51,11 @@ class CategoriesFragment : Fragment(),
         search.setOnClickListener {
             var searchedProduct = view.search_bar.text.toString()
             var name:String? = null
-            for (i in productData){
-                if (searchedProduct.equals(i.name)){
-                    name = searchedProduct
-                }
-            }
+//            for (i in productData){
+////                if (searchedProduct.equals(i.name)){
+////                    name = searchedProduct
+////                }
+////            }
             var bundle = Bundle()
             bundle.putBoolean("from search bar", true)
             bundle.putString("search",name)
@@ -67,13 +68,13 @@ class CategoriesFragment : Fragment(),
             fragmentTransaction.commit()
         }
 
-        val catergoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
-        catergoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
-        main_srl.isRefreshing = true
+        val categoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
+        categoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
 
         CategoryRepository(MainActivity.mainThis).fetchCategory(false) {
-            catergoriesView.adapter = CategoriesAdapter(it,this)
-            main_srl.isRefreshing = false
+            MainActivity.categories = it
+            categoryAdapter = CategoriesAdapter(MainActivity.categories,this)
+            categoriesView.adapter = categoryAdapter
         }
 
         return view
@@ -82,8 +83,14 @@ class CategoriesFragment : Fragment(),
 
 
 
-    override fun clickListener(holder: View) {
+    override fun clickListener(holder: View, id: String?) {
         val item = BrowseItemFragment()
+//        main_srl.isRefreshing = true
+        ProductRepository(MainActivity.mainThis).fetchProductsByCategoryId(true, id!!) {
+            MainActivity.products.clear()
+            MainActivity.products.addAll(it)
+//            main_srl.isRefreshing = false
+        }
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, item)

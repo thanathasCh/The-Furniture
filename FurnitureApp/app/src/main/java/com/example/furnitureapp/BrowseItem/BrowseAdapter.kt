@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.ClickEventHandler
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.R
+import com.example.furnitureapp.models.ProductViewModel
 import kotlinx.android.synthetic.main.browse_cell.view.*
 
 
 
 class BrowseAdapter(
-    val product: ArrayList<Product>,
+    val product: ArrayList<ProductViewModel>,
     val context: BrowseItemFragment
 ) : RecyclerView.Adapter<BrowseAdapter.CustomViewHolder>() {
 
@@ -42,14 +44,17 @@ class BrowseAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val product = product[position]
-        holder.itemView.name.text = product.name
-        holder.itemView.code.text = product.code
-        holder.itemView.size.text = product.size
-        holder.itemView.price.text = product.price.toString()
-        holder.itemView.item_img.setImageResource(product.image)
+        holder.itemView.name.text = product.Name
+        holder.itemView.code.text = product.Code
+        holder.itemView.size.text = product.Description
+        holder.itemView.price.text = product.Price.toString()
+//        holder.itemView.item_img.setImageResource(product.image)
+        Glide.with(context)
+            .load(product.ImageUrls[0])
+            .into(holder.itemView.item_img)
 
         holder.itemView.setOnClickListener {
-            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
+//            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
         }
 
 

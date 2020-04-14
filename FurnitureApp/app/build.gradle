@@ -8,9 +8,6 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
     defaultConfig {
         applicationId "com.example.furnitureapp"
         minSdkVersion 15
@@ -41,8 +38,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
 //  independence
-    implementation 'com.android.support:design:29.0.0'
-    implementation 'com.android.support:recyclerview-v7:29.0.2'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
@@ -53,9 +51,8 @@ dependencies {
         exclude module: 'support-v4'
     }
 
-
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
-    implementation("io.coil-kt:coil:0.9.5")
+//    implementation("io.coil-kt:coil:0.9.5")
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
 }

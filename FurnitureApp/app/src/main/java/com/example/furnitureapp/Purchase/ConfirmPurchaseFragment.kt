@@ -86,13 +86,13 @@ class ConfirmPurchaseFragment : Fragment() {
         //Button Action
         //set button
         placeOrder.setOnClickListener {
-            for (i in currentPurchaseItem) {
-                allUser[userIndex!!].productList.add(i)
-                for (j in productData){
-                    if (j.id!!.equals(i.id)){
-                        j.available -= amount!!
-                    }
-                }
+//            for (i in currentPurchaseItem) {
+//                allUser[userIndex!!].productList.add(i)
+//                for (j in productData){
+//                    if (j.id!!.equals(i.id)){
+//                        j.available -= amount!!
+//                    }
+//                }
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Purchase Successful")
                 builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
@@ -106,7 +106,7 @@ class ConfirmPurchaseFragment : Fragment() {
                 }
                 builder.show()
             }
-        }
+
         pick_up.setOnClickListener {
             isPickUp = true
             delivery.setBackgroundResource(R.drawable.grey_border)

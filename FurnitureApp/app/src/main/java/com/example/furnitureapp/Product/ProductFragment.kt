@@ -17,7 +17,7 @@ import com.example.furnitureapp.R
 import com.example.furnitureapp.User.LoginFragment
 import com.example.furnitureapp.isLogin
 import com.example.furnitureapp.models.ProductController
-import com.example.furnitureapp.productData
+//import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 

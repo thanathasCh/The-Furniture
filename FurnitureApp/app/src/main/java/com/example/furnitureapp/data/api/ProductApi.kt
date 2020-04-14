@@ -20,4 +20,21 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             }
         }
     }
+
+    fun getProductByCategoryId(id: String, callback: (ArrayList<ProductViewModel>) -> Unit) {
+        val products = ArrayList<ProductViewModel>()
+        db.whereEqualTo("CategoryId", "/Categories/${id}")
+            .get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (item in it.result!!) {
+                        val bufferProduct = item.toObject(ProductViewModel::class.java)
+                        bufferProduct.Id = item.id
+                        products.add(bufferProduct)
+                    }
+                    callback(products)
+                } else {
+                    callback(products)
+                }
+            }
+    }
 }

@@ -104,3 +104,13 @@ val productData = arrayListOf(
     )
 )
 
+/*
+Search by categories
+Open Product
+Cart
+
+place order
+login
+create account
+
+ */

@@ -21,12 +21,12 @@ import com.example.furnitureapp.models.ProductController
  */
 class BrowseItemFragment : Fragment(),
     ClickEventHandler {
-
+    companion object Browse {
+        lateinit var browseAdapter: BrowseAdapter
+    }
     var product = ArrayList<Product>()
     var singleton = ProductController()
     var categories = CategoriesController()
-    
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +42,10 @@ class BrowseItemFragment : Fragment(),
         }
 
 
-////        TODO bind data in to recycler view
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recyclerview_list_of_product) as RecyclerView
         listOfProduct.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
-        listOfProduct.adapter =
-            BrowseAdapter(
-                productData,
-                this
-            )
-
+        browseAdapter = BrowseAdapter(MainActivity.products, this)
+        listOfProduct.adapter = browseAdapter
         return view
     }
 

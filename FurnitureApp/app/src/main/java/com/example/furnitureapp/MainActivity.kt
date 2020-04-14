@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import com.example.furnitureapp.Cart.CartFragment
+import com.example.furnitureapp.Categories.CategoriesFragment
 import com.example.furnitureapp.User.UnRegisterFragment
 import com.example.furnitureapp.User.UserFragment
 import com.example.furnitureapp.data.repository.AnnouncementRepository
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     companion object Page {
         var pageId = R.id.home
         lateinit var mainThis: Context
+        var categories = arrayListOf<CategoryViewModel>()
+        var products = arrayListOf<ProductViewModel>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,13 +96,15 @@ class MainActivity : AppCompatActivity() {
                     main_srl.isRefreshing = false
                 }
                 R.id.cart -> {
-                    CategoryRepository(this).fetchCategory(false) {
-                        Log.d("DEBUG", it.toString())
-                    }
                     main_srl.isRefreshing = false
                 }
                 R.id.search_icon -> {
-                    Log.d("DEBUG", "Search")
+                    CategoryRepository(this).fetchCategory(true) {
+                        MainActivity.categories.clear()
+                        MainActivity.categories.addAll(it)
+                        CategoriesFragment.categoryAdapter.notifyDataSetChanged()
+                        main_srl.isRefreshing = false
+                    }
                     main_srl.isRefreshing = false
                 }
                 else -> {

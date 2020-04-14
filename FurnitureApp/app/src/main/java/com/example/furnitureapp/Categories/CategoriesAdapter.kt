@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.CategoryViewModel
@@ -39,10 +39,12 @@ class CategoriesAdapter(
         val category = catergories[position]
         holder.itemView.item_name.text = category.Name
 //        holder.itemView.item_icon.setImageResource(category.ImageUrl)
-        holder.itemView.item_icon.load(category.ImageUrl)
+        Glide.with(context)
+            .load(category.ImageUrl)
+            .into(holder.itemView.item_icon)
         val check = false
         holder.itemView.setOnClickListener{
-            clickHandler.clickListener(it)
+            clickHandler.clickListener(it,  category.Id)
         }
 
     }
