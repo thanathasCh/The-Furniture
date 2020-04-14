@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.viewpager.widget.ViewPager
-import com.example.furnitureapp.Address.ImageModel
+import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.Categories.CategoriesFragment
 
 /**
@@ -23,10 +22,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
+        val sliderImage = activity?.let { SliderImage(it) }
         val search = view.findViewById<View>(R.id.search_icon) as ImageView
-
+        val slider = view.findViewById<View>(R.id.home_image) as SliderImage
+        val image = listOf("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png","https://homepages.cae.wisc.edu/~ece533/images/airplane.png","https://homepages.cae.wisc.edu/~ece533/images/baboon.png")
+        slider.setItems(image)
+//        sliderImage!!.addView(slider)
         search.setOnClickListener {
             val categories =
                 CategoriesFragment()
@@ -39,75 +42,9 @@ class HomeFragment : Fragment() {
         }
         return view
     }
-//    private fun populateList(): ArrayList<ImageModel> {
-//
-//        val list = ArrayList<ImageModel>()
-//
-//        for (i in 0..5) {
-//            val imageModel = ImageModel()
-//            imageModel.setImage_drawables(myImageList[i])
-//            list.add(imageModel)
-//        }
-//
-//        return list
-//    }
-//
-//    private fun init() {
-//
-//        mPager = findViewById(R.id.pager) as ViewPager
-//        mPager!!.adapter = SlidingImage_Adapter(this@MainActivity, this.imageModelArrayList!!)
-//
-//        val indicator = findViewById(R.id.indicator) as CirclePageIndicator
-//
-//        indicator.setViewPager(mPager)
-//
-//        val density = resources.displayMetrics.density
-//
-//        //Set circle indicator radius
-//        indicator.setRadius(5 * density)
-//
-//        NUM_PAGES = imageModelArrayList!!.size
-//
-//        // Auto start of viewpager
-//        val handler = Handler()
-//        val Update = Runnable {
-//            if (currentPage == NUM_PAGES) {
-//                currentPage = 0
-//            }
-//            mPager!!.setCurrentItem(currentPage++, true)
-//        }
-//        val swipeTimer = Timer()
-//        swipeTimer.schedule(object : TimerTask() {
-//            override fun run() {
-//                handler.post(Update)
-//            }
-//        }, 3000, 3000)
-//
-//        // Pager listener over indicator
-//        indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//
-//            override fun onPageSelected(position: Int) {
-//                currentPage = position
-//
-//            }
-//
-//            override fun onPageScrolled(pos: Int, arg1: Float, arg2: Int) {
-//
-//            }
-//
-//            override fun onPageScrollStateChanged(pos: Int) {
-//
-//            }
-//        })
-//
-//    }
-//
-//    companion object {
-//
-//        private var mPager: ViewPager? = null
-//        private var currentPage = 0
-//        private var NUM_PAGES = 0
-//    }
+
+
+
 
 }
 
