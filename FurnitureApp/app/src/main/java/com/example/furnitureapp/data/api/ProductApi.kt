@@ -1,7 +1,5 @@
-package com.example.furnitureapp.api
+package com.example.furnitureapp.data.api
 
-import android.util.Log
-import com.example.furnitureapp.models.CategoryViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

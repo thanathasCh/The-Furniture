@@ -10,32 +10,32 @@ var userIndex: Int? = null
 var userID: String? = null
 
 
-val categoriesData = arrayListOf(
-    Categories(
-        "Table",
-        R.drawable.desk
-    ),
-    Categories(
-        "Chair",
-        R.drawable.chair
-    ),
-    Categories(
-        "Matress",
-        R.drawable.mattress
-    ),
-    Categories(
-        "Closet",
-        R.drawable.closet
-    ),
-    Categories(
-        "Bed",
-        R.drawable.bed
-    ),
-    Categories(
-        "More",
-        R.drawable.more
-    )
-)
+//val categoriesData = arrayListOf(
+//    Categories(
+//        "Table",
+//        R.drawable.desk
+//    ),
+//    Categories(
+//        "Chair",
+//        R.drawable.chair
+//    ),
+//    Categories(
+//        "Matress",
+//        R.drawable.mattress
+//    ),
+//    Categories(
+//        "Closet",
+//        R.drawable.closet
+//    ),
+//    Categories(
+//        "Bed",
+//        R.drawable.bed
+//    ),
+//    Categories(
+//        "More",
+//        R.drawable.more
+//    )
+//)
 val purchaseList = arrayListOf<Product>()
 val addressList = arrayListOf<Address>()
 

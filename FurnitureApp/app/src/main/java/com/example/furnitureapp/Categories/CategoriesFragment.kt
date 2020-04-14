@@ -16,6 +16,8 @@ import com.example.furnitureapp.models.Categories
 import com.example.furnitureapp.models.CategoriesController
 import kotlinx.android.synthetic.main.fragment_categories.view.*
 import android.widget.AdapterView
+import com.example.furnitureapp.data.repository.CategoryRepository
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 /**
@@ -24,7 +26,7 @@ import android.widget.AdapterView
 class CategoriesFragment : Fragment(),
     Communicator {
 
-    var categories = CategoriesController()
+//    var categories = CategoriesController()
 //    val adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,
 //        productData)
 
@@ -40,6 +42,7 @@ class CategoriesFragment : Fragment(),
         val back = view.findViewById<View>(R.id.back) as ImageView
 
         back.setOnClickListener{
+            MainActivity.pageId = R.id.home
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
@@ -66,7 +69,12 @@ class CategoriesFragment : Fragment(),
 
         val catergoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         catergoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
-        catergoriesView.adapter = CategoriesAdapter(categoriesData,this)
+        main_srl.isRefreshing = true
+
+        CategoryRepository(MainActivity.mainThis).fetchCategory(false) {
+            catergoriesView.adapter = CategoriesAdapter(it,this)
+            main_srl.isRefreshing = false
+        }
 
         return view
 
@@ -78,7 +86,7 @@ class CategoriesFragment : Fragment(),
         val item = BrowseItemFragment()
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,item)
+        fragmentTransaction.replace(R.id.frame_layout, item)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
     }
@@ -90,50 +98,4 @@ class CategoriesFragment : Fragment(),
     override fun clickToSelect(holder: View, id: String) {
         TODO("Not yet implemented")
     }
-
-
-//    fun createCategories(){
-//        categories.categoriesList.clear()
-//        categories.setCategories(
-//            Categories(
-//                "Table",
-//                R.drawable.desk
-//            )
-//        )
-//        categories.setCategories(
-//            Categories(
-//                "Chair",
-//                R.drawable.chair
-//            )
-//        )
-//        categories.setCategories(
-//            Categories(
-//                "Matress",
-//                R.drawable.mattress
-//            )
-//        )
-//        categories.setCategories(
-//            Categories(
-//                "Closet",
-//                R.drawable.closet
-//            )
-//        )
-//        categories.setCategories(
-//            Categories(
-//                "Bed",
-//                R.drawable.bed
-//            )
-//        )
-//        categories.setCategories(
-//            Categories(
-//                "More",
-//                R.drawable.more
-//            )
-//        )
-//    }
-//
-
-
-
-
 }

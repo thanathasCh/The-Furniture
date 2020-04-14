@@ -2,19 +2,19 @@ package com.example.furnitureapp.Categories
 
 
 
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.models.Categories
+import coil.api.load
 import com.example.furnitureapp.Communicator
 import com.example.furnitureapp.R
+import com.example.furnitureapp.models.CategoryViewModel
 import kotlinx.android.synthetic.main.catergories_cell.view.*
 
 
 class CategoriesAdapter(
-    val catergories: ArrayList<Categories>,
+    val catergories: ArrayList<CategoryViewModel>,
     val context: CategoriesFragment
 ) : RecyclerView.Adapter<CategoriesAdapter.CustomViewHolder>() {
 
@@ -24,7 +24,7 @@ class CategoriesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.catergories_cell, parent, false)
-        return CustomViewHolder(
+        return CustomViewHolder (
             cellForRow)
 //        ).also {
 //            cellForRow.setOnClickListener{clickHandler.forwardClick(it,"hello")}
@@ -36,9 +36,10 @@ class CategoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val catergory = catergories[position]
-        holder.itemView.item_name.text = catergory.name
-        holder.itemView.item_icon.setImageResource(catergory.image)
+        val category = catergories[position]
+        holder.itemView.item_name.text = category.Name
+//        holder.itemView.item_icon.setImageResource(category.ImageUrl)
+        holder.itemView.item_icon.load(category.ImageUrl)
         val check = false
         holder.itemView.setOnClickListener{
             clickHandler.clickListener(it)

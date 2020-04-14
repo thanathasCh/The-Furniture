@@ -2,6 +2,7 @@ package com.example.furnitureapp
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,9 @@ import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
 import com.example.furnitureapp.Address.ImageModel
 import com.example.furnitureapp.Categories.CategoriesFragment
+import com.example.furnitureapp.data.api.AnnouncementApi
+import com.example.furnitureapp.data.repository.AnnouncementRepository
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -25,9 +29,14 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+//        val api = AnnouncementApi()
+//        api.getAnnouncements {
+//            Log.d("DEBUG", it.toString())
+//        }
         val search = view.findViewById<View>(R.id.search_icon) as ImageView
 
         search.setOnClickListener {
+            MainActivity.pageId = R.id.search_icon
             val categories =
                 CategoriesFragment()
             val fragmentManager = activity!!.supportFragmentManager
@@ -37,6 +46,12 @@ class HomeFragment : Fragment() {
             fragmentTransaction.commit()
 
         }
+
+//        view.fragment_home_srl.setOnRefreshListener {
+//            AnnouncementRepository(this.activity).fetchAnnouncement(false) {
+//                Log.d("DEBUG", it.toString())
+//            }
+//        }
         return view
     }
 //    private fun populateList(): ArrayList<ImageModel> {
@@ -108,7 +123,6 @@ class HomeFragment : Fragment() {
 //        private var currentPage = 0
 //        private var NUM_PAGES = 0
 //    }
-
 }
 
 

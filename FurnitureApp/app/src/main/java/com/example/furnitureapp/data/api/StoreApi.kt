@@ -1,4 +1,4 @@
-package com.example.furnitureapp.api
+package com.example.furnitureapp.data.api
 
 import com.example.furnitureapp.models.StoreViewModel
 import com.google.firebase.firestore.CollectionReference

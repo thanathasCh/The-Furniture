@@ -8,6 +8,9 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     defaultConfig {
         applicationId "com.example.furnitureapp"
         minSdkVersion 15
@@ -52,6 +55,7 @@ dependencies {
 
 
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
+    implementation("io.coil-kt:coil:0.9.5")
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.android.support:multidex:1.0.3'
 }
