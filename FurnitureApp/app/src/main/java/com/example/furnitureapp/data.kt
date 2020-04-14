@@ -49,7 +49,18 @@ val allUser = arrayListOf(User(
         "012-345-6789",
             "menhk@gmail.com",
         addressList,
-            purchaseList)
+            purchaseList),
+    User(
+        "u2",
+        "Male",
+        "Oat",
+        "Ty",
+        "oatty",
+        "12345",
+        "012-345-6789",
+        "menhk@gmail.com",
+        addressList,
+        purchaseList)
         )
 
 val addressData = arrayListOf<Address>(
@@ -105,10 +116,10 @@ val productData = arrayListOf(
 )
 
 /*
-Search by categories
-Open Product
+What's new image slide
 Cart
-
+Add to cart
+Delete from cart
 place order
 login
 create account

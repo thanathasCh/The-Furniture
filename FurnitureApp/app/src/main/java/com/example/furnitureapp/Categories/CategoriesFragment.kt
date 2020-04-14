@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
+import com.example.furnitureapp.data.api.ProductApi
 import kotlinx.android.synthetic.main.fragment_categories.view.*
 import com.example.furnitureapp.data.repository.CategoryRepository
-import com.example.furnitureapp.data.repository.ProductRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -85,14 +85,15 @@ class CategoriesFragment : Fragment(),
 
     override fun clickListener(holder: View, id: String?) {
         val item = BrowseItemFragment()
-//        main_srl.isRefreshing = true
-        ProductRepository(MainActivity.mainThis).fetchProductsByCategoryId(true, id!!) {
+        MainActivity.categoryId = id ?: ""
+        ProductApi().getProductByCategoryId(id ?: "") {
             MainActivity.products.clear()
             MainActivity.products.addAll(it)
-//            main_srl.isRefreshing = false
+            BrowseItemFragment.browseAdapter.notifyDataSetChanged()
         }
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+        MainActivity.pageId = R.layout.fragment_browse_item
         fragmentTransaction.replace(R.id.frame_layout, item)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.

@@ -28,17 +28,18 @@ class Product{
 
 data class ProductViewModel(
     var Id: String? = null,
-    var CategoryId: DocumentReference? = null,
+    var CategoryId: String? = null,
     var Name: String? = null,
     var Code: String? = null,
     var Price: Double = 0.0,
     var Description: String? = null,
+    var Material: String? = null,
     var ImageUrls: ArrayList<String> = arrayListOf(),
     var ProductStock: Int = 0,
-    var StoreId: DocumentReference? = null,
+    var StoreId: String? = null,
     var UpdatedAt: Date? = null,
-    var UpdatedBy: DocumentReference? = null,
+    var UpdatedBy: String? = null,
     var CreatedAt: Date? = null,
-    var CreatedBy: DocumentReference? = null,
+    var CreatedBy: String? = null,
     var IsActive: Boolean = true
 )

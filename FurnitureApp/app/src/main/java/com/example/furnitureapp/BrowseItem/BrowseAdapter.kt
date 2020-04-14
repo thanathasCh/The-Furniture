@@ -48,13 +48,14 @@ class BrowseAdapter(
         holder.itemView.code.text = product.Code
         holder.itemView.size.text = product.Description
         holder.itemView.price.text = product.Price.toString()
-//        holder.itemView.item_img.setImageResource(product.image)
         Glide.with(context)
             .load(product.ImageUrls[0])
+            .placeholder(R.drawable.loading)
             .into(holder.itemView.item_img)
 
         holder.itemView.setOnClickListener {
-//            clickHandler.forwardClick(it,product.id.toString() ,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)
+            clickHandler.forwardClick(it, product)
+
         }
 
 

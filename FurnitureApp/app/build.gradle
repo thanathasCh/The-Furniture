@@ -10,7 +10,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.furnitureapp"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.karumi:dexter:5.0.0'
+    implementation 'io.github.ivanespitiac:imageslider:1.0.3'
     compile ('com.github.JakeWharton:ViewPagerIndicator:2.4.1')  {
         exclude group: 'com.android.support'
         exclude module: 'appcompat-v7'

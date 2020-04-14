@@ -2,8 +2,8 @@ package com.example.furnitureapp.models
 
 class User{
     var id: String? = null
-    var gender:String? = null
-    var firstName:String? = null
+    var gender: String? = null
+    var firstName: String? = null
     var lastName:String? = null
     var UserName: String? = null
     var password : String? = null

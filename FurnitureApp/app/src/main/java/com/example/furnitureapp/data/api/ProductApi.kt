@@ -1,5 +1,6 @@
 package com.example.furnitureapp.data.api
 
+import android.util.Log
 import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,9 +22,21 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
         }
     }
 
+    fun getProductById(id: String, callback: (ProductViewModel) -> Unit) {
+        val products = ArrayList<ProductViewModel>()
+        db.document(id)
+            .get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    callback(it.result!!.toObject(ProductViewModel::class.java) ?: ProductViewModel())
+                } else {
+                    callback(ProductViewModel())
+                }
+            }
+    }
+
     fun getProductByCategoryId(id: String, callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
-        db.whereEqualTo("CategoryId", "/Categories/${id}")
+        db.whereEqualTo("CategoryId", id)
             .get().addOnCompleteListener {
                 if (it.isSuccessful) {
                     for (item in it.result!!) {

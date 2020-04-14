@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.local.UserSharedPreference
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -56,6 +57,7 @@ class LoginFragment : Fragment() {
                     isLogin = true
                     userIndex = i
                     success = true
+//                    UserSharedPreference(context).loggedIn()
                 }
             }
             if (success) {

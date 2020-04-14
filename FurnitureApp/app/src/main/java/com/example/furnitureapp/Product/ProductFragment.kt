@@ -11,13 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
+import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.Purchase.PurchaseFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.User.LoginFragment
 import com.example.furnitureapp.isLogin
 import com.example.furnitureapp.models.ProductController
-//import com.example.furnitureapp.productData
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 
@@ -41,14 +42,14 @@ class ProductFragment : Fragment() {
         val addToCart = view.findViewById<View>(R.id.add_to_cart)
         val purchase = view.findViewById<View>(R.id.purchase)
         var mApp = ProductController()
-        var id = arguments?.getString("id")
-        var name = arguments?.getString("name")
-        var code = arguments?.getString("code")
-        var size = arguments?.getString("size")
-        var price = arguments?.getFloat("price")
-        var image = arguments?.getInt("image")
-        var material = arguments?.getString("material")
-        var available = arguments?.getInt("available")
+        val id = arguments?.getString("id")
+        val name = arguments?.getString("name")
+        val code = arguments?.getString("code")
+        val size = arguments?.getString("size")
+        val price = arguments?.getDouble("price")
+        val images = arguments?.getStringArrayList("image")
+        val material = arguments?.getString("material")
+        val available = arguments?.getBoolean("available")
         e("id is", id.toString())
         view.item_name.text = name
         view.item_code.text = code
@@ -56,11 +57,17 @@ class ProductFragment : Fragment() {
         view.item_price.text = price.toString()
         view.item_available.text = available.toString()
         view.item_material.text = material.toString()
-        image?.let { img.setImageResource(it) }
+        images!![0].let {
+            Glide.with(context!!)
+                .load(it)
+                .placeholder(R.drawable.loading)
+                .into(img)
+        }
 
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
+            MainActivity.pageId = R.layout.fragment_browse_item
             fragmentManager.popBackStack()
         }
         addToCart.setOnClickListener {
@@ -71,7 +78,7 @@ class ProductFragment : Fragment() {
 
 
         purchase.setOnClickListener {
-            if (available!!.equals(0)) {
+            if (!available!!) {
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Product is Not Available at The moment")
                 builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentTransaction
+import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.Categories.CategoriesFragment
 import com.example.furnitureapp.User.UnRegisterFragment
 import com.example.furnitureapp.User.UserFragment
+import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.repository.AnnouncementRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
 //import com.example.furnitureapp.data.api.Examples
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var mainThis: Context
         var categories = arrayListOf<CategoryViewModel>()
         var products = arrayListOf<ProductViewModel>()
+        var categoryId = ""
+        var productId = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,20 +94,37 @@ class MainActivity : AppCompatActivity() {
         main_srl.setOnRefreshListener {
             when (pageId) {
                 R.id.home -> {
-                    AnnouncementRepository(this).fetchAnnouncement(true) {
-                        Log.d("DEBUG", it.toString())
-                    }
+                    Log.d("DEBUG", "HOME")
+//                    AnnouncementRepository(this).fetchAnnouncement(true) {
+//                        Log.d("DEBUG", it.toString())
+//                    }
                     main_srl.isRefreshing = false
                 }
                 R.id.cart -> {
                     main_srl.isRefreshing = false
                 }
                 R.id.search_icon -> {
+                    Log.d("DEBUG", "CATEGORY")
                     CategoryRepository(this).fetchCategory(true) {
                         MainActivity.categories.clear()
                         MainActivity.categories.addAll(it)
                         CategoriesFragment.categoryAdapter.notifyDataSetChanged()
                         main_srl.isRefreshing = false
+                    }
+                }
+                R.layout.fragment_browse_item -> {
+                    Log.d("DEBUG", "BROWSE")
+                    ProductApi().getProductByCategoryId(categoryId) {
+                        products.clear()
+                        products.addAll(it)
+                        BrowseItemFragment.browseAdapter.notifyDataSetChanged()
+                        main_srl.isRefreshing = false
+                    }
+                }
+                R.layout.fragment_product -> {
+                    Log.d("DEBUG", "PRODUCT")
+                    ProductApi().getProductById(productId) {
+                        Log.d("DEBUG", it.toString())
                     }
                     main_srl.isRefreshing = false
                 }

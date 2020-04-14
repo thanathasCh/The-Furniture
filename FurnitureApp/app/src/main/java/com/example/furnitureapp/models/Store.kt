@@ -10,8 +10,8 @@ data class StoreViewModel (
     var Address: String? = null,
     var Location: GeoPoint? = null,
     var UpdatedAt: Date? = null,
-    var UpdatedBy: DocumentReference? = null,
+    var UpdatedBy: String? = null,
     var CreatedAt: Date? = null,
-    var CreatedBy: DocumentReference? = null,
+    var CreatedBy: String? = null,
     var IsActive: Boolean = true
 )

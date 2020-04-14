@@ -38,9 +38,9 @@ class CategoriesAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val category = catergories[position]
         holder.itemView.item_name.text = category.Name
-//        holder.itemView.item_icon.setImageResource(category.ImageUrl)
         Glide.with(context)
             .load(category.ImageUrl)
+            .placeholder(R.drawable.loading)
             .into(holder.itemView.item_icon)
         val check = false
         holder.itemView.setOnClickListener{

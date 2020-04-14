@@ -61,7 +61,7 @@ class UserPurchaseListAdapter(
         holder.itemView.upurchase_code.text = product.code
         holder.itemView.upurchase_quantity.text = product.available.toString()
         holder.itemView.upurchase_price.text = (product.price*product.available).toString()
-        holder.itemView.upurchase_delivery.text = "2-4 of Apr"
+        holder.itemView.upurchase_delivery.text = day + month
         holder.itemView.purchase_list_image.setImageResource(product.image)
 
         val check = false
