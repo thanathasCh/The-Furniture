@@ -4,7 +4,7 @@ import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
 
-//var userIndex: Int? = null
+var userIndex: Int? = null
 val addressList = arrayListOf<Address>()
 
 val allUser = arrayListOf(User(
