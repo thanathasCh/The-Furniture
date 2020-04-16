@@ -12,7 +12,6 @@ import com.example.furnitureapp.R
 import com.example.furnitureapp.allUser
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.isEmailValid
-import com.example.furnitureapp.userIndex
 import kotlinx.android.synthetic.main.fragment_email_setting.view.*
 
 /**

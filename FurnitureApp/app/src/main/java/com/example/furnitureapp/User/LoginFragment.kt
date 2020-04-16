@@ -61,7 +61,6 @@ class LoginFragment : Fragment() {
                 val builder = AlertDialog.Builder(this.activity)
                 if (it) {
                     UserSharedPreference(MainActivity.mainThis).loggedIn()
-                    userIndex = 0
                     builder.setTitle("Login Successful")
 
                     if (isFromUser) {

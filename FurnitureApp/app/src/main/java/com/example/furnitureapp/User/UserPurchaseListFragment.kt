@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.R
 import com.example.furnitureapp.allUser
-import com.example.furnitureapp.userIndex
 
 
 /**

@@ -13,7 +13,6 @@ import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 //import com.example.furnitureapp.isLogin
-import com.example.furnitureapp.userIndex
 import kotlin.math.log
 
 /**
@@ -61,8 +60,6 @@ class UserFragment : Fragment() {
             val builder = AlertDialog.Builder(this.activity)
             builder.setTitle("Logout ?")
             builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                userIndex = null
-//                isLogin = false
                 UserSharedPreference(MainActivity.mainThis).logOut()
                 val login = LoginFragment()
                 val fragmentManager = activity!!.supportFragmentManager

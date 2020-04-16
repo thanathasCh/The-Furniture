@@ -12,7 +12,6 @@ import android.widget.EditText
 import com.example.furnitureapp.R
 import com.example.furnitureapp.allUser
 import com.example.furnitureapp.data.api.UserApi
-import com.example.furnitureapp.userIndex
 import kotlinx.android.synthetic.main.fragment_create_new.*
 import kotlinx.android.synthetic.main.fragment_phone_number.view.*
 
