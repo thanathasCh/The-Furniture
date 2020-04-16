@@ -29,6 +29,7 @@ class CategoriesFragment : Fragment(),
 //        productData)
     companion object Category {
         lateinit var categoryAdapter: CategoriesAdapter
+
     }
 
 
@@ -41,6 +42,7 @@ class CategoriesFragment : Fragment(),
 //        createCategories()
         val search = view.findViewById<View>(R.id.search_btn) as ImageView
         val back = view.findViewById<View>(R.id.back) as ImageView
+
 
         back.setOnClickListener{
             MainActivity.pageId = R.id.home

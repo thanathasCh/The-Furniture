@@ -18,12 +18,12 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_srl"
         android:layout_width="match_parent"
+        android:layout_above="@id/btm_navig"
         android:layout_height="match_parent">
             <FrameLayout
                 android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/btm_navig">
+                android:layout_height="match_parent">
             </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

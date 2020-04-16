@@ -1,5 +1,6 @@
 package com.example.furnitureapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         var productId = ""
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -97,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_srl.setOnRefreshListener {
+            main_srl.setColorSchemeColors(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light)
             when (pageId) {
                 R.id.home -> {
 //                    AnnouncementRepository(this).fetchAnnouncement(true) {
