@@ -3,6 +3,7 @@ package com.example.furnitureapp.User
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.example.furnitureapp.R
 import com.example.furnitureapp.allUser
+import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.userIndex
 import kotlinx.android.synthetic.main.fragment_create_new.*
 import kotlinx.android.synthetic.main.fragment_phone_number.view.*
@@ -24,10 +26,10 @@ class PhoneNumberFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_phone_number, container, false)
-        var newPhoneNumber = view.findViewById<View>(R.id.phone_setting_new_phone) as EditText
-        var newVerification = view.findViewById<View>(R.id.phone_setting_password) as EditText
-        var random = ((Math.random() * 9000) + 1000).toInt()
+        val view = inflater.inflate(R.layout.fragment_phone_number, container, false)
+        val newPhoneNumber = view.findViewById<View>(R.id.phone_setting_new_phone) as EditText
+        val newVerification = view.findViewById<View>(R.id.phone_setting_password) as EditText
+        val random = ((Math.random() * 9000) + 1000).toInt()
 
         view.verification_code.setOnClickListener {
             val builder = AlertDialog.Builder(this.activity)
@@ -40,28 +42,30 @@ class PhoneNumberFragment : Fragment() {
             fragment.popBackStack()
         }
         view.phone_save.setOnClickListener {
-            if (newPhoneNumber.text.toString().length < 10) {
-                val builder = AlertDialog.Builder(this.activity)
+            val builder = AlertDialog.Builder(this.activity)
+            if (newPhoneNumber.text.toString().length != 10) {
                 builder.setTitle("Invalid Phone Number")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int -> }
-                builder.show()
+                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
             } else {
-                if (newVerification.text.toString().equals(random.toString())) {
-                    allUser[userIndex!!].phoneNumber = newPhoneNumber.text.toString()
-                    val builder = AlertDialog.Builder(this.activity)
-                    builder.setTitle("Success")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                        val fragment = activity!!.supportFragmentManager
-                        fragment.popBackStack()
+                if (newVerification.text.toString() == random.toString()) {
+                    UserApi().updateTelephoneNumber(newPhoneNumber.text.toString()) {
+                        if (it) {
+                            builder.setTitle("Success")
+                            builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
+                                val fragment = activity!!.supportFragmentManager
+                                fragment.popBackStack()
+                            }
+                        } else {
+                            builder.setTitle("Error Occurred")
+                            builder.setPositiveButton("Okay") {_: DialogInterface, _: Int -> }
+                        }
                     }
-                    builder.show()
                 } else {
-                    val builder = AlertDialog.Builder(this.activity)
                     builder.setTitle("Wrong Verification Code")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int -> }
-                    builder.show()
+                    builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
                 }
             }
+            builder.show()
         }
         return view
 

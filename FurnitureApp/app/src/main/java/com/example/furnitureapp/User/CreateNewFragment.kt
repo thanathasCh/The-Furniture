@@ -69,13 +69,13 @@ class CreateNewFragment : Fragment() {
             for (i in allUser){
                 if (userName.equals(i.UserName)){
                     showAlert("User Name is Already Taken!")
-                }else if (view.user_name.text.toString().equals("")){
+                }else if (view.user_name.text.toString().isEmpty()){
                     showAlert("Please fill User Name")
                 }else{
                     success += 1
                 }
             }
-            if (password.length<8){
+            if (password.length < 8){
                 showAlert("Password Must Be More Than 8 Character!")
             }else{
                 if (view.password.text.toString().equals(view.reenter_password.text.toString())){
@@ -129,7 +129,6 @@ class CreateNewFragment : Fragment() {
                 }else{
                     gender = "Male"
                 }
-//                newAddress.add(Address("a0","Home",firstName,road,house,subDistrict,district,province,true,phoneNumber))
                 addressList.add(Address("a$addressID",
                     "u$id","Home",firstName,road,house,subDistrict,district,province,true,phoneNumber))
                 newUser = User(

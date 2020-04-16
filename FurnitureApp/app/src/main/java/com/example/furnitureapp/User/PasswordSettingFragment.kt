@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import com.example.furnitureapp.R
-import com.example.furnitureapp.addressList
-import com.example.furnitureapp.allUser
-import com.example.furnitureapp.userIndex
+import com.example.furnitureapp.*
+import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.data.local.UserSharedPreference
 import kotlinx.android.synthetic.main.fragment_password_setting.view.*
 
 /**
@@ -24,48 +23,60 @@ class PasswordSettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view =  inflater.inflate(R.layout.fragment_password_setting, container, false)
-        var originPassword  = view.findViewById<View>(R.id.password_origin) as EditText
-        var newPassword = view.findViewById<View>(R.id.password_new_password) as EditText
-        var confirmPassword = view.findViewById<View>(R.id.password_confirm_password) as EditText
+        val view =  inflater.inflate(R.layout.fragment_password_setting, container, false)
+        val originPasswordEditText  = view.findViewById<View>(R.id.password_origin) as EditText
+        val newPasswordEditText = view.findViewById<View>(R.id.password_new_password) as EditText
+        val confirmPasswordEditText = view.findViewById<View>(R.id.password_confirm_password) as EditText
 
         // Action Button
         view.password_save.setOnClickListener {
-            if (!originPassword.text.toString().equals(allUser[userIndex!!].password)){
-                val builder = AlertDialog.Builder(this.activity)
+            val user = UserSharedPreference(MainActivity.mainThis).retrieveUser()
+            val originPassword = originPasswordEditText.text.toString().encrypt()
+            val newPassword = newPasswordEditText.text.toString().encrypt()
+            val confirmPassword = confirmPasswordEditText.text.toString().encrypt()
+            val builder = AlertDialog.Builder(this.activity)
+
+            if (originPassword != user.Password){
                 builder.setTitle("Wrong Password")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                }
-                builder.show()
+                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
             }else{
-                if (newPassword.text.equals("") || newPassword.text.toString().length<8){
-                    val builder = AlertDialog.Builder(this.activity)
-                    builder.setTitle("Password Must More than 8 character!")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                if (newPassword.isEmpty() || newPassword.length<8){
+                    with(builder) {
+                        setTitle("Password Must More than 8 character!")
+                        setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
                     }
-                    builder.show()
-                }else{
-                    if (newPassword.text.toString().equals(confirmPassword.text.toString())){
-                        allUser[userIndex!!].password = confirmPassword.text.toString()
-                        val builder = AlertDialog.Builder(this.activity)
-                        builder.setTitle("Success !")
-                        builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                            var fragmentManager = activity!!.supportFragmentManager
-                            fragmentManager.popBackStack()
+                } else {
+                    if (newPassword == confirmPassword){
+//                        allUser[userIndex!!].password = confirmPasswordEditText.text.toString()
+                        UserApi().updatePassword(newPassword) {
+                            if (it) {
+                                with(builder) {
+                                    setTitle("Success !")
+                                    setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
+                                        val fragmentManager = activity!!.supportFragmentManager
+                                        fragmentManager.popBackStack()
+                                    }
+                                }
+                            } else {
+                                with(builder) {
+                                    setTitle("Error Occurred")
+                                    setPositiveButton("Okay") {_, _ ->  }
+                                }
+                            }
                         }
-                        builder.show()
-                    }else{
-                        val builder = AlertDialog.Builder(this.activity)
-                        builder.setTitle("Password Not Match")
-                        builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                    } else {
+                        with(builder) {
+                            setTitle("Password Not Match")
+                            setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
                         }
-                        builder.show()
                     }
                 }
+
+                builder.show()
             }
         }
         view.password_setting_back.setOnClickListener {
-            var fragmentManager = activity!!.supportFragmentManager
+            val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
 

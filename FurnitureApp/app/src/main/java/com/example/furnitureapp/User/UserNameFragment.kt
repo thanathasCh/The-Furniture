@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import com.example.furnitureapp.R
-import com.example.furnitureapp.allUser
-import com.example.furnitureapp.userIndex
+import com.example.furnitureapp.*
+import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.data.local.UserSharedPreference
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_user_name.view.*
 
@@ -35,30 +35,35 @@ class UserNameFragment : Fragment() {
             fragmentManager.popBackStack()
         }
         view.user_name_save.setOnClickListener {
-            if (firstName.text.toString().length<3 || lastName.text.toString().length<3){
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Name is too Short")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->  }
-                builder.show()
+            val user = UserSharedPreference(MainActivity.mainThis).retrieveUser()
+            val builder = AlertDialog.Builder(this.activity)
+            if (firstName.text.toString().isEmpty() || lastName.text.toString().isEmpty()) {
+                builder.setTitle("Name and LastName are required!")
+                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->  }
             }else{
-                if (password.text.toString().equals(allUser[userIndex!!].password)){
-                    allUser[userIndex!!].lastName = lastName.text.toString()
-                    allUser[userIndex!!].firstName = firstName.text.toString()
-                    val builder = AlertDialog.Builder(this.activity)
-                    builder.setTitle("Success !")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                        var fragmentManager = activity!!.supportFragmentManager
-                        fragmentManager.popBackStack()
+                if (password.text.toString().encrypt() == user.Password) {
+                    UserApi().updateName(firstName.text.toString(), lastName.text.toString()) {
+                        if (it) {
+                            with(builder) {
+                                setTitle("Success !")
+                                setPositiveButton("Okay") { _, _ ->
+                                    val fragment = activity!!.supportFragmentManager
+                                    fragment.popBackStack()
+                                }
+                            }
+                        } else {
+                            with(builder) {
+                                setTitle("Error Occurred")
+                                setPositiveButton("Okay") { _, _ ->  }
+                            }
+                        }
                     }
-
-                    builder.show()
-                }else{
-                    val builder = AlertDialog.Builder(this.activity)
+                }else {
                     builder.setTitle("Password is Incorrect")
                     builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->  }
-                    builder.show()
                 }
             }
+            builder.show()
         }
         return view
 

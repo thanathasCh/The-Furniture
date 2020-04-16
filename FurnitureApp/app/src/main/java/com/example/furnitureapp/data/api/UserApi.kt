@@ -7,7 +7,6 @@ import com.example.furnitureapp.models.User
 import com.example.furnitureapp.models.UserViewMode
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import javax.security.auth.callback.Callback
 
 class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstance().collection("Users")) {
     fun isExist(userName: String, hashedPassword: String, callback: (Boolean) -> Unit) {
@@ -15,9 +14,12 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             .whereEqualTo("Password", hashedPassword)
             .get().addOnCompleteListener {
                 if (it.isSuccessful && it.result != null && !it.result!!.isEmpty) {
-                    val user = it.result!!.toObjects(UserViewMode::class.java)
-                    UserSharedPreference(MainActivity.mainThis).saveUser(user[0])
-                    callback(true)
+                    for (item in it.result!!) {
+                        val user = item.toObject(UserViewMode::class.java)
+                        user.Id = item.id
+                        UserSharedPreference(MainActivity.mainThis).saveUser(user)
+                        callback(true)
+                    }
                 } else {
                     callback(false)
                 }
@@ -35,4 +37,57 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
                 callback(false)
             }
     }
+
+    fun updateName(firstName: String, lastName: String, callback: (Boolean) -> Unit) {
+        val userPreference = UserSharedPreference(MainActivity.mainThis)
+        val user = userPreference.retrieveUser()
+
+        user.FirstName = firstName
+        user.LastName = lastName
+
+        db.document(user.Id ?: "").update("FirstName", firstName)
+        db.document(user.Id ?: "").update("LastName", lastName)
+
+        userPreference.saveUser(user)
+        callback(true)
+    }
+
+    fun updatePassword(newPassword: String, callback: (Boolean) -> Unit) {
+        val userPreference = UserSharedPreference(MainActivity.mainThis)
+        val user = userPreference.retrieveUser()
+
+        user.Password = newPassword
+
+        db.document(user.Id ?: "").update("Password", newPassword)
+
+        userPreference.saveUser(user)
+        callback(true)
+    }
+
+    fun updateTelephoneNumber(telephoneNumber: String, callback: (Boolean) -> Unit) {
+        val userPreference = UserSharedPreference(MainActivity.mainThis)
+        val user = userPreference.retrieveUser()
+
+        user.TelephoneNumber = telephoneNumber
+
+        db.document(user.Id ?: "").update("TelephoneNumber", telephoneNumber)
+
+        userPreference.saveUser(user)
+        callback(true)
+    }
+
+    fun updateEmail(email: String, callback: (Boolean) -> Unit) {
+        val userPreference = UserSharedPreference(MainActivity.mainThis)
+        val user = userPreference.retrieveUser()
+
+        user.Email = email
+
+        db.document(user.Id ?: "").update("Email", email)
+
+        userPreference.saveUser(user)
+        callback(true)
+    }
+
+    fun updateAddress() {}
+
 }

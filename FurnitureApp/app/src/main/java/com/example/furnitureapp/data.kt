@@ -89,11 +89,6 @@ Cart
 Add to cart
 Delete from cart
 place order
-update user
-- name and last name
-- password
-- phone number
-- email
-- address
+update address
 purchase list
  */

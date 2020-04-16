@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.example.furnitureapp.R
 import com.example.furnitureapp.allUser
+import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.isEmailValid
 import com.example.furnitureapp.userIndex
 import kotlinx.android.synthetic.main.fragment_email_setting.view.*
 
@@ -27,24 +29,31 @@ class EmailSettingFragment : Fragment() {
         var newEmail = view.findViewById<View>(R.id.email_setting_new_email) as EditText
 
         view.email_save.setOnClickListener {
-            if (newEmail.text.toString().length > 14) {
-                allUser[userIndex!!].email = newEmail.text.toString()
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Success !")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                    val fragment = activity!!.supportFragmentManager
-                    fragment.popBackStack()
+            val builder = AlertDialog.Builder(this.activity)
+            if (isEmailValid(newEmail.text.toString())) {
+                UserApi().updateEmail(newEmail.text.toString()) {
+                    if (it) {
+                        with(builder) {
+                            setTitle("Success!")
+                            setPositiveButton("Okay") { _, _ ->
+                                val fragment = activity!!.supportFragmentManager
+                                fragment.popBackStack()
+                            }
+                        }
+                    } else {
+                        with(builder) {
+                            setTitle("Error Occurred")
+                            setPositiveButton("Okay") { _, _ ->  }
+                        }
+                    }
                 }
             } else {
-                allUser[userIndex!!].email = newEmail.text.toString()
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Wrong Email")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-
-                }
+                builder.setTitle("Email format is incorrect")
+                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
             }
-        }
 
+            builder.show()
+        }
 
         view.email_setting_back.setOnClickListener {
             val fragment = activity!!.supportFragmentManager
