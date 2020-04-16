@@ -197,7 +197,7 @@
                 android:layout_below="@id/address_info"/>
             <EditText
                 android:id="@+id/create_new_house_number"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/address_info"
                 android:background="@drawable/border"
@@ -208,50 +208,47 @@
                 android:drawableLeft="@drawable/address_left"/>
             <EditText
                 android:id="@+id/create_new_road"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/address_info"
+                android:layout_below="@id/create_new_house_number"
                 android:background="@drawable/border"
-                android:layout_toRightOf="@id/create_new_house_number"
                 android:layout_margin="5dp"
                 android:hint="Road"
                 android:fontFamily="@font/custom"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:drawableLeft="@drawable/address_left"/>
             <EditText
                 android:id="@+id/create_new_subdistrict"
-                android:layout_width="140dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/address_info"
+                android:layout_below="@id/create_new_road"
                 android:background="@drawable/border"
                 android:layout_margin="5dp"
-                android:layout_toRightOf="@id/create_new_road"
                 android:hint="Sub-District"
                 android:fontFamily="@font/custom"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:drawableLeft="@drawable/address_left"/>
             <EditText
                 android:id="@+id/create_new_district"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/create_new_house_number"
+                android:layout_below="@id/create_new_subdistrict"
                 android:background="@drawable/border"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/custom"
                 android:hint="District"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:drawableLeft="@drawable/address_left"/>
             <EditText
                 android:id="@+id/create_new_province"
-                android:layout_width="170dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/create_new_house_number"
+                android:layout_below="@id/create_new_district"
                 android:background="@drawable/border"
-                android:layout_toRightOf="@id/create_new_house_number"
                 android:layout_margin="5dp"
                 android:hint="Province/City"
                 android:fontFamily="@font/custom"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:drawableLeft="@drawable/address_left"/>
 
             <Button
@@ -265,9 +262,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"/>
-
-
-
 
 
         </RelativeLayout>
