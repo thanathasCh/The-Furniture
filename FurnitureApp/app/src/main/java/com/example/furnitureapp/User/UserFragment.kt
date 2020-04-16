@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.R
-import com.example.furnitureapp.isLogin
+import com.example.furnitureapp.data.local.UserSharedPreference
+//import com.example.furnitureapp.isLogin
 import com.example.furnitureapp.userIndex
 import kotlin.math.log
 
@@ -58,9 +60,10 @@ class UserFragment : Fragment() {
         logout.setOnClickListener{
             val builder = AlertDialog.Builder(this.activity)
             builder.setTitle("Logout ?")
-            builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
+            builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                 userIndex = null
-                isLogin = false
+//                isLogin = false
+                UserSharedPreference(MainActivity.mainThis).logOut()
                 val login = LoginFragment()
                 val fragmentManager = activity!!.supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()

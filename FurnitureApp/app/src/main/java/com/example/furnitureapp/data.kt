@@ -1,42 +1,10 @@
 package com.example.furnitureapp
 
 import com.example.furnitureapp.models.Address
-import com.example.furnitureapp.models.Categories
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
 
-var isLogin = false
 var userIndex: Int? = null
-var userID: String? = null
-
-
-//val categoriesData = arrayListOf(
-//    Categories(
-//        "Table",
-//        R.drawable.desk
-//    ),
-//    Categories(
-//        "Chair",
-//        R.drawable.chair
-//    ),
-//    Categories(
-//        "Matress",
-//        R.drawable.mattress
-//    ),
-//    Categories(
-//        "Closet",
-//        R.drawable.closet
-//    ),
-//    Categories(
-//        "Bed",
-//        R.drawable.bed
-//    ),
-//    Categories(
-//        "More",
-//        R.drawable.more
-//    )
-//)
-val purchaseList = arrayListOf<Product>()
 val addressList = arrayListOf<Address>()
 
 val allUser = arrayListOf(User(
@@ -49,7 +17,7 @@ val allUser = arrayListOf(User(
         "012-345-6789",
             "menhk@gmail.com",
         addressList,
-            purchaseList),
+    arrayListOf()),
     User(
         "u2",
         "Male",
@@ -60,7 +28,7 @@ val allUser = arrayListOf(User(
         "012-345-6789",
         "menhk@gmail.com",
         addressList,
-        purchaseList)
+        arrayListOf())
         )
 
 val addressData = arrayListOf<Address>(
@@ -121,7 +89,11 @@ Cart
 Add to cart
 Delete from cart
 place order
-login
-create account
-
+update user
+- name and last name
+- password
+- phone number
+- email
+- address
+purchase list
  */

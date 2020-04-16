@@ -16,6 +16,7 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.Purchase.ConfirmPurchaseAdapter
 import com.example.furnitureapp.Purchase.ConfirmPurchaseFragment
 import com.example.furnitureapp.User.LoginFragment
+import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.Product
@@ -64,7 +65,7 @@ class CartFragment : Fragment() {
 
 
         placeOrder.setOnClickListener {
-            if (!isLogin){
+            if (!UserSharedPreference(MainActivity.mainThis).isLogged()){
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Please Login Before Make Purchase")
                 builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->

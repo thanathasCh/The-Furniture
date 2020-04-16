@@ -17,7 +17,8 @@ import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.Purchase.PurchaseFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.User.LoginFragment
-import com.example.furnitureapp.isLogin
+import com.example.furnitureapp.data.local.UserSharedPreference
+//import com.example.furnitureapp.isLogin
 import com.example.furnitureapp.models.ProductController
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
@@ -85,7 +86,8 @@ class ProductFragment : Fragment() {
                 }
                 builder.show()
             } else {
-                if (!isLogin) {
+                MainActivity.mainSrl.isRefreshing = true
+                if (!UserSharedPreference(MainActivity.mainThis).isLogged()) {
                     val builder = AlertDialog.Builder(this.activity)
                     builder.setTitle("Please Login Before Making Purchase")
                     builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
@@ -113,6 +115,8 @@ class ProductFragment : Fragment() {
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
                 }
+
+                MainActivity.mainSrl.isRefreshing = false
             }
         }
 

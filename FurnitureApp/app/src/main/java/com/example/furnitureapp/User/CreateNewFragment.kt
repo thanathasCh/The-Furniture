@@ -15,8 +15,6 @@ import com.example.furnitureapp.allUser
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
-import com.example.furnitureapp.purchaseList
-import kotlinx.android.synthetic.main.fragment_create_new.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.male
 

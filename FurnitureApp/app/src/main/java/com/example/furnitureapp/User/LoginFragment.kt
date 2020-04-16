@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -30,10 +33,10 @@ class LoginFragment : Fragment() {
         var isFromUser = false
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        if(arguments?.getBoolean("from user") != null) {
-            isFromUser = arguments?.getBoolean("from user")!!
+        isFromUser = if(arguments?.getBoolean("from user") != null) {
+            arguments?.getBoolean("from user")!!
         }else{
-            isFromUser = false
+            false
         }
         e("is from ", isFromUser.toString())
         val create_new = view.findViewById<View>(R.id.create_new_btn)
@@ -50,45 +53,37 @@ class LoginFragment : Fragment() {
         }
 
         login.setOnClickListener {
-            var success = false
             view.hideKeyboard()
-            for (i in 0 until allUser.size) {
-                if (allUser[i].UserName!!.equals(view.login_email.text.toString()) && allUser[i].password!!.equals(view.login_password.text.toString())) {
-                    isLogin = true
-                    userIndex = i
-                    success = true
-//                    UserSharedPreference(context).loggedIn()
-                }
-            }
-            if (success) {
-                val builder = AlertDialog.Builder(this.activity)
-                if (isFromUser!!){
-                    builder.setTitle("Login Success")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                        val home = HomeFragment()
-                        val fragmentManager = activity!!.supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.frame_layout, home)
-                        fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.commit()
-                    }
-                    builder.show()
 
-                }else{
-                    builder.setTitle("Login Success")
-                    builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                        val fragmentManager = activity!!.supportFragmentManager
-                        fragmentManager.popBackStack()
-                    }
-                    builder.show()
-                }
-
-            }else{
+            MainActivity.mainSrl.isRefreshing = true
+            Log.d("DEBUG", view.login_password.text.toString().encrypt())
+            UserApi().isExist(view.login_email.text.toString(), view.login_password.text.toString().encrypt()) {
                 val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Wrong User or Password")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                if (it) {
+                    UserSharedPreference(MainActivity.mainThis).loggedIn()
+                    userIndex = 0
+                    builder.setTitle("Login Successful")
+
+                    if (isFromUser) {
+                        builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> val home = HomeFragment()
+                                val fragmentManager = activity!!.supportFragmentManager
+                                val fragmentTransaction = fragmentManager.beginTransaction()
+                                fragmentTransaction.replace(R.id.frame_layout, home)
+                                fragmentTransaction.addToBackStack(null)
+                                fragmentTransaction.commit()
+                        }
+                    } else {
+                        builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
+                            val fragmentManager = activity!!.supportFragmentManager
+                            fragmentManager.popBackStack()
+                        }
+                    }
+                } else {
+                    builder.setTitle("Wrong User or Password")
+                    builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
                 }
                 builder.show()
+                MainActivity.mainSrl.isRefreshing = false
             }
         }
 

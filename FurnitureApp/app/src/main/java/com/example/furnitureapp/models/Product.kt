@@ -1,8 +1,8 @@
 package com.example.furnitureapp.models
 
-import com.google.firebase.firestore.DocumentReference
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class Product{
     var id: String? = null

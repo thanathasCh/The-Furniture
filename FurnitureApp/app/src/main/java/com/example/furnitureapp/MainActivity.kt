@@ -5,18 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentTransaction
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.Categories.CategoriesFragment
 import com.example.furnitureapp.User.UnRegisterFragment
 import com.example.furnitureapp.User.UserFragment
+import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
+import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AnnouncementRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
 //import com.example.furnitureapp.data.api.Examples
 import com.example.furnitureapp.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,8 +32,9 @@ class MainActivity : AppCompatActivity() {
     var categories = CategoriesController()
 
     companion object Page {
-        var pageId = R.id.home
         lateinit var mainThis: Context
+        lateinit var mainSrl: SwipeRefreshLayout
+        var pageId = R.id.home
         var categories = arrayListOf<CategoryViewModel>()
         var products = arrayListOf<ProductViewModel>()
         var categoryId = ""
@@ -46,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.frame_layout, homeFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
-
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -70,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.user -> {
                     pageId = 0
-                    if (isLogin) {
+                    if (UserSharedPreference(mainThis).isLogged()) {
                         userFragment = UserFragment()
                         supportFragmentManager
                             .beginTransaction()
@@ -94,7 +99,6 @@ class MainActivity : AppCompatActivity() {
         main_srl.setOnRefreshListener {
             when (pageId) {
                 R.id.home -> {
-                    Log.d("DEBUG", "HOME")
 //                    AnnouncementRepository(this).fetchAnnouncement(true) {
 //                        Log.d("DEBUG", it.toString())
 //                    }
@@ -104,7 +108,6 @@ class MainActivity : AppCompatActivity() {
                     main_srl.isRefreshing = false
                 }
                 R.id.search_icon -> {
-                    Log.d("DEBUG", "CATEGORY")
                     CategoryRepository(this).fetchCategory(true) {
                         MainActivity.categories.clear()
                         MainActivity.categories.addAll(it)
@@ -113,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.layout.fragment_browse_item -> {
-                    Log.d("DEBUG", "BROWSE")
                     ProductApi().getProductByCategoryId(categoryId) {
                         products.clear()
                         products.addAll(it)
@@ -122,7 +124,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.layout.fragment_product -> {
-                    Log.d("DEBUG", "PRODUCT")
                     ProductApi().getProductById(productId) {
                         Log.d("DEBUG", it.toString())
                     }
@@ -133,13 +134,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
-    override fun onBackPressed() {
-        if (pageId == R.id.search_icon) {
-            pageId = R.id.home
-            super.onBackPressed()
-        }
+        mainSrl = main_srl
     }
-
 }

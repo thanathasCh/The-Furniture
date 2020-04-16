@@ -71,10 +71,12 @@ class CategoriesFragment : Fragment(),
         val categoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         categoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
 
+        MainActivity.mainSrl.isRefreshing = true
         CategoryRepository(MainActivity.mainThis).fetchCategory(false) {
             MainActivity.categories = it
             categoryAdapter = CategoriesAdapter(MainActivity.categories,this)
             categoriesView.adapter = categoryAdapter
+            MainActivity.mainSrl.isRefreshing = false
         }
 
         return view
@@ -86,10 +88,12 @@ class CategoriesFragment : Fragment(),
     override fun clickListener(holder: View, id: String?) {
         val item = BrowseItemFragment()
         MainActivity.categoryId = id ?: ""
+        MainActivity.mainSrl.isRefreshing = true
         ProductApi().getProductByCategoryId(id ?: "") {
             MainActivity.products.clear()
             MainActivity.products.addAll(it)
             BrowseItemFragment.browseAdapter.notifyDataSetChanged()
+            MainActivity.mainSrl.isRefreshing = false
         }
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
