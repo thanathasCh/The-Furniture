@@ -19,6 +19,8 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             } else {
                 callback(products)
             }
+        }.addOnFailureListener {
+            callback(products)
         }
     }
 
@@ -31,6 +33,8 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
                 } else {
                     callback(ProductViewModel())
                 }
+            }.addOnFailureListener {
+                callback(ProductViewModel())
             }
     }
 
@@ -48,6 +52,28 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
                 } else {
                     callback(products)
                 }
+            }.addOnFailureListener {
+                callback(products)
+            }
+    }
+
+    fun getProductByIds(ids: ArrayList<String>, callback: (ArrayList<ProductViewModel>) -> Unit) {
+        val products = ArrayList<ProductViewModel>()
+        db.get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (item in it.result!!) {
+                    if (item.id in ids) {
+                        val bufferProduct = item.toObject(ProductViewModel::class.java)
+                        bufferProduct.Id = item.id
+                        products.add(bufferProduct)
+                    }
+                }
+                callback(products)
+            } else {
+                callback(products)
+            }
+        }.addOnFailureListener {
+            callback(products)
             }
     }
 }

@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.Cart.CartFragment
 import com.example.furnitureapp.Categories.CategoriesFragment
+import com.example.furnitureapp.Product.ProductFragment
 import com.example.furnitureapp.User.UnRegisterFragment
 import com.example.furnitureapp.User.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
@@ -22,6 +24,8 @@ import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.cart_cell.view.*
+import kotlinx.android.synthetic.main.fragment_product.view.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -54,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.frame_layout, homeFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
-
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -102,9 +105,9 @@ class MainActivity : AppCompatActivity() {
             main_srl.setColorSchemeColors(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light)
             when (pageId) {
                 R.id.home -> {
-//                    AnnouncementRepository(this).fetchAnnouncement(true) {
-//                        Log.d("DEBUG", it.toString())
-//                    }
+                    AnnouncementApi().getAnnouncementImages {
+                        HomeFragment.slider.setItems(it)
+                    }
                     main_srl.isRefreshing = false
                 }
                 R.id.cart -> {
@@ -128,7 +131,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.layout.fragment_product -> {
                     ProductApi().getProductById(productId) {
-                        Log.d("DEBUG", it.toString())
+                        with(ProductFragment.productView) {
+                            item_name.text = it.Name
+                            item_code.text = it.Code
+                            item_size.text = it.Description
+                            item_price.text = it.Price.toString()
+                            item_available.text = if (it.IsActive) "Yes" else "No"
+                            item_material.text = it.Material
+                            Glide.with(this)
+                                .load(it.ImageUrls[0])
+                                .placeholder(R.drawable.loading)
+                                .into(prod_img)
+                        }
                     }
                     main_srl.isRefreshing = false
                 }

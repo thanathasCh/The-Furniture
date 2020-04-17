@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
-import com.example.furnitureapp.Purchase.ConfirmPurchaseAdapter
 import com.example.furnitureapp.Purchase.ConfirmPurchaseFragment
 import com.example.furnitureapp.User.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
@@ -49,10 +48,10 @@ class CartFragment : Fragment() {
 
         for (i in 0 until arrayKey.size-1){
             for (j in productData){
-                if (arrayKey[i].substring(0,2).equals(j.id)){
+                if (arrayKey[i].substring(0,2) == j.id){
                     if (!cartProduct.contains(j)){
                         cartProduct.add(j)
-                        e("cart product is:",j.name )
+                        e("cart product is:", j.name ?: "" )
                     }
                 }
             }
@@ -82,11 +81,11 @@ class CartFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putStringArrayList("cart product",adapter.selectProductCode)
                 bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
-                val confirmPurchse = ConfirmPurchaseFragment()
+                val confirmPurchase = ConfirmPurchaseFragment()
                 val fragmentManager = activity!!.supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
-                confirmPurchse.arguments = bundle
-                fragmentTransaction.replace(R.id.frame_layout,confirmPurchse)
+                confirmPurchase.arguments = bundle
+                fragmentTransaction.replace(R.id.frame_layout,confirmPurchase)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
             }
