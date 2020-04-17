@@ -25,16 +25,18 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
     }
 
     fun getProductById(id: String, callback: (ProductViewModel) -> Unit) {
-        val products = ArrayList<ProductViewModel>()
+        var product = ProductViewModel()
         db.document(id)
             .get().addOnCompleteListener {
                 if (it.isSuccessful) {
-                    callback(it.result!!.toObject(ProductViewModel::class.java) ?: ProductViewModel())
-                } else {
-                    callback(ProductViewModel())
-                }
+                    product = it.result!!.toObject(ProductViewModel::class.java) ?: ProductViewModel()
+                    product.Id = it.result!!.id
+                    callback(product)
+                    } else {
+                        callback(product)
+                    }
             }.addOnFailureListener {
-                callback(ProductViewModel())
+                callback(product)
             }
     }
 
