@@ -1,5 +1,7 @@
 package com.example.furnitureapp.models
 
+import com.google.firebase.database.Exclude
+
 class Address{
     var id: String? = null
     var uid: String? = null
@@ -27,5 +29,26 @@ class Address{
         this.isCurrentAddress = isCurrentAddress
         this.phoneNumber = phoneNumber
     }
+}
 
+data class AddressViewModel (
+    var Id: String? = null,
+    var UserId: String? = null,
+    var Address: String? = null,
+    var Road: String? = null,
+    var SubDistrict: String? = null,
+    var District: String? = null,
+    var Provice: String? = null
+) {
+    @Exclude
+    fun toMap(): Map<String, Any?>{
+        return mapOf("Id" to Id,
+            "UserId" to UserId,
+            "Address" to Address,
+            "Road" to Road,
+            "SubDistrict" to SubDistrict,
+            "District" to District,
+            "Province" to Provice
+            )
+    }
 }

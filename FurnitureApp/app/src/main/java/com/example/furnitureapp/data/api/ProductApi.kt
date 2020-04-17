@@ -19,18 +19,24 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             } else {
                 callback(products)
             }
+        }.addOnFailureListener {
+            callback(products)
         }
     }
 
     fun getProductById(id: String, callback: (ProductViewModel) -> Unit) {
-        val products = ArrayList<ProductViewModel>()
+        var product = ProductViewModel()
         db.document(id)
             .get().addOnCompleteListener {
                 if (it.isSuccessful) {
-                    callback(it.result!!.toObject(ProductViewModel::class.java) ?: ProductViewModel())
-                } else {
-                    callback(ProductViewModel())
-                }
+                    product = it.result!!.toObject(ProductViewModel::class.java) ?: ProductViewModel()
+                    product.Id = it.result!!.id
+                    callback(product)
+                    } else {
+                        callback(product)
+                    }
+            }.addOnFailureListener {
+                callback(product)
             }
     }
 
@@ -48,6 +54,28 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
                 } else {
                     callback(products)
                 }
+            }.addOnFailureListener {
+                callback(products)
+            }
+    }
+
+    fun getProductByIds(ids: ArrayList<String>, callback: (ArrayList<ProductViewModel>) -> Unit) {
+        val products = ArrayList<ProductViewModel>()
+        db.get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (item in it.result!!) {
+                    if (item.id in ids) {
+                        val bufferProduct = item.toObject(ProductViewModel::class.java)
+                        bufferProduct.Id = item.id
+                        products.add(bufferProduct)
+                    }
+                }
+                callback(products)
+            } else {
+                callback(products)
+            }
+        }.addOnFailureListener {
+            callback(products)
             }
     }
 }

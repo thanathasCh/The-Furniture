@@ -84,11 +84,11 @@ val productData = arrayListOf(
 )
 
 /*
-What's new image slide
 Cart
 Add to cart
 Delete from cart
 place order
-update address
 purchase list
+update address
+create account
  */

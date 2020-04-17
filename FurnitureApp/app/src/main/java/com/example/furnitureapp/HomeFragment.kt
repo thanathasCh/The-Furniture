@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.Categories.CategoriesFragment
+import com.example.furnitureapp.data.api.AnnouncementApi
 
 /**
  * A simple [Fragment] subclass.
  */
 class HomeFragment : Fragment() {
-
-//    var myImageList = ArrayList(R.drawable.slide_chair,R.drawable.slide_table)
+    companion object Home {
+        lateinit var slider: SliderImage
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +28,13 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val sliderImage = activity?.let { SliderImage(it) }
         val search = view.findViewById<View>(R.id.search_icon) as ImageView
-        val slider = view.findViewById<View>(R.id.home_image) as SliderImage
-        val image = listOf("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png","https://homepages.cae.wisc.edu/~ece533/images/airplane.png","https://homepages.cae.wisc.edu/~ece533/images/baboon.png")
-        slider.setItems(image)
-//        sliderImage!!.addView(slider)
+        slider = view.findViewById<View>(R.id.home_image) as SliderImage
+
+        MainActivity.mainSrl.isRefreshing = true
+        AnnouncementApi().getAnnouncementImages {
+            slider.setItems(it)
+            MainActivity.mainSrl.isRefreshing = false
+        }
         search.setOnClickListener {
             val categories =
                 CategoriesFragment()

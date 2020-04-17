@@ -25,7 +25,7 @@
         android:fontFamily="@font/custom"
         android:layout_toRightOf="@+id/back_product_btn"/>
 
-    <com.custom.sliderimage.logic.SliderImage
+    <ImageView
         android:id="@+id/prod_img"
         android:layout_width="match_parent"
         android:layout_height="250dp"

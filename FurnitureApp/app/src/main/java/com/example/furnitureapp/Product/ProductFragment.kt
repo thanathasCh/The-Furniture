@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.Purchase.PurchaseFragment
@@ -29,20 +29,21 @@ import kotlinx.android.synthetic.main.fragment_product.view.*
  */
 class ProductFragment : Fragment() {
 
-// TODO set all the detail according to each id name
-
-
+    companion object Product {
+        lateinit var productView: View
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_product, container, false)
-        val back = view.findViewById<View>(R.id.back_product_btn)
-        val img = view.findViewById<View>(R.id.prod_img) as SliderImage
-        val addToCart = view.findViewById<View>(R.id.add_to_cart)
-        val purchase = view.findViewById<View>(R.id.purchase)
-        var mApp = ProductController()
+        productView = inflater.inflate(R.layout.fragment_product, container, false)
+
+        val back = productView.findViewById<View>(R.id.back_product_btn)
+        val img = productView.findViewById<View>(R.id.prod_img) as ImageView
+        val addToCart = productView.findViewById<View>(R.id.add_to_cart)
+        val purchase = productView.findViewById<View>(R.id.purchase)
+//        clearSharePref()
         val id = arguments?.getString("id")
         val name = arguments?.getString("name")
         val code = arguments?.getString("code")
@@ -51,15 +52,18 @@ class ProductFragment : Fragment() {
         val images = arguments?.getStringArrayList("image")
         val material = arguments?.getString("material")
         val available = arguments?.getBoolean("available")
-        e("id is", id.toString())
-        view.item_name.text = name
-        view.item_code.text = code
-        view.item_size.text = size
-        view.item_price.text = price.toString()
-        view.item_available.text = available.toString()
-        view.item_material.text = material.toString()
-        if (images != null) {
-            img.setItems(images)
+        Log.d("DEBUG", "here")
+        productView.item_name.text = name
+        productView.item_code.text = code
+        productView.item_size.text = size
+        productView.item_price.text = price.toString()
+        productView.item_available.text = if (available == true) "Yes" else "No"
+        productView.item_material.text = material.toString()
+        images!![0].let {
+            Glide.with(context!!)
+                .load(it)
+                .placeholder(R.drawable.loading)
+                .into(img)
         }
 
 
@@ -70,9 +74,7 @@ class ProductFragment : Fragment() {
         }
         addToCart.setOnClickListener {
             if (id != null) {
-                if (code != null) {
-                    storeSharePref(code,id)
-                }
+                storeSharePref(code.toString(),id)
             }
         }
 
@@ -81,7 +83,7 @@ class ProductFragment : Fragment() {
             if (!available!!) {
                 val builder = AlertDialog.Builder(this.activity)
                 builder.setTitle("Product is Not Available at The moment")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
                 }
                 builder.show()
             } else {
@@ -89,7 +91,7 @@ class ProductFragment : Fragment() {
                 if (!UserSharedPreference(MainActivity.mainThis).isLogged()) {
                     val builder = AlertDialog.Builder(this.activity)
                     builder.setTitle("Please Login Before Making Purchase")
-                    builder.setPositiveButton("Yes") { dialogInterface: DialogInterface?, i: Int ->
+                    builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                         val login =
                             LoginFragment()
                         val fragmentManager = activity!!.supportFragmentManager
@@ -98,19 +100,19 @@ class ProductFragment : Fragment() {
                         fragmentTransaction.addToBackStack(null)
                         fragmentTransaction.commit()
                     }
-                    builder.setNegativeButton("No") { dialogInterface: DialogInterface?, i: Int ->
+                    builder.setNegativeButton("No") { _: DialogInterface?, _: Int ->
                     }
                     builder.show()
 
                 } else {
                     val bundle = Bundle()
-                    val purchase =
+                    val purchaseFragment =
                         PurchaseFragment()
                     bundle.putString("id", id)
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    purchase.arguments = bundle
-                    fragmentTransaction.replace(R.id.frame_layout, purchase)
+                    purchaseFragment.arguments = bundle
+                    fragmentTransaction.replace(R.id.frame_layout, purchaseFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
                 }
@@ -119,14 +121,13 @@ class ProductFragment : Fragment() {
             }
         }
 
-
-        return view
+        return productView
     }
 
-    fun storeSharePref(id: String,name: String) {
+    fun storeSharePref(code:String,id: String) {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
-        editor?.putString(id, name)
+        editor?.putString(code, id)
         editor?.apply()
     }
 
