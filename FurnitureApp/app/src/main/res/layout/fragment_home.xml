@@ -61,24 +61,10 @@
         android:layout_height="450dp"
         android:layout_below="@+id/welcome"
         android:layout_margin="5dp"
+        android:background="@drawable/border"
          />
 
-<!--    <TextView-->
-<!--        android:id="@+id/new_arrival"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/home_image"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:text="New Arrival"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textStyle="bold" />-->
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_below="@+id/new_arrival"-->
-<!--        android:layout_margin="10dp" />-->
 
         </RelativeLayout>
     </LinearLayout>

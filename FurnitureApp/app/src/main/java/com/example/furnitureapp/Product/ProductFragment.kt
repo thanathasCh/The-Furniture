@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.Purchase.PurchaseFragment
@@ -40,7 +41,7 @@ class ProductFragment : Fragment() {
         productView = inflater.inflate(R.layout.fragment_product, container, false)
 
         val back = productView.findViewById<View>(R.id.back_product_btn)
-        val img = productView.findViewById<View>(R.id.prod_img) as ImageView
+        val img = productView.findViewById<View>(R.id.prod_img) as SliderImage
         val addToCart = productView.findViewById<View>(R.id.add_to_cart)
         val purchase = productView.findViewById<View>(R.id.purchase)
 //        clearSharePref()
@@ -59,11 +60,8 @@ class ProductFragment : Fragment() {
         productView.item_price.text = price.toString()
         productView.item_available.text = if (available == true) "Yes" else "No"
         productView.item_material.text = material.toString()
-        images!![0].let {
-            Glide.with(context!!)
-                .load(it)
-                .placeholder(R.drawable.loading)
-                .into(img)
+        if (images != null) {
+            img.setItems(images)
         }
 
 

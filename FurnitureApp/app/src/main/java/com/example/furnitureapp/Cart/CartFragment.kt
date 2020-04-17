@@ -34,24 +34,15 @@ class CartFragment : Fragment() {
     var currentKey: String = ""
     var cartProduct = ArrayList<ProductViewModel>()
     var categories = CategoriesController()
-//    lateinit var recyclerView: RecyclerView
-//    lateinit var adapter: CartAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        //TODO
         getAllSharePref()
-//        e("global: ", getSharePref("t1"))
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         val arrayKey = currentKey.split(",")
-//        val arrayKeyAfterSplit = ArrayList<String>()
-//        for (i in arrayKey){
-//            var split = i.split("=")
-//            arrayKeyAfterSplit.add(split[0])
-//        }
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
         val delete = view.findViewById<View>(R.id.delete_cart) as ImageView
@@ -156,13 +147,6 @@ class CartFragment : Fragment() {
         editor?.commit()
     }
 
-
-
-//    fun refreshAdapter() {
-//        adapter = CartAdapter(cater, R.layout., dateList, selectIndex)
-//        countryListView.adapter = adapter
-//        adapter.notifyDataSetChanged()
-//    }
 
 
 }

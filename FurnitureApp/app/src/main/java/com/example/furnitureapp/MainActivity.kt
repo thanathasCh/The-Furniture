@@ -138,10 +138,7 @@ class MainActivity : AppCompatActivity() {
                             item_price.text = it.Price.toString()
                             item_available.text = if (it.IsActive) "Yes" else "No"
                             item_material.text = it.Material
-                            Glide.with(this)
-                                .load(it.ImageUrls[0])
-                                .placeholder(R.drawable.loading)
-                                .into(prod_img)
+                            prod_img.setItems(it.ImageUrls)
                         }
                     }
                     main_srl.isRefreshing = false
