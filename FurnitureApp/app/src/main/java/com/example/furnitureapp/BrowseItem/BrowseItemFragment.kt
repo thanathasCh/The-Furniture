@@ -48,48 +48,7 @@ class BrowseItemFragment : Fragment(),
             MainActivity.pageId = R.id.search_icon
             fragmentManager.popBackStack()
         }
-//        swipeRefresh.setOnRefreshListener {
-//            when (MainActivity.pageId) {
-//                R.id.home -> {
-////                    AnnouncementRepository(this).fetchAnnouncement(true) {
-////                        Log.d("DEBUG", it.toString())
-////                    }
-//                    swipeRefresh.isRefreshing = false
-//                }
-//                R.id.cart -> {
-//                    swipeRefresh.isRefreshing = false
-//                }
-//                R.id.search_icon -> {
-//                    this!!.activity?.let {
-//                        CategoryRepository(it).fetchCategory(true) {
-//                            MainActivity.categories.clear()
-//                            MainActivity.categories.addAll(it)
-//                            CategoriesFragment.categoryAdapter.notifyDataSetChanged()
-//                            swipeRefresh.isRefreshing = false
-//                        }
-//                    }
-//                }
-//                R.layout.fragment_browse_item -> {
-//                    ProductApi().getProductByCategoryId(MainActivity.categoryId) {
-//                        MainActivity.products.clear()
-//                        MainActivity.products.addAll(it)
-//                        BrowseItemFragment.browseAdapter.notifyDataSetChanged()
-//                        swipeRefresh.isRefreshing = false
-//                    }
-//                }
-//                R.layout.fragment_product -> {
-//                    ProductApi().getProductById(MainActivity.productId) {
-//                        Log.d("DEBUG", it.toString())
-//                    }
-//                    swipeRefresh.isRefreshing = false
-//                }
-//                else -> {
-//                    swipeRefresh.isRefreshing = false
-//                }
-//            }
-//        }
-//
-//        mainSrl = swipeRefresh
+
 
 
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recyclerview_list_of_product) as RecyclerView

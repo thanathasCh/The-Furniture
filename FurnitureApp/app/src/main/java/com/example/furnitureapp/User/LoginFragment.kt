@@ -43,6 +43,7 @@ class LoginFragment : Fragment() {
         val login = view.findViewById<View>(R.id.login_btn)
 
 
+
         create_new.setOnClickListener {
             val createnew = CreateNewFragment()
             val fragmentManager = activity!!.supportFragmentManager

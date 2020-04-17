@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.BrowseItem.BrowseItemFragment
 import com.example.furnitureapp.MainActivity
 import com.example.furnitureapp.Purchase.PurchaseFragment
@@ -37,9 +38,8 @@ class ProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_product, container, false)
-
         val back = view.findViewById<View>(R.id.back_product_btn)
-        val img = view.findViewById<View>(R.id.prod_img) as ImageView
+        val img = view.findViewById<View>(R.id.prod_img) as SliderImage
         val addToCart = view.findViewById<View>(R.id.add_to_cart)
         val purchase = view.findViewById<View>(R.id.purchase)
         var mApp = ProductController()
@@ -58,11 +58,8 @@ class ProductFragment : Fragment() {
         view.item_price.text = price.toString()
         view.item_available.text = available.toString()
         view.item_material.text = material.toString()
-        images!![0].let {
-            Glide.with(context!!)
-                .load(it)
-                .placeholder(R.drawable.loading)
-                .into(img)
+        if (images != null) {
+            img.setItems(images)
         }
 
 
@@ -73,7 +70,9 @@ class ProductFragment : Fragment() {
         }
         addToCart.setOnClickListener {
             if (id != null) {
-                storeSharePref(id)
+                if (code != null) {
+                    storeSharePref(code,id)
+                }
             }
         }
 
@@ -124,18 +123,18 @@ class ProductFragment : Fragment() {
         return view
     }
 
-    fun storeSharePref(name: String) {
+    fun storeSharePref(id: String,name: String) {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
-        editor?.putString(name, name)
+        editor?.putString(id, name)
         editor?.apply()
     }
 
-//    fun clearSharePref() {
-//        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-//        val editor = sharedPref?.edit()?.clear()
-//        editor?.apply()
-//    }
+    fun clearSharePref() {
+        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()?.clear()
+        editor?.apply()
+    }
 
 
 }
