@@ -70,8 +70,6 @@ class CartFragment : Fragment() {
         }
 
 
-
-
         listOfProduct.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
         listOfProduct.adapter =

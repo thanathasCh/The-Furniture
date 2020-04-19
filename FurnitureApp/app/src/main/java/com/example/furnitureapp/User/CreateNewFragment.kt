@@ -15,7 +15,9 @@ import com.example.furnitureapp.allUser
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
+import kotlinx.android.synthetic.main.fragment_create_new.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
+import kotlinx.android.synthetic.main.fragment_create_new.view.female
 import kotlinx.android.synthetic.main.fragment_create_new.view.male
 
 /**
@@ -44,10 +46,12 @@ class CreateNewFragment : Fragment() {
         }
 
         view.male.setOnClickListener {
+            view.male.setBackgroundResource(R.drawable.border)
             isMale = true
             view.female.setBackgroundResource(R.drawable.grey_border)
         }
         view.female.setOnClickListener {
+            view.female.setBackgroundResource(R.drawable.border)
             isMale = false
             view.male.setBackgroundResource(R.drawable.grey_border)
         }
