@@ -34,21 +34,32 @@ class Address{
 data class AddressViewModel (
     var Id: String? = null,
     var UserId: String? = null,
+    var Name: String? = null,
+    var TelephoneNumber: String? = null,
     var Address: String? = null,
     var Road: String? = null,
-    var SubDistrict: String? = null,
+    var Subdistrict: String? = null,
     var District: String? = null,
-    var Provice: String? = null
+    var Province: String? = null,
+    var Type: Int = 0
 ) {
+    @Exclude
+    fun getFullAddress(): String {
+        return "${if(Type == 0) "Home" else "Work"}, $Address, $Road $District $Subdistrict, $Province"
+    }
+
     @Exclude
     fun toMap(): Map<String, Any?>{
         return mapOf(
             "UserId" to UserId,
+            "Name" to Name,
+            "TelephoneNumber" to TelephoneNumber,
             "Address" to Address,
             "Road" to Road,
-            "SubDistrict" to SubDistrict,
+            "SubDistrict" to Subdistrict,
             "District" to District,
-            "Province" to Provice
+            "Province" to Province,
+            "Type" to Type
             )
     }
 }

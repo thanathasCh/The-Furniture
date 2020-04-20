@@ -46,18 +46,18 @@
         android:textColor="@color/black"
         android:layout_below="@id/edit_back"/>
 
-    <EditText
-        android:id="@+id/edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/address_info"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/border"
-        android:fontFamily="@font/custom"
-        android:hint="Name..."
-        android:paddingLeft="10dp" />
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@id/address_info"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="Address"
+            android:paddingLeft="10dp" />
 
     <EditText
         android:id="@+id/edit_phone"
@@ -81,6 +81,19 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/edit_address"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border"
+            android:fontFamily="@font/custom"
+            android:hint="Address"
+            android:paddingLeft="10dp" />
+
+        <EditText
             android:id="@+id/edit_road"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -92,19 +105,6 @@
             android:background="@drawable/border"
             android:fontFamily="@font/custom"
             android:hint="Road"
-            android:paddingLeft="10dp" />
-
-        <EditText
-            android:id="@+id/edit_house"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/border"
-            android:fontFamily="@font/custom"
-            android:hint="House"
             android:paddingLeft="10dp" />
     </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.graphics.Color.parseColor
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.models.Address
+import com.example.furnitureapp.models.AddressViewModel
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.userIndex
+import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_address.*
 
@@ -26,6 +30,10 @@ import kotlinx.android.synthetic.main.fragment_address.*
 class AddressFragment : Fragment(),
     Communicator {
 
+    companion object Address {
+        val addresses = ArrayList<AddressViewModel>()
+        lateinit var addressAdapter: AddressAdapter
+    }
 
     var currentUserAddress = ArrayList<Address>()
     var adapter: AddressAdapter? = null
@@ -41,15 +49,28 @@ class AddressFragment : Fragment(),
         var view =  inflater.inflate(R.layout.fragment_address, container, false)
         var back = view.findViewById<View>(R.id.address_back) as ImageView
         var add = view.findViewById<View>(R.id.add_address) as ImageView
-        getAddress()
+        MainActivity.pageId = R.layout.fragment_address
+        val listOfAddress =  view.findViewById(R.id.recycler_view_address) as RecyclerView
+        listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
+
+        MainActivity.mainSrl.isRefreshing = true
+        AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+            addresses.addAll(it)
+            addressAdapter = AddressAdapter(addresses, this)
+            listOfAddress.adapter = addressAdapter
+            addressAdapter.notifyDataSetChanged()
+            MainActivity.mainSrl.isRefreshing = false
+        }
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
+            MainActivity.pageId = R.id.user
             fragmentManager.popBackStack()
         }
+
         add.setOnClickListener {
             val bundle = Bundle()
-            bundle.putBoolean("add",true)
+            bundle.putBoolean("add", true)
             val editAddress = EditAddressFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -58,10 +79,6 @@ class AddressFragment : Fragment(),
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
-
-        val listOfAddress =  view.findViewById<RecyclerView>(R.id.recycler_view_address) as RecyclerView
-        listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
-        listOfAddress.adapter = AddressAdapter(currentUserAddress,this)
 
         val swipeHandler = object : SwipeToDeleteCallback(this.activity!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -72,25 +89,15 @@ class AddressFragment : Fragment(),
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recycler_view_address)
 
-
         return view
     }
-    fun getAddress(){
-        currentUserAddress.clear()
-        for (i in allUser[userIndex!!].addressList){
-            if (allUser[userIndex!!].id.equals(i.uid)){
-                currentUserAddress.add(i)
-            }
-        }
-    }
-
 
     override fun clickToSelect(holder: View, id: String) {
-        for(i in currentUserAddress){
-            i.isCurrentAddress = i.id.equals(id)
-        }
-        val fragment = activity!!.supportFragmentManager
-        fragment.popBackStack()
+//        for(i in currentUserAddress){
+//            i.isCurrentAddress = i.id.equals(id)
+//        }
+//        val fragment = activity!!.supportFragmentManager
+//        fragment.popBackStack()
     }
 
     override fun clickListener(holder: View, id: String?) {
@@ -108,6 +115,4 @@ class AddressFragment : Fragment(),
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
-
-
 }

@@ -14,6 +14,7 @@ import com.example.furnitureapp.services.addressData
 import com.example.furnitureapp.services.addressList
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.models.Address
+import com.example.furnitureapp.services.AlertBuilder
 import kotlinx.android.synthetic.main.fragment_edit_address.view.*
 
 /**
@@ -36,7 +37,7 @@ class EditAddressFragment : Fragment(){
         var name = view.edit_name
         var phone = view.edit_phone
         var road = view.edit_road
-        var house = view.edit_house
+        var house = view.edit_address
         var subDistrict = view.edit_subdistrict
         var district = view.edit_district
         var province = view.edit_province
@@ -69,9 +70,9 @@ class EditAddressFragment : Fragment(){
             view.edit_office.setBackgroundResource(R.drawable.border)
         }
 
-
         //Save Button
         view.edit_save.setOnClickListener {
+            val alertBuilder = AlertBuilder()
             var  check = checkAddress(name,phone,road,house,subDistrict,district,province,currentType,isAdd)
             if (check){
                 val fragmentManager = activity!!.supportFragmentManager
@@ -85,11 +86,8 @@ class EditAddressFragment : Fragment(){
 
                 }
                 builder.show()
-            }else{
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Please Fill All the Information")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->  }
-                builder.show()
+            } else {
+                alertBuilder.showOkAlert(getString(R.string.require_information))
             }
         }
 
@@ -110,7 +108,6 @@ class EditAddressFragment : Fragment(){
 
         //Add Button
 
-
         //Back Button
         back.setOnClickListener {
             isAdd = false
@@ -118,26 +115,22 @@ class EditAddressFragment : Fragment(){
             fragmentManager.popBackStack()
         }
 
-
-
         return view
     }
     fun checkAddress(name:EditText,phone:EditText,road:EditText,house:EditText,subDistrict:EditText,district:EditText,province:EditText,currentType:String,isAdd:Boolean):Boolean{
-        var check  = false
-        if (isAdd){
-            var currentID = 0
-            if (addressList.size == 0){
-                currentID = 0
-            }else {
-                currentID = addressList[addressList.size - 1].id?.substring(1, 2)?.toInt()?.plus(1)!!
-            }
+        var check = false
+
+        if (isAdd) {
+            val currentID = if (addressList.size == 0) 0 else addressList[addressList.size - 1].id?.substring(1, 2)?.toInt()?.plus(1) ?: 0
+
             var currentName = ""
             var currentPhone = ""
             var currentRoad = ""
             var currentHouse = ""
-            var currentSubstrict = ""
+            var currentSubdistrict = ""
             var currentDistrict = ""
             var currentProvince = ""
+
             if (name.text.toString() != "") {
                 currentName = name.text.toString()
                 check = true
@@ -163,7 +156,7 @@ class EditAddressFragment : Fragment(){
                 check = false
             }
             if (subDistrict.text.toString() != "") {
-                currentSubstrict = subDistrict.text.toString()
+                currentSubdistrict = subDistrict.text.toString()
                 check = true
             } else {
                 check = false
@@ -185,9 +178,9 @@ class EditAddressFragment : Fragment(){
             } else {
                 check = false
             }
-            if (check){
+            if (check) {
                 addressList.add(Address("a$currentID",
-                    allUser[currentIndex].id!!,currentType,currentName,currentRoad,currentHouse,currentSubstrict,currentDistrict,currentProvince,false,currentPhone))
+                    allUser[currentIndex].id!!, currentType, currentName, currentRoad, currentHouse, currentSubdistrict, currentDistrict, currentProvince,false, currentPhone))
             }
         }else {
             if (name.text.toString() != "") {

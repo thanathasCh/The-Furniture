@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.furnitureapp.R
@@ -15,13 +16,19 @@ import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
+import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
 //import com.example.furnitureapp.data.api.Examples
 import com.example.furnitureapp.models.*
+import com.example.furnitureapp.views.address.AddressFragment
+import com.example.furnitureapp.views.user.UserSettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
+import kotlinx.android.synthetic.main.fragment_user_setting.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,8 +73,7 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.cart -> {
-                    pageId =
-                        R.id.cart
+                    pageId = R.id.cart
                     cartFragment = CartFragment()
                     supportFragmentManager
                         .beginTransaction()
@@ -93,7 +99,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
-
             }
             true
         }
@@ -136,6 +141,28 @@ class MainActivity : AppCompatActivity() {
                             item_available.text = if (it.IsActive) "Yes" else "No"
                             item_material.text = it.Material
                             prod_img.setItems(it.ImageUrls)
+                        }
+                    }
+                    main_srl.isRefreshing = false
+                }
+                R.id.user_account -> {
+                    val user = UserSharedPreference(this).retrieveUser()
+                    UserApi().getUser(user.Id ?: "") {
+                        with(UserSettingFragment.userSettingView) {
+                            welcome_txt.text = getString(R.string.greeting_user, it.FirstName, it.LastName)
+                            setting_name.text = it.getFullName()
+                            setting_phone.text = it.TelephoneNumber
+                            setting_email.text = it.Email
+                        }
+                    }
+                    main_srl.isRefreshing = false
+                }
+                R.id.img_setting_address -> {
+                    AddressRepository(this).fetchAddresses(true) {
+                        with (AddressFragment) {
+                            addresses.clear()
+                            addresses.addAll(it)
+                            addressAdapter.notifyDataSetChanged()
                         }
                     }
                     main_srl.isRefreshing = false

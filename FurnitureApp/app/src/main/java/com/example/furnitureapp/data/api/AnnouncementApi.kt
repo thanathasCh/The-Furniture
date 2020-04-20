@@ -1,6 +1,5 @@
 package com.example.furnitureapp.data.api
 
-import android.util.Log
 import com.example.furnitureapp.models.AnnouncementViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference

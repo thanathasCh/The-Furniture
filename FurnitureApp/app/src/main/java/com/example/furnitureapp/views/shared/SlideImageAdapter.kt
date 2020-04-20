@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.furnitureapp.R
-import com.example.furnitureapp.views.address.ImageModel
 import java.util.ArrayList
 
 /**

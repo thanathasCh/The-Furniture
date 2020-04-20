@@ -3,7 +3,7 @@ package com.example.furnitureapp.data.api
 import android.util.Log
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.data.local.UserSharedPreference
-import com.example.furnitureapp.models.UserViewMode
+import com.example.furnitureapp.models.UserViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -14,7 +14,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             .get().addOnCompleteListener {
                 if (it.isSuccessful && it.result != null && !it.result!!.isEmpty) {
                     for (item in it.result!!) {
-                        val user = item.toObject(UserViewMode::class.java)
+                        val user = item.toObject(UserViewModel::class.java)
                         user.Id = item.id
                         UserSharedPreference(MainActivity.mainThis).saveUser(user)
                         callback(true)
@@ -23,16 +23,31 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
                     callback(false)
                 }
             }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 
-    fun createAccount(user: UserViewMode, callback: (Boolean) -> Unit) {
-        db.add(user.toMap())
-            .addOnSuccessListener {
-                Log.d("DEBUG", "DONE WITH ${it.id}")
-                callback(true)
+    fun isDuplicated(userName: String, callback: (Boolean) -> Unit) {
+        db.whereEqualTo("UserName", userName)
+            .get()
+            .addOnCompleteListener {
+                val a = !it.result!!.isEmpty
+                callback((it.isSuccessful && it.result != null && !it.result!!.isEmpty))
             }
             .addOnFailureListener {
-                Log.d("DEBUG", it.toString())
+                callback(false)
+            }
+    }
+
+    fun createAccount(user: UserViewModel, callback: (Boolean) -> Unit) {
+        db.add(user.toMap())
+            .addOnSuccessListener {
+                getUser(user.Id ?: "") {
+                    callback(true)
+                }
+            }
+            .addOnFailureListener {
                 callback(false)
             }
     }
@@ -68,6 +83,22 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
             .addOnFailureListener {
                 callback(false)
+            }
+    }
+
+    fun getUser(userId: String, callback: (UserViewModel) -> Unit) {
+        db.document(userId)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val user = it.result!!.toObject(UserViewModel::class.java) ?: UserViewModel()
+                    user.Id = userId
+                    UserSharedPreference(MainActivity.mainThis).saveUser(user)
+                    callback(user)
+                }
+            }
+            .addOnFailureListener {
+                callback(UserSharedPreference(MainActivity.mainThis).retrieveUser())
             }
     }
 
@@ -111,7 +142,4 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
                 callback(false)
             }
     }
-
-    fun updateAddress() {}
-
 }

@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.Address
+import com.example.furnitureapp.models.AddressViewModel
 import kotlinx.android.synthetic.main.address_cell.view.*
 
 class AddressAdapter(
-    val address: ArrayList<Address>,
+    val address: ArrayList<AddressViewModel>,
     val context: AddressFragment
 ) : RecyclerView.Adapter<AddressAdapter.CustomViewHolder>() {
 
@@ -38,30 +39,22 @@ class AddressAdapter(
         return address.size
     }
 
-
-
     fun removeAt(position: Int) {
         address.removeAt(position)
         notifyItemRemoved(position)
     }
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
-        holder.itemView.address_name.text  = address.name
-        holder.itemView.address_phone_number.text = address.phoneNumber
-        holder.itemView.address_detail.text = address.type+", "+ address.road+", "+address.house+", "+address.sub_district+", "+address.district+", "+address.province
+        holder.itemView.address_name.text  = address.Name
+        holder.itemView.address_phone_number.text = address.TelephoneNumber
+        holder.itemView.address_detail.text = address.getFullAddress()
         holder.itemView.btn_edit.setOnClickListener {
-            clickHandler.clickWithDataTransfer(it,address.id!!)
+            clickHandler.clickWithDataTransfer(it, address.Id ?: "")
         }
         holder.itemView.address_name.setOnClickListener {
-            clickHandler.clickToSelect(it,address.id!!)
+            clickHandler.clickToSelect(it,address.Id ?: "")
         }
-
-
-
-
-
     }
-
 
     class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

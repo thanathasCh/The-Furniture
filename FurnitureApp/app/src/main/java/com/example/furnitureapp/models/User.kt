@@ -32,7 +32,7 @@ class User{
     }
 }
 
-data class UserViewMode (
+data class UserViewModel (
     var Id: String? = null,
     var FirstName: String? = null,
     var LastName: String? = null,
@@ -42,8 +42,6 @@ data class UserViewMode (
     var Email: String? = null,
     var TelephoneNumber: String? = null,
     var ImageUrl: String? = null,
-    var Address1: String? = null,
-    var Address2: String? = null,
     var CreatedAt: Date? = null,
     var UpdatedAt: Date? = null
 ) {
@@ -58,8 +56,6 @@ data class UserViewMode (
             "Email" to Email,
             "TelephoneNumber" to TelephoneNumber,
             "ImageUrl" to ImageUrl,
-            "Address1" to Address1,
-            "Address2" to Address2,
             "CreatedAt" to CreatedAt,
             "UpdatedAt" to UpdatedAt
         )

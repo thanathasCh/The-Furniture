@@ -1,4 +1,4 @@
-package com.example.furnitureapp.views.address
+package com.example.furnitureapp.views.shared
 
 /**
  * Created by Parsania Hardik on 03-Jan-17.

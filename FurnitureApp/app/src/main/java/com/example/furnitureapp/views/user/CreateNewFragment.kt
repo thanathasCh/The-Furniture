@@ -10,14 +10,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.furnitureapp.R
-import com.example.furnitureapp.services.addressList
-import com.example.furnitureapp.services.allUser
+import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.User
+import com.example.furnitureapp.models.UserViewModel
+import com.example.furnitureapp.services.*
+import com.example.furnitureapp.views.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.female
 import kotlinx.android.synthetic.main.fragment_create_new.view.male
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -57,112 +61,77 @@ class CreateNewFragment : Fragment() {
 
         //Action Button
         view.create_new_create_btn.setOnClickListener{
-            var success = 0
+
             val userName = view.user_name.text.toString()
-            val password = view.password.text.toString()
+            val password = view.password.text.toString().encrypt()
+            val confirmPassowrd = view.reenter_password.text.toString().encrypt()
+            val passwordLength = view.password.text.toString().length
             val firstName = view.first_name.text.toString()
             val lastName = view.last_name.text.toString()
             val email = view.email.text.toString()
-            val phoneNumber = view.phone_number.text.toString()
+            val telephoneNumber = view.phone_number.text.toString()
             val house = view.create_new_house_number.text.toString()
             val road = view.create_new_road.text.toString()
             val subDistrict = view.create_new_subdistrict.text.toString()
             val district = view.create_new_district.text.toString()
             val province = view.create_new_province.text.toString()
 
-            for (i in allUser){
-                if (userName == i.UserName){
-                    showAlert("User Name is Already Taken!")
-                } else if (view.user_name.text.toString().isEmpty()){
-                    showAlert("Please fill User Name")
-                } else{
-                    success += 1
-                }
-            }
-            if (password.length < 8){
-                showAlert("Password Must Be More Than 8 Character!")
-            }else{
-                if (view.password.text.toString() == view.reenter_password.text.toString()){
-                    success += 1
-                }else{
-                    showAlert("Password is Not Match!")
+            val now = Date()
+            val user = UserViewModel (
+                "",
+                firstName,
+                lastName,
+                0,
+                userName,
+                password,
+                email,
+                telephoneNumber,
+                "",
+                now,
+                now
+            )
 
-                }
-            }
-            if (isMale?.equals(null)!!){
-                showAlert("Please Select Gender!")
-            } else{
-                success += 1
-            }
-            if (firstName.isNotEmpty()){
-                success += 1
-            }
-            if(lastName.isNotEmpty()){
-                success += 1
-            }
-            if (email.isNotEmpty()){
-                success += 1
-            }
-            if (phoneNumber.isNotEmpty()){
-                success += 1
-            }
-            if (house.isNotEmpty()){
-                success += 1
-            }
-            if (road.isNotEmpty()){
-                success += 1
-            }
-            if (subDistrict.isNotEmpty()){
-                success += 1
-            }
-            if (district.isNotEmpty()){
-                success += 1
-            }
-            if (province.isNotEmpty()){
-                success += 1
-            }
-            if (success  == 12){
-                var id = 2
-                var addressID = 1
-                var gender = ""
-                var newUser: User? = null
-                var newAddress = ArrayList<Address>()
-                var newPurchaseList = ArrayList<Product>()
-                if (!isMale!!){
-                    gender = "Female"
-                }else{
-                    gender = "Male"
-                }
-                addressList.add(Address("a$addressID",
-                    "u$id","Home",firstName,road,house,subDistrict,district,province,true,phoneNumber))
-                newUser = User(
-                    "u$id",gender,firstName,lastName,userName,password,phoneNumber,email,
-                    addressList,newPurchaseList)
-                allUser.add(newUser)
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("New User Have Been Created")
-                builder.setPositiveButton("Login") { dialogInterface: DialogInterface?, i: Int ->
-                    for(i in allUser){
-                        e("All User", i.phoneNumber)
+            val alertBuilder = AlertBuilder()
+            val userApi = UserApi()
+
+            if (checkUser(user, passwordLength, confirmPassowrd)) {
+                userApi.isDuplicated(user.UserName ?: "") {
+                    if (!it) {
+                        userApi.createAccount(user) { result ->
+                            if (result) {
+                                alertBuilder.showOkAlert(getString(R.string.account_created)) {
+                                    val fragment = activity!!.supportFragmentManager
+                                    fragment.popBackStack()
+                                }
+                            } else {
+                                alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                            }
+                        }
+                    } else {
+                        alertBuilder.showOkAlert(getString(R.string.duplicate_username))
                     }
-                    newAddress.clear()
-                    val fragmentManager = activity!!.supportFragmentManager
-                    fragmentManager.popBackStack()
                 }
-                builder.show()
             }
         }
-
 
         return view
     }
-    fun showAlert(message:String){
-        val builder = AlertDialog.Builder(this.activity)
-        builder.setTitle(message)
-        builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+
+    private fun checkUser(user: UserViewModel, passwordLength: Int, confirmPassword: String): Boolean {
+        val alertBuilder = AlertBuilder()
+        if (user.UserName.isNullOrEmpty() || user.FirstName.isNullOrEmpty() || user.LastName.isNullOrEmpty()
+            || user.Password.isNullOrEmpty() || user.Email.isNullOrEmpty() || user.TelephoneNumber.isNullOrEmpty()) {
+            alertBuilder.showOkAlert(getString(R.string.require_information))
+        } else if (passwordLength < 8) {
+            alertBuilder.showOkAlert(getString(R.string.password_length))
+        } else if (!user.Password.equals(confirmPassword)) {
+            alertBuilder.showOkAlert(getString(R.string.password_not_match))
+        } else if (isEmailValid(user.Email)){
+            alertBuilder.showOkAlert(getString(R.string.email_invalid))
+        } else {
+            return true
         }
-        builder.show()
+
+        return false
     }
-
-
 }

@@ -29,7 +29,6 @@ class CategoriesFragment : Fragment(),
 //        productData)
     companion object Category {
         lateinit var categoryAdapter: CategoriesAdapter
-
     }
 
 

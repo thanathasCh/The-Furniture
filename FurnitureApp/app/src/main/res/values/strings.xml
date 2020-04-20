@@ -21,4 +21,9 @@
     <string name="save_confirm">Do you want to save?</string>
     <string name="delete_confirm">Do you want to delete?</string>
     <string name="require_information">Please fill all information.</string>
+    <string name="password_length">Please use password longer than 8 characters.</string>
+    <string name="password_not_match">Password not match.</string>
+    <string name="duplicate_username">Duplicate Username.</string>
+    <string name="account_created">Account has been created.</string>
+    <string name="email_invalid">Email is invalid.</string>
 </resources>

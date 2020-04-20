@@ -15,19 +15,18 @@ import kotlinx.android.synthetic.main.fragment_user_setting.view.*
  * A simple [Fragment] subclass.
  */
 class UserSettingFragment : Fragment() {
+    companion object UserSetting {
+        lateinit var userSettingView: View
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view =  inflater.inflate(R.layout.fragment_user_setting, container, false)
+        val view =  inflater.inflate(R.layout.fragment_user_setting, container, false)
 
         //Set View Info
-//        view.welcome_txt.text = "Hello, "+allUser[userIndex!!].firstName+" "+allUser[userIndex!!].lastName
-//        view.setting_name.text = allUser[userIndex!!].firstName+" "+allUser[userIndex!!].lastName
-//        view.setting_phone.text = allUser[userIndex!!].phoneNumber
-//        view.setting_email.text = allUser[userIndex!!].email
         val user = UserSharedPreference(MainActivity.mainThis).retrieveUser()
 
         with(view) {
@@ -36,8 +35,10 @@ class UserSettingFragment : Fragment() {
             setting_phone.text = user.TelephoneNumber
             setting_email.text = user.Email
         }
+
         //Button Action
         view.img_setting_address.setOnClickListener {
+            MainActivity.pageId = R.id.img_setting_address
             val address = AddressFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -45,6 +46,7 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
         view.img_setting_name.setOnClickListener {
             val userName = UserNameFragment()
             val fragmentManager = activity!!.supportFragmentManager
@@ -53,10 +55,13 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
         view.setting_back.setOnClickListener {
+            MainActivity.pageId = R.layout.fragment_user
             val fragment = activity!!.supportFragmentManager
             fragment.popBackStack()
         }
+
         view.img_setting_password.setOnClickListener {
             val password = PasswordSettingFragment()
             val fragmentManager = activity!!.supportFragmentManager
@@ -65,6 +70,7 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
         view.img_setting_email.setOnClickListener {
             val email = EmailSettingFragment()
             val fragmentManager = activity!!.supportFragmentManager
@@ -73,6 +79,7 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
         view.img_setting_phone.setOnClickListener {
             val phone = PhoneNumberFragment()
             val fragmentManager = activity!!.supportFragmentManager
@@ -82,6 +89,7 @@ class UserSettingFragment : Fragment() {
             fragmentTransaction.commit()
         }
 
+        userSettingView = view
         return view
     }
 

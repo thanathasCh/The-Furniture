@@ -2,7 +2,7 @@ package com.example.furnitureapp.data.local
 
 import android.content.Context
 import com.example.furnitureapp.services.fromJson
-import com.example.furnitureapp.models.UserViewMode
+import com.example.furnitureapp.models.UserViewModel
 import com.google.gson.Gson
 
 class UserSharedPreference(private val context: Context) {
@@ -27,7 +27,7 @@ class UserSharedPreference(private val context: Context) {
             .edit().clear().apply()
     }
 
-    fun saveUser(user: UserViewMode) {
+    fun saveUser(user: UserViewModel) {
         val userJson = Gson().toJson(user)
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putString(userInfo, userJson)
@@ -35,16 +35,16 @@ class UserSharedPreference(private val context: Context) {
         }
     }
 
-    fun retrieveUser(): UserViewMode {
+    fun retrieveUser(): UserViewModel {
         val userJson =
             context.getSharedPreferences(
                 sharedPreferenceKey,
                 Context.MODE_PRIVATE).getString(userInfo, "")
 
         return if (userJson.isNullOrEmpty()) {
-            UserViewMode()
+            UserViewModel()
         } else {
-            Gson().fromJson<UserViewMode>(userJson)
+            Gson().fromJson<UserViewModel>(userJson)
         }
     }
 }

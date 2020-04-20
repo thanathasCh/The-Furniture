@@ -27,7 +27,7 @@ class UserFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user, container, false)
-
+        MainActivity.pageId = R.id.user
         val logout = view.findViewById<View>(R.id.logout)
         val account = view.findViewById<View>(R.id.user_account) as EditText
         var purchaseList = view.findViewById<View>(R.id.user_purchase_list) as EditText
@@ -36,6 +36,7 @@ class UserFragment : Fragment() {
 
         // Account Button
         account.setOnClickListener {
+            MainActivity.pageId = R.id.user_account
             val setting = UserSettingFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
