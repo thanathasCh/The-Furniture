@@ -6,7 +6,7 @@
     android:fillViewport="true"
     android:scrollbars="none"
     android:background="@color/background"
-    tools:context=".User.LoginFragment">
+    tools:context=".views.user.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

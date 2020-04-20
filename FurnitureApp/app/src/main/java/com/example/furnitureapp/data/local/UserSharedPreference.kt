@@ -1,7 +1,7 @@
 package com.example.furnitureapp.data.local
 
 import android.content.Context
-import com.example.furnitureapp.fromJson
+import com.example.furnitureapp.services.fromJson
 import com.example.furnitureapp.models.UserViewMode
 import com.google.gson.Gson
 
@@ -10,14 +10,14 @@ class UserSharedPreference(private val context: Context) {
     private val isLogin = "Logged"
     private val userInfo = "UserInfo"
 
-    fun loggedIn() {
+    fun logIn() {
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putBoolean(isLogin, true)
             apply()
         }
     }
 
-    fun isLogged(): Boolean {
+    fun isLogin(): Boolean {
         return context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
             .getBoolean(isLogin, false)
     }

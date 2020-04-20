@@ -50,7 +50,6 @@ data class UserViewMode (
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "Id" to Id,
             "FirstName" to FirstName,
             "LastName" to LastName,
             "Gender" to Gender,

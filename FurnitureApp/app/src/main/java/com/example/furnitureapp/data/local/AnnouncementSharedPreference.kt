@@ -3,7 +3,7 @@ package com.example.furnitureapp.data.local
 import android.content.Context
 import com.example.furnitureapp.models.AnnouncementViewModel
 import com.google.gson.Gson
-import  com.example.furnitureapp.fromJson
+import  com.example.furnitureapp.services.fromJson
 
 class AnnouncementSharedPreference(private val context: Context) {
     private val sharedPreferenceKey = "Announcement"

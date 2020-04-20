@@ -32,7 +32,7 @@ class AnnouncementRepository(private val context: Context) {
             Context.MODE_PRIVATE).getString("AllAnnouncement", "")!!.isNotBlank()
     }
 
-    fun saveAnnouncement(announcements: ArrayList<AnnouncementViewModel>) {
+    private fun saveAnnouncement(announcements: ArrayList<AnnouncementViewModel>) {
         AnnouncementSharedPreference(context).saveAnnouncements(announcements)
     }
 }

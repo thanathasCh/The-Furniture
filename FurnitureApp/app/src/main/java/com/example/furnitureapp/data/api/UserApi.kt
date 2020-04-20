@@ -59,9 +59,17 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         user.Password = newPassword
 
         db.document(user.Id ?: "").update("Password", newPassword)
-
-        userPreference.saveUser(user)
-        callback(true)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    userPreference.saveUser(user)
+                    callback(true)
+                } else {
+                     callback(false)
+                }
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 
     fun updateTelephoneNumber(telephoneNumber: String, callback: (Boolean) -> Unit) {
@@ -71,9 +79,18 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         user.TelephoneNumber = telephoneNumber
 
         db.document(user.Id ?: "").update("TelephoneNumber", telephoneNumber)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    userPreference.saveUser(user)
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
 
-        userPreference.saveUser(user)
-        callback(true)
     }
 
     fun updateEmail(email: String, callback: (Boolean) -> Unit) {
@@ -83,9 +100,17 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         user.Email = email
 
         db.document(user.Id ?: "").update("Email", email)
-
-        userPreference.saveUser(user)
-        callback(true)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    userPreference.saveUser(user)
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 
     fun updateAddress() {}

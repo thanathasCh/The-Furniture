@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgrey"
-    tools:context=".User.UserFragment">
+    tools:context=".views.user.UserFragment">
 
     <RelativeLayout
         android:id="@+id/top_relative"

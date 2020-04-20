@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.custom.sliderimage.logic.SliderImage
-import com.example.furnitureapp.Categories.CategoriesFragment
+import com.example.furnitureapp.views.category.CategoriesFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 
 /**

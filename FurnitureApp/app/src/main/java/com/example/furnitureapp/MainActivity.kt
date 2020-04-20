@@ -4,37 +4,29 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bumptech.glide.Glide
-import com.example.furnitureapp.BrowseItem.BrowseItemFragment
-import com.example.furnitureapp.Cart.CartFragment
-import com.example.furnitureapp.Categories.CategoriesFragment
-import com.example.furnitureapp.Product.ProductFragment
-import com.example.furnitureapp.User.UnRegisterFragment
-import com.example.furnitureapp.User.UserFragment
+import com.example.furnitureapp.views.browseItem.BrowseItemFragment
+import com.example.furnitureapp.views.cart.CartFragment
+import com.example.furnitureapp.views.category.CategoriesFragment
+import com.example.furnitureapp.views.product.ProductFragment
+import com.example.furnitureapp.views.user.UnRegisterFragment
+import com.example.furnitureapp.views.user.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
-import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
-import com.example.furnitureapp.data.repository.AnnouncementRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
 //import com.example.furnitureapp.data.api.Examples
 import com.example.furnitureapp.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.cart_cell.view.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var homeFragment: HomeFragment
     lateinit var cartFragment: CartFragment
     lateinit var userFragment: UserFragment
-
-    var categories = CategoriesController()
 
     companion object Page {
         lateinit var mainThis: Context
@@ -51,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
+
         mainThis = this
         homeFragment = HomeFragment()
         supportFragmentManager
@@ -80,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.user -> {
                     pageId = 0
-                    if (UserSharedPreference(mainThis).isLogged()) {
+                    if (UserSharedPreference(mainThis).isLogin()) {
                         userFragment = UserFragment()
                         supportFragmentManager
                             .beginTransaction()

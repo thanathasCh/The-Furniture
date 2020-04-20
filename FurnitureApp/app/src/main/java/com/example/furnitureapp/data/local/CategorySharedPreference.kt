@@ -1,7 +1,7 @@
 package com.example.furnitureapp.data.local
 
 import android.content.Context
-import com.example.furnitureapp.fromJson
+import com.example.furnitureapp.services.fromJson
 import com.example.furnitureapp.models.CategoryViewModel
 import com.google.gson.Gson
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".User.PasswordSettingFragment">
+    tools:context=".views.user.PasswordSettingFragment">
 
     <ImageView
         android:id="@+id/email_setting_back"
