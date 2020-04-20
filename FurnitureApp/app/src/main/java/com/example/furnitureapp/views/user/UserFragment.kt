@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import com.example.furnitureapp.MainActivity
+import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.services.AlertBuilder
+
 //import com.example.furnitureapp.isLogin
 
 /**
@@ -44,31 +46,27 @@ class UserFragment : Fragment() {
 
         //Purchase List
         purchaseList.setOnClickListener {
-            val purchaseList = UserPurchaseListFragment()
+            val purchaseListFragment = UserPurchaseListFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, purchaseList)
+
+            fragmentTransaction.replace(R.id.frame_layout, purchaseListFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
 
-
-
         //Logout Button
         logout.setOnClickListener{
-            val builder = AlertDialog.Builder(this.activity)
-            builder.setTitle("Logout ?")
-            builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+            AlertBuilder().showYesNoAlert(getString(R.string.logout_confirm),
+            yesOpt = {
                 UserSharedPreference(MainActivity.mainThis).logOut()
                 val login = LoginFragment()
-                val fragmentManager = activity!!.supportFragmentManager
+                val  fragmentManager = activity!!.supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.frame_layout, login)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
-            }
-            builder.setNegativeButton("No") { dialogInterface: DialogInterface?, i: Int ->}
-            builder.show()
+            })
         }
 
         return view

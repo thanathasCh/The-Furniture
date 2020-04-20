@@ -10,7 +10,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.views.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_phone_number.*
 import kotlinx.android.synthetic.main.fragment_phone_number.view.*
+import kotlinx.android.synthetic.main.fragment_phone_number.view.verification_code
 
 /**
  * A simple [Fragment] subclass.
@@ -28,40 +32,40 @@ class PhoneNumberFragment : Fragment() {
         val random = ((Math.random() * 9000) + 1000).toInt()
 
         view.verification_code.setOnClickListener {
-            val builder = AlertDialog.Builder(this.activity)
-            builder.setTitle("Verification Code is $random")
-            builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int -> }
-            builder.show()
+            AlertBuilder().showOkAlert(getString(R.string.verification_code, random))
         }
+
         view.phone_setting_back.setOnClickListener {
             val fragment = activity!!.supportFragmentManager
             fragment.popBackStack()
         }
+
         view.phone_save.setOnClickListener {
-            val builder = AlertDialog.Builder(this.activity)
+            MainActivity.mainSrl.isRefreshing = true
+            val alertBuilder = AlertBuilder()
+
             if (newPhoneNumber.text.toString().length != 10) {
-                builder.setTitle("Invalid Phone Number")
-                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
+                alertBuilder.showOkAlert(getString(R.string.phone_number_incorrect)) {
+                    MainActivity.mainSrl.isRefreshing = false
+                }
             } else {
                 if (newVerification.text.toString() == random.toString()) {
                     UserApi().updateTelephoneNumber(newPhoneNumber.text.toString()) {
                         if (it) {
-                            builder.setTitle("Success")
-                            builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
+                            alertBuilder.showOkAlert(getString(R.string.success)) {
                                 val fragment = activity!!.supportFragmentManager
                                 fragment.popBackStack()
                             }
                         } else {
-                            builder.setTitle("Error Occurred")
-                            builder.setPositiveButton("Okay") {_: DialogInterface, _: Int -> }
+                            alertBuilder.showOkAlert(getString(R.string.error_occurred))
                         }
+                        MainActivity.mainSrl.isRefreshing = false
                     }
                 } else {
-                    builder.setTitle("Wrong Verification Code")
-                    builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
+                    alertBuilder.showOkAlert(getString(R.string.incorrect_code))
+                    MainActivity.mainSrl.isRefreshing = false
                 }
             }
-            builder.show()
         }
         return view
 

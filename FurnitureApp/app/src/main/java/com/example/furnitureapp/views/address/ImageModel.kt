@@ -5,13 +5,13 @@ package com.example.furnitureapp.views.address
  */
 class ImageModel {
 
-    private var image_drawable: Int = 0
+    private var imageDrawable: Int = 0
 
-    fun getImage_drawables(): Int {
-        return image_drawable
+    fun getImageDrawables(): Int {
+        return imageDrawable
     }
 
-    fun setImage_drawables(image_drawable: Int) {
-        this.image_drawable = image_drawable
+    fun setImageDrawable(image_drawable: Int) {
+        this.imageDrawable = image_drawable
     }
 }

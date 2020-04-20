@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.furnitureapp.views.address.AddressFragment
-import com.example.furnitureapp.MainActivity
+import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 import kotlinx.android.synthetic.main.fragment_user_setting.view.*

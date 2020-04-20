@@ -41,8 +41,7 @@ class EditAddressFragment : Fragment(){
         var district = view.edit_district
         var province = view.edit_province
         for (i in 0 until  addressData.size){
-            if(addressData[i].id.equals(id)&& allUser[i].id.equals(
-                    addressData[i].id)){
+            if(addressData[i].id.equals(id) && allUser[i].id.equals(addressData[i].id)) {
                 currentIndex = i
                 currentType = addressList[i].type.toString()
                 name.setText(addressList[i].name)

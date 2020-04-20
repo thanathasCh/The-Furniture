@@ -20,6 +20,7 @@ import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_cart.*
 
 /**
@@ -43,7 +44,7 @@ class CartFragment : Fragment() {
         val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
         val delete = view.findViewById<View>(R.id.delete_cart) as ImageView
-        var adapter = CartAdapter(cartProduct, this)
+        val adapter = CartAdapter(cartProduct, this)
         for (i in 0 until arrayKey.size - 1){
             ProductApi().getProductById(arrayKey[i].substring(5,arrayKey[i].length)){
                 if (!cartProduct.contains(it)){
@@ -61,7 +62,7 @@ class CartFragment : Fragment() {
                     adapter.removeAt(i)
                     e("key is: ",i.Code +"="+ i.Id.toString() )
                     removeKeySharePref(i.Code.toString())
-                    e("after delete:",returnSharePRef())
+                    e("after delete:", returnSharePref())
                 }
             }
         }
@@ -113,7 +114,7 @@ class CartFragment : Fragment() {
         return sharedPref?.getString(name, null).toString()
     }
 
-    fun getAllSharePref() {
+    private fun getAllSharePref() {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         var key = sharedPref?.all
 
@@ -124,7 +125,7 @@ class CartFragment : Fragment() {
             }
         }
     }
-    fun returnSharePRef():String{
+    private fun returnSharePref():String{
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         var key = sharedPref?.all
         var store = ""
@@ -135,7 +136,7 @@ class CartFragment : Fragment() {
         }
         return store
     }
-    fun removeKeySharePref(key:String){
+    private fun removeKeySharePref(key:String){
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
         editor?.remove(key)

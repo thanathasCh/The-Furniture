@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.catergories_cell.view.*
 
 
 class CategoriesAdapter(
-    val catergories: ArrayList<CategoryViewModel>,
+    private val categories: ArrayList<CategoryViewModel>,
     val context: CategoriesFragment
 ) : RecyclerView.Adapter<CategoriesAdapter.CustomViewHolder>() {
 
@@ -32,11 +32,11 @@ class CategoriesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return catergories.size
+        return categories.size
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val category = catergories[position]
+        val category = categories[position]
         holder.itemView.item_name.text = category.Name
         Glide.with(context)
             .load(category.ImageUrl)

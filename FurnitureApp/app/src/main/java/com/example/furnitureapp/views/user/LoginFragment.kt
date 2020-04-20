@@ -15,7 +15,11 @@ import android.view.inputmethod.InputMethodManager
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.encrypt
+import com.example.furnitureapp.services.hideKeyboard
+import com.example.furnitureapp.views.main.HomeFragment
+import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 /**
@@ -53,44 +57,36 @@ class LoginFragment : Fragment() {
 
         login.setOnClickListener {
             view.hideKeyboard()
-
+            val alertBuilder = AlertBuilder()
             MainActivity.mainSrl.isRefreshing = true
-            Log.d("DEBUG", view.login_password.text.toString().encrypt())
+
             UserApi().isExist(view.login_email.text.toString(), view.login_password.text.toString().encrypt()) {
-                val builder = AlertDialog.Builder(this.activity)
                 if (it) {
                     UserSharedPreference(MainActivity.mainThis).logIn()
-                    builder.setTitle("Login Successful")
 
                     if (isFromUser) {
-                        builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> val home = HomeFragment()
-                                val fragmentManager = activity!!.supportFragmentManager
-                                val fragmentTransaction = fragmentManager.beginTransaction()
-                                fragmentTransaction.replace(R.id.frame_layout, home)
-                                fragmentTransaction.addToBackStack(null)
-                                fragmentTransaction.commit()
+                        alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                            val home = HomeFragment()
+                            val fragmentManager = activity!!.supportFragmentManager
+                            val fragmentTransaction = fragmentManager.beginTransaction()
+                            fragmentTransaction.replace(R.id.frame_layout, home)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
                         }
                     } else {
-                        builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
-                            val fragmentManager = activity!!.supportFragmentManager
-                            fragmentManager.popBackStack()
+                        alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                            val fragment = activity!!.supportFragmentManager
+                            fragment.popBackStack()
                         }
                     }
                 } else {
-                    builder.setTitle("Wrong User or Password")
-                    builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
+                    alertBuilder.showOkAlert(getString(R.string.login_fail))
                 }
-                builder.show()
+
                 MainActivity.mainSrl.isRefreshing = false
             }
         }
 
-            return view
-        }
-    fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
+        return view
     }
-
-
-    }
+}

@@ -11,12 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.custom.sliderimage.logic.SliderImage
-import com.example.furnitureapp.MainActivity
+import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.purchase.PurchaseFragment
 import com.example.furnitureapp.R
 import com.example.furnitureapp.views.user.LoginFragment
-import com.example.furnitureapp.services.createShortToast
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.ToastBuilder
 import kotlinx.android.synthetic.main.fragment_product.view.*
 
 
@@ -48,7 +49,7 @@ class ProductFragment : Fragment() {
         val images = arguments?.getStringArrayList("image")
         val material = arguments?.getString("material")
         val available = arguments?.getBoolean("available")
-        Log.d("DEBUG", "here")
+
         productView.item_name.text = name
         productView.item_code.text = code
         productView.item_size.text = size
@@ -68,43 +69,31 @@ class ProductFragment : Fragment() {
         addToCart.setOnClickListener {
             if (id != null) {
                 storeSharePref(code.toString(), id)
-                createShortToast(
-                    MainActivity.mainThis,
-                    getString(R.string.added_cart)
-                )
+                ToastBuilder().createShortToast(getString(R.string.added_cart))
             }
         }
 
 
         purchase.setOnClickListener {
+            val alertBuilder = AlertBuilder()
+
             if (!available!!) {
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle(getString(R.string.product_not_available))
-                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
-                }
-                builder.show()
+                alertBuilder.showOkAlert(getString(R.string.product_not_available))
             } else {
                 MainActivity.mainSrl.isRefreshing = true
                 if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                    val builder = AlertDialog.Builder(this.activity)
-                    builder.setTitle(getString(R.string.login_required))
-                    builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                        val login =
-                            LoginFragment()
+                    alertBuilder.showYesNoAlert(getString(R.string.login_required),
+                    yesOpt = {
+                        val login = LoginFragment()
                         val fragmentManager = activity!!.supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_layout, login)
                         fragmentTransaction.addToBackStack(null)
                         fragmentTransaction.commit()
-                    }
-                    builder.setNegativeButton("No") { _: DialogInterface?, _: Int ->
-                    }
-                    builder.show()
-
+                    })
                 } else {
                     val bundle = Bundle()
-                    val purchaseFragment =
-                        PurchaseFragment()
+                    val purchaseFragment = PurchaseFragment()
                     bundle.putString("id", id)
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
@@ -121,7 +110,7 @@ class ProductFragment : Fragment() {
         return productView
     }
 
-    fun storeSharePref(code:String,id: String) {
+    private fun storeSharePref(code:String, id: String) {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
         editor?.putString(code, id)

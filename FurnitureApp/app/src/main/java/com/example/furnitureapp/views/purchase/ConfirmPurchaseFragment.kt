@@ -17,9 +17,11 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.productData
 import com.example.furnitureapp.services.userIndex
+import com.example.furnitureapp.views.main.HomeFragment
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
 
@@ -40,29 +42,32 @@ class ConfirmPurchaseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_confirm_purchase, container, false)
-        var back = view.findViewById<View>(R.id.con_back) as ImageView
-        var pick_up = view.findViewById<View>(R.id.pick_up) as Button
-        var delivery = view.findViewById<View>(R.id.delivery) as Button
-        var address = view.findViewById<View>(R.id.address) as RelativeLayout
-        var placeOrder = view.findViewById<View>(R.id.btn_confirm_place_order)
+        val back = view.findViewById<View>(R.id.con_back) as ImageView
+        val pickUp = view.findViewById<View>(R.id.pick_up) as Button
+        val delivery = view.findViewById<View>(R.id.delivery) as Button
+        val address = view.findViewById<View>(R.id.address) as RelativeLayout
+        val placeOrder = view.findViewById<View>(R.id.btn_confirm_place_order)
         currentPurchaseItem.clear()
 //        createAddress()
 
-        var id = arguments?.getString("id")
-        var amount = arguments?.getInt("amount")
-        var listOfID = arguments?.getStringArrayList("cart product")
-        var listOfAmount = arguments?.getIntegerArrayList("cart amount")
+        val id = arguments?.getString("id")
+        val amount = arguments?.getInt("amount")
+        val listOfID = arguments?.getStringArrayList("cart product")
+        val listOfAmount = arguments?.getIntegerArrayList("cart amount")
 
 
-        for (address in allUser[userIndex!!].addressList) {
-            e("address", address.isCurrentAddress.toString())
-            if (address.isCurrentAddress!!) {
-                view.customer.text = address.name
-                view.con_phone_number.text = address.phoneNumber
+        for (userAddress in allUser[userIndex!!].addressList) {
+            e("address", userAddress.isCurrentAddress.toString())
+            if (userAddress.isCurrentAddress!!) {
+                view.customer.text = userAddress.name
+                view.con_phone_number.text = userAddress.phoneNumber
                 view.con_address_detail.text =
-                    address.road + ", " + address.house + ", " + address.sub_district + ", " + address.district + ", " + address.province + "."
+                    userAddress.road + ", " + userAddress.house + ", " +
+                            userAddress.sub_district + ", " + userAddress.district +
+                            ", " + userAddress.province + "."
             }
         }
+
         //Find and Create the in confirm purchase
         if (id != null) {
             findProduct(id.toString(), amount!!)
@@ -91,28 +96,24 @@ class ConfirmPurchaseFragment : Fragment() {
 //                        j.available -= amount!!
 //                    }
 //                }
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Purchase Successful")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
-                    val home = HomeFragment()
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.frame_layout, home)
-                    fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.commit()
-
-                }
-                builder.show()
+            AlertBuilder().showOkAlert(getString(R.string.purchase_successful)) {
+                val home = HomeFragment()
+                val fragmentManager = activity!!.supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.frame_layout, home)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
             }
+        }
 
-        pick_up.setOnClickListener {
+        pickUp.setOnClickListener {
             isPickUp = true
             delivery.setBackgroundResource(R.drawable.grey_border)
-            pick_up.setBackgroundResource(R.drawable.border)
+            pickUp.setBackgroundResource(R.drawable.border)
         }
         delivery.setOnClickListener {
             isPickUp = false
-            pick_up.setBackgroundResource(R.drawable.grey_border)
+            pickUp.setBackgroundResource(R.drawable.grey_border)
             delivery.setBackgroundResource(R.drawable.border)
             address.setBackgroundResource(R.drawable.border)
         }

@@ -58,30 +58,31 @@ class CreateNewFragment : Fragment() {
         //Action Button
         view.create_new_create_btn.setOnClickListener{
             var success = 0
-            var userName = view.user_name.text.toString()
-            var password = view.password.text.toString()
-            var firstName = view.first_name.text.toString()
-            var lastName = view.last_name.text.toString()
-            var email = view.email.text.toString()
-            var phoneNumber = view.phone_number.text.toString()
-            var house = view.create_new_house_number.text.toString()
-            var road = view.create_new_road.text.toString()
-            var subDistrict = view.create_new_subdistrict.text.toString()
-            var district = view.create_new_district.text.toString()
-            var province = view.create_new_province.text.toString()
+            val userName = view.user_name.text.toString()
+            val password = view.password.text.toString()
+            val firstName = view.first_name.text.toString()
+            val lastName = view.last_name.text.toString()
+            val email = view.email.text.toString()
+            val phoneNumber = view.phone_number.text.toString()
+            val house = view.create_new_house_number.text.toString()
+            val road = view.create_new_road.text.toString()
+            val subDistrict = view.create_new_subdistrict.text.toString()
+            val district = view.create_new_district.text.toString()
+            val province = view.create_new_province.text.toString()
+
             for (i in allUser){
-                if (userName.equals(i.UserName)){
+                if (userName == i.UserName){
                     showAlert("User Name is Already Taken!")
-                }else if (view.user_name.text.toString().isEmpty()){
+                } else if (view.user_name.text.toString().isEmpty()){
                     showAlert("Please fill User Name")
-                }else{
+                } else{
                     success += 1
                 }
             }
             if (password.length < 8){
                 showAlert("Password Must Be More Than 8 Character!")
             }else{
-                if (view.password.text.toString().equals(view.reenter_password.text.toString())){
+                if (view.password.text.toString() == view.reenter_password.text.toString()){
                     success += 1
                 }else{
                     showAlert("Password is Not Match!")
@@ -90,34 +91,34 @@ class CreateNewFragment : Fragment() {
             }
             if (isMale?.equals(null)!!){
                 showAlert("Please Select Gender!")
-            }else{
+            } else{
                 success += 1
             }
-            if (!firstName.equals("")){
+            if (firstName.isNotEmpty()){
                 success += 1
             }
-            if(!lastName.equals("")){
+            if(lastName.isNotEmpty()){
                 success += 1
             }
-            if (!email.equals("")){
+            if (email.isNotEmpty()){
                 success += 1
             }
-            if (!phoneNumber.equals("")){
+            if (phoneNumber.isNotEmpty()){
                 success += 1
             }
-            if (!house.equals("")){
+            if (house.isNotEmpty()){
                 success += 1
             }
-            if (!road.equals("")){
+            if (road.isNotEmpty()){
                 success += 1
             }
-            if (!subDistrict.equals("")){
+            if (subDistrict.isNotEmpty()){
                 success += 1
             }
-            if (!district.equals("")){
+            if (district.isNotEmpty()){
                 success += 1
             }
-            if (!province.equals("")){
+            if (province.isNotEmpty()){
                 success += 1
             }
             if (success  == 12){

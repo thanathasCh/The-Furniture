@@ -17,6 +17,7 @@ import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.userIndex
+import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_address.*
 
 /**
@@ -58,12 +59,6 @@ class AddressFragment : Fragment(),
             fragmentTransaction.commit()
         }
 
-
-
-
-
-
-//  Recycler View
         val listOfAddress =  view.findViewById<RecyclerView>(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
         listOfAddress.adapter = AddressAdapter(currentUserAddress,this)
@@ -92,13 +87,9 @@ class AddressFragment : Fragment(),
 
     override fun clickToSelect(holder: View, id: String) {
         for(i in currentUserAddress){
-            if (i.id.equals(id)){
-                i.isCurrentAddress = true
-            }else{
-                i.isCurrentAddress = false
-            }
+            i.isCurrentAddress = i.id.equals(id)
         }
-        var fragment = activity!!.supportFragmentManager
+        val fragment = activity!!.supportFragmentManager
         fragment.popBackStack()
     }
 

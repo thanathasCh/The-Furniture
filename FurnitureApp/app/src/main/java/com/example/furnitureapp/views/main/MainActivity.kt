@@ -1,4 +1,4 @@
-package com.example.furnitureapp
+package com.example.furnitureapp.views.main
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.furnitureapp.R
 import com.example.furnitureapp.views.browseItem.BrowseItemFragment
 import com.example.furnitureapp.views.cart.CartFragment
 import com.example.furnitureapp.views.category.CategoriesFragment
@@ -54,8 +55,10 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    pageId = R.id.home
-                    homeFragment = HomeFragment()
+                    pageId =
+                        R.id.home
+                    homeFragment =
+                        HomeFragment()
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, homeFragment)
@@ -63,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.cart -> {
-                    pageId = R.id.cart
+                    pageId =
+                        R.id.cart
                     cartFragment = CartFragment()
                     supportFragmentManager
                         .beginTransaction()
@@ -81,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit()
                     } else {
-                        var unRegisterUser = UnRegisterFragment()
+                        val unRegisterUser = UnRegisterFragment()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.frame_layout, unRegisterUser)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -108,8 +112,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.search_icon -> {
                     CategoryRepository(this).fetchCategory(true) {
-                        MainActivity.categories.clear()
-                        MainActivity.categories.addAll(it)
+                        categories.clear()
+                        categories.addAll(it)
                         CategoriesFragment.categoryAdapter.notifyDataSetChanged()
                         main_srl.isRefreshing = false
                     }

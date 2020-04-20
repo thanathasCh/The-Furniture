@@ -1,4 +1,4 @@
-package com.example.furnitureapp
+package com.example.furnitureapp.views.shared
 
 import android.content.Context
 import android.os.Parcelable
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
+import com.example.furnitureapp.R
 import com.example.furnitureapp.views.address.ImageModel
 import java.util.ArrayList
 
@@ -36,7 +37,7 @@ class SlidingImage_Adapter(private val context: Context, private val imageModelA
             .findViewById(R.id.home_image) as ImageView
 
 
-        imageView.setImageResource(imageModelArrayList[position].getImage_drawables())
+        imageView.setImageResource(imageModelArrayList[position].getImageDrawables())
 
         view.addView(imageLayout, 0)
 

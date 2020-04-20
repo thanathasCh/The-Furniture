@@ -20,9 +20,6 @@ class CartAdapter(
     val context: CartFragment
 ) : RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
 
-
-    //    private val clickHandler: ClickEventHandler = context
-//    var bundle = Bundle()
     var selectProductCode = ArrayList<String>()
     var selectProductAmount = ArrayList<Int>()
     var selectProudctPosition = ArrayList<ProductViewModel>()
@@ -42,7 +39,6 @@ class CartAdapter(
     fun removeAt(selectProduct:ProductViewModel) {
         product.remove(selectProduct)
         notifyDataSetChanged()
-//        notifyItemRemoved(selectProduct)
     }
 
     override fun getItemCount(): Int {

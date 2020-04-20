@@ -12,6 +12,7 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.services.encrypt
+import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_password_setting.view.*
 
 /**

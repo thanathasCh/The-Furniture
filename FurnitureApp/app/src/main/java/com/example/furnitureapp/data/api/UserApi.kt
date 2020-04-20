@@ -1,9 +1,8 @@
 package com.example.furnitureapp.data.api
 
 import android.util.Log
-import com.example.furnitureapp.MainActivity
+import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.data.local.UserSharedPreference
-import com.example.furnitureapp.models.User
 import com.example.furnitureapp.models.UserViewMode
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

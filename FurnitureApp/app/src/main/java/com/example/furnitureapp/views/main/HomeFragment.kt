@@ -1,4 +1,4 @@
-package com.example.furnitureapp
+package com.example.furnitureapp.views.main
 
 
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.custom.sliderimage.logic.SliderImage
+import com.example.furnitureapp.R
 import com.example.furnitureapp.views.category.CategoriesFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 
@@ -28,7 +29,9 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val sliderImage = activity?.let { SliderImage(it) }
         val search = view.findViewById<View>(R.id.search_icon) as ImageView
-        slider = view.findViewById<View>(R.id.home_image) as SliderImage
+        slider = view.findViewById<View>(
+            R.id.home_image
+        ) as SliderImage
 
         MainActivity.mainSrl.isRefreshing = true
         AnnouncementApi().getAnnouncementImages {

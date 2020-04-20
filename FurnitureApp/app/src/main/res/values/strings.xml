@@ -7,4 +7,18 @@
     <string name="added_cart">Added to cart.</string>
     <string name="product_not_available">Product is not available.</string>
     <string name="login_required">Login Required.</string>
+    <string name="verification_code">Verification Code is %1d.</string>
+    <string name="invalid_input">Invalid Input.</string>
+    <string name="incorrect_code">Incorrect Code.</string>
+    <string name="success">Success.</string>
+    <string name="error_occurred">Error Occurred.</string>
+    <string name="phone_number_incorrect">Incorrect Phone Number.</string>
+    <string name="incorrect_email_format">Incorrect Email Format.</string>
+    <string name="logout_confirm">Do you want to Logout?</string>
+    <string name="login_successful">Login Successful.</string>
+    <string name="login_fail">Incorrect Username or Password.</string>
+    <string name="purchase_successful">Purchase Successful.</string>
+    <string name="save_confirm">Do you want to save?</string>
+    <string name="delete_confirm">Do you want to delete?</string>
+    <string name="require_information">Please fill all information.</string>
 </resources>

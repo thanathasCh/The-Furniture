@@ -1,5 +1,8 @@
 package com.example.furnitureapp.services
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.regex.Matcher
@@ -15,4 +18,9 @@ fun isEmailValid(email: String?): Boolean {
     val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
     val matcher: Matcher = pattern.matcher(email)
     return matcher.matches()
+}
+
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }

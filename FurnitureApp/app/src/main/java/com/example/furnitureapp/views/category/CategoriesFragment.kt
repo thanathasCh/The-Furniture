@@ -15,6 +15,7 @@ import com.example.furnitureapp.data.api.ProductApi
 import kotlinx.android.synthetic.main.fragment_categories.view.*
 import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.interfaces.Communicator
+import com.example.furnitureapp.views.main.MainActivity
 
 
 /**

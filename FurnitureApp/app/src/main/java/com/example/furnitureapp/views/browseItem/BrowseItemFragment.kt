@@ -16,6 +16,7 @@ import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.views.main.MainActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -36,7 +37,6 @@ class BrowseItemFragment : Fragment(),
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_browse_item, container, false)
-//        val swipeRefresh = view.findViewById<View>(R.id.swipeRefreshBrowse) as SwipeRefreshLayout
 
         val back = view.findViewById<View>(R.id.back_btn_browse)
         back.setOnClickListener{
@@ -75,34 +75,4 @@ class BrowseItemFragment : Fragment(),
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
-//    override fun forwardClick(
-//        holder: View,
-//        id: String,
-//        name: String,
-//        size: String,
-//        code: String,
-//        price: Float,
-//        image: Int,
-//        material: String,
-//        available: Int
-//    ) {
-//        val bundle = Bundle()
-//        bundle.putString("id",id)
-//        bundle.putString("name",name)
-//        bundle.putString("size",size)
-//        bundle.putString("code",code)
-//        bundle.putFloat("price",price)
-//        bundle.putInt("image",image)
-//        bundle.putString("material", material)
-//        bundle.putInt("available", available)
-//        val product = ProductFragment()
-//        val fragmentManager = activity!!.supportFragmentManager
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-//        product.arguments = bundle
-//        fragmentTransaction.replace(R.id.frame_layout,product)
-//        fragmentTransaction.addToBackStack(null)
-//        fragmentTransaction.commit()
-//
-//    }
-
 }

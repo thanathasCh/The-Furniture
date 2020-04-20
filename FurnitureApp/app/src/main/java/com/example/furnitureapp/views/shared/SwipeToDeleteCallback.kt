@@ -1,4 +1,4 @@
-package com.example.furnitureapp
+package com.example.furnitureapp.views.shared
 
 import android.content.Context
 import android.graphics.Canvas
@@ -11,11 +11,14 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.furnitureapp.R
 
 
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.delete)
+    private val deleteIcon = ContextCompat.getDrawable(context,
+        R.drawable.delete
+    )
     private val intrinsicWidth = deleteIcon?.intrinsicWidth
     private val intrinsicHeight = deleteIcon?.intrinsicHeight
     private val background = ColorDrawable()
