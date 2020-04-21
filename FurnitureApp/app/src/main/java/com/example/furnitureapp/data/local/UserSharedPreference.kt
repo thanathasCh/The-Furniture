@@ -35,6 +35,10 @@ class UserSharedPreference(private val context: Context) {
         }
     }
 
+    fun getUserId(): String {
+        return retrieveUser().Id ?: ""
+    }
+
     fun retrieveUser(): UserViewModel {
         val userJson =
             context.getSharedPreferences(

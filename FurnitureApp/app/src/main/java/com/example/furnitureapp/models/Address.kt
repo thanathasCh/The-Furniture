@@ -32,16 +32,16 @@ class Address{
 }
 
 data class AddressViewModel (
-    var Id: String? = null,
-    var UserId: String? = null,
-    var Name: String? = null,
-    var TelephoneNumber: String? = null,
-    var Address: String? = null,
-    var Road: String? = null,
-    var Subdistrict: String? = null,
-    var District: String? = null,
-    var Province: String? = null,
-    var Type: Int = 0
+    var Id: String = "",
+    var UserId: String = "",
+    var Name: String = "",
+    var TelephoneNumber: String = "",
+    var Address: String = "",
+    var Road: String = "",
+    var Subdistrict: String = "",
+    var District: String = "",
+    var Province: String = "",
+    var Type: Int = -1
 ) {
     @Exclude
     fun getFullAddress(): String {

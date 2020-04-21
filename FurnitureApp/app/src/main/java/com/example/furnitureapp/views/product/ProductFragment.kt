@@ -83,14 +83,14 @@ class ProductFragment : Fragment() {
                 MainActivity.mainSrl.isRefreshing = true
                 if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
                     alertBuilder.showYesNoAlert(getString(R.string.login_required),
-                    yesOpt = {
-                        val login = LoginFragment()
-                        val fragmentManager = activity!!.supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.frame_layout, login)
-                        fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.commit()
-                    })
+                        yesOpt = {
+                            val login = LoginFragment()
+                            val fragmentManager = activity!!.supportFragmentManager
+                            val fragmentTransaction = fragmentManager.beginTransaction()
+                            fragmentTransaction.replace(R.id.frame_layout, login)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
+                        })
                 } else {
                     val bundle = Bundle()
                     val purchaseFragment = PurchaseFragment()

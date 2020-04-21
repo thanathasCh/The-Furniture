@@ -1,6 +1,5 @@
 package com.example.furnitureapp.services
 
-import android.content.Context
 import android.widget.Toast
 import com.example.furnitureapp.views.main.MainActivity
 

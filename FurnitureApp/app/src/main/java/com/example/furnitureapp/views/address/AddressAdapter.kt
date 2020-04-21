@@ -9,6 +9,7 @@ import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressViewModel
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.address_cell.view.*
 
 class AddressAdapter(
@@ -43,16 +44,19 @@ class AddressAdapter(
         address.removeAt(position)
         notifyItemRemoved(position)
     }
+
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
         holder.itemView.address_name.text  = address.Name
         holder.itemView.address_phone_number.text = address.TelephoneNumber
         holder.itemView.address_detail.text = address.getFullAddress()
+
         holder.itemView.btn_edit.setOnClickListener {
-            clickHandler.clickWithDataTransfer(it, address.Id ?: "")
+            clickHandler.clickWithDataTransfer(it, Gson().toJson(address))
         }
+
         holder.itemView.address_name.setOnClickListener {
-            clickHandler.clickToSelect(it,address.Id ?: "")
+            clickHandler.clickToSelect(it,address.Id)
         }
     }
 

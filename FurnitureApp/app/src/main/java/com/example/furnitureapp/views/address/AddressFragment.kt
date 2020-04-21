@@ -22,6 +22,7 @@ import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.userIndex
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_address.*
 
 /**
@@ -55,6 +56,7 @@ class AddressFragment : Fragment(),
 
         MainActivity.mainSrl.isRefreshing = true
         AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+            addresses.clear()
             addresses.addAll(it)
             addressAdapter = AddressAdapter(addresses, this)
             listOfAddress.adapter = addressAdapter

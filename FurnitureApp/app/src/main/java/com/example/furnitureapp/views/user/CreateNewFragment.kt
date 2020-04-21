@@ -61,7 +61,7 @@ class CreateNewFragment : Fragment() {
 
         //Action Button
         view.create_new_create_btn.setOnClickListener{
-
+            MainActivity.mainSrl.isRefreshing = true
             val userName = view.user_name.text.toString()
             val password = view.password.text.toString().encrypt()
             val confirmPassowrd = view.reenter_password.text.toString().encrypt()
@@ -106,11 +106,15 @@ class CreateNewFragment : Fragment() {
                             } else {
                                 alertBuilder.showOkAlert(getString(R.string.error_occurred))
                             }
+                            MainActivity.mainSrl.isRefreshing = false
                         }
                     } else {
                         alertBuilder.showOkAlert(getString(R.string.duplicate_username))
+                        MainActivity.mainSrl.isRefreshing = true
                     }
                 }
+            } else {
+                MainActivity.mainSrl.isRefreshing = false
             }
         }
 
@@ -126,7 +130,7 @@ class CreateNewFragment : Fragment() {
             alertBuilder.showOkAlert(getString(R.string.password_length))
         } else if (!user.Password.equals(confirmPassword)) {
             alertBuilder.showOkAlert(getString(R.string.password_not_match))
-        } else if (isEmailValid(user.Email)){
+        } else if (!isEmailValid(user.Email)){
             alertBuilder.showOkAlert(getString(R.string.email_invalid))
         } else {
             return true

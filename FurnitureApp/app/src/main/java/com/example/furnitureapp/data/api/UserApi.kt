@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstance().collection("Users")) {
     fun isExist(userName: String, hashedPassword: String, callback: (Boolean) -> Unit) {
-        db.whereEqualTo("UserName", userName)
+        db.whereEqualTo("Username", userName)
             .whereEqualTo("Password", hashedPassword)
             .get().addOnCompleteListener {
                 if (it.isSuccessful && it.result != null && !it.result!!.isEmpty) {
@@ -32,7 +32,6 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         db.whereEqualTo("UserName", userName)
             .get()
             .addOnCompleteListener {
-                val a = !it.result!!.isEmpty
                 callback((it.isSuccessful && it.result != null && !it.result!!.isEmpty))
             }
             .addOnFailureListener {
@@ -43,7 +42,8 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
     fun createAccount(user: UserViewModel, callback: (Boolean) -> Unit) {
         db.add(user.toMap())
             .addOnSuccessListener {
-                getUser(user.Id ?: "") {
+
+                getUser(it.id ?: "") {
                     callback(true)
                 }
             }
