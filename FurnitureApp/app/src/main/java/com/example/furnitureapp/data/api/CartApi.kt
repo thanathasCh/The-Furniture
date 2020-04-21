@@ -65,7 +65,7 @@ class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         val productIds = ArrayList(items.map { it.ProductId ?: "" })
         productApi.getProductByIds(productIds) {
             for (item in items) {
-                item.Product = it.find { x -> x.Id == item.ProductId }
+                item.Product = it.find { x -> x.Id == item.ProductId } ?: ProductViewModel()
             }
 
             callback(items)

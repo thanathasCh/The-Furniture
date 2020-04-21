@@ -16,13 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.interfaces.Communicator
-import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressViewModel
-import com.example.furnitureapp.services.allUser
-import com.example.furnitureapp.services.userIndex
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_address.*
 
 /**

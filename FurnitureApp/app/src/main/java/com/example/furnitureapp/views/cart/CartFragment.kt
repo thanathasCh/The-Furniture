@@ -18,8 +18,11 @@ import com.example.furnitureapp.views.purchase.ConfirmPurchaseFragment
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.CartRepository
+import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.CategoriesController
 import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_cart.*
 
@@ -27,85 +30,77 @@ import kotlinx.android.synthetic.main.fragment_cart.*
  * A simple [Fragment] subclass.
  */
 class CartFragment : Fragment() {
+    companion object Cart {
+        lateinit var cartAdapter: CartAdapter
+        val carts = arrayListOf<CartViewModel>()
+    }
 
-
-    var currentKey: String = ""
-    var cartProduct = ArrayList<ProductViewModel>()
-    var categories = CategoriesController()
+//    var currentKey: String = ""
+//    var cartProduct = ArrayList<ProductViewModel>()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getAllSharePref()
+//        getAllSharePref()
+        MainActivity.pageId = R.layout.fragment_cart
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
-        val arrayKey = currentKey.split(",")
-        val listOfProduct = view.findViewById<RecyclerView>(R.id.recycler_view_cart) as RecyclerView
+//        val arrayKey = currentKey.split(",")
+        val listOfProduct = view.findViewById(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
         val delete = view.findViewById<View>(R.id.delete_cart) as ImageView
-        val adapter = CartAdapter(cartProduct, this)
-        for (i in 0 until arrayKey.size - 1){
-            ProductApi().getProductById(arrayKey[i].substring(5,arrayKey[i].length)){
-                if (!cartProduct.contains(it)){
-                    e("it code: ", it.Code)
-                    cartProduct.add(it)
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
+        MainActivity.mainSrl.isRefreshing = true
+        cartAdapter = CartAdapter(carts, this)
 
         delete.setOnClickListener {
-            if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                val adapter = recycler_view_cart.adapter as CartAdapter
-                for (i in adapter.selectProudctPosition) {
-                    adapter.removeAt(i)
-                    e("key is: ",i.Code +"="+ i.Id.toString() )
-                    removeKeySharePref(i.Code.toString())
-                    e("after delete:", returnSharePref())
-                }
-            }
+//            if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
+//                val adapter = recycler_view_cart.adapter as CartAdapter
+//                for (i in adapter.selectProudctPosition) {
+//                    adapter.removeAt(i)
+//                    e("key is: ",i.Code +"="+ i.Id.toString() )
+//                    removeKeySharePref(i.Code.toString())
+//                    e("after delete:", returnSharePref())
+//                }
+//            }
         }
 
-
-        listOfProduct.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
-        listOfProduct.adapter =
-            adapter
-
+        listOfProduct.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+        CartRepository(MainActivity.mainThis).fetchCartByUserId(false) {
+            carts.clear()
+            carts.addAll(it)
+            cartAdapter.notifyDataSetChanged()
+            MainActivity.mainSrl.isRefreshing = false
+        }
 
         placeOrder.setOnClickListener {
+            val alertBuilder = AlertBuilder()
             if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                val builder = AlertDialog.Builder(this.activity)
-                builder.setTitle("Please Login Before Make Purchase")
-                builder.setPositiveButton("Okay") { dialogInterface: DialogInterface?, i: Int ->
+                alertBuilder.showOkAlert(getString(R.string.login_required)) {
                     val login = LoginFragment()
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     fragmentTransaction.replace(R.id.frame_layout, login)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
-
                 }
-                builder.show()
             } else {
-                val bundle = Bundle()
-                bundle.putStringArrayList("cart product", adapter.selectProductCode)
-                bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
-                val confirmPurchse = ConfirmPurchaseFragment()
-                val fragmentManager = activity!!.supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                confirmPurchse.arguments = bundle
-                fragmentTransaction.replace(R.id.frame_layout, confirmPurchse)
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
+//                val bundle = Bundle()
+//                bundle.putStringArrayList("cart product", adapter.selectProductCode)
+//                bundle.putIntegerArrayList("cart amount", adapter.selectProductAmount)
+//                val confirmPurchse = ConfirmPurchaseFragment()
+//                val fragmentManager = activity!!.supportFragmentManager
+//                val fragmentTransaction = fragmentManager.beginTransaction()
+//                confirmPurchse.arguments = bundle
+//                fragmentTransaction.replace(R.id.frame_layout, confirmPurchse)
+//                fragmentTransaction.addToBackStack(null)
+//                fragmentTransaction.commit()
             }
 
         }
 
         return view
     }
-
 
     fun getSharePref(name: String): String {
         val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
@@ -114,35 +109,32 @@ class CartFragment : Fragment() {
         return sharedPref?.getString(name, null).toString()
     }
 
-    private fun getAllSharePref() {
-        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-        var key = sharedPref?.all
-
-        if (key != null) {
-            for (entry in key) {
-                currentKey += "$entry,"
-                e("global is", currentKey)
-            }
-        }
-    }
-    private fun returnSharePref():String{
-        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-        var key = sharedPref?.all
-        var store = ""
-        if (key != null) {
-            for (entry in key) {
-                store += "$entry,"
-            }
-        }
-        return store
-    }
-    private fun removeKeySharePref(key:String){
-        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-        val editor = sharedPref?.edit()
-        editor?.remove(key)
-        editor?.commit()
-    }
-
-
-
+//    private fun getAllSharePref() {
+//        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
+//        var key = sharedPref?.all
+//
+//        if (key != null) {
+//            for (entry in key) {
+//                currentKey += "$entry,"
+//                e("global is", currentKey)
+//            }
+//        }
+//    }
+//    private fun returnSharePref():String{
+//        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
+//        var key = sharedPref?.all
+//        var store = ""
+//        if (key != null) {
+//            for (entry in key) {
+//                store += "$entry,"
+//            }
+//        }
+//        return store
+//    }
+//    private fun removeKeySharePref(key:String){
+//        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
+//        val editor = sharedPref?.edit()
+//        editor?.remove(key)
+//        editor?.commit()
+//    }
 }

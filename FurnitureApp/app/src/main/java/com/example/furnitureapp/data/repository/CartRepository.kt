@@ -5,9 +5,12 @@ import com.example.furnitureapp.data.api.CartApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CartViewModel
+import com.example.furnitureapp.views.main.MainActivity
 
 class CartRepository(private val context: Context) {
-    fun fetchCartByUserId(isRemotePreferred: Boolean, userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
+    fun fetchCartByUserId(isRemotePreferred: Boolean, callback: (ArrayList<CartViewModel>) -> Unit) {
+        val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
+
         if (isRemotePreferred) {
             requestCartApi(userId, callback)
         } else {

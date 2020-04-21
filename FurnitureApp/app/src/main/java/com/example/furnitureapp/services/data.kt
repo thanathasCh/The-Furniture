@@ -32,34 +32,6 @@ val allUser = arrayListOf(User(
         arrayListOf())
         )
 
-val addressData = arrayListOf<Address>(
-    Address(
-        "a1",
-        "u1",
-        "Home",
-        "Xell",
-        "Road 123",
-        "House 456",
-        "Bang Bo",
-        "Bang Bo",
-        "Samut Prakarn",
-        true,
-        "012-345-6789"
-    ),
-    Address(
-        "a2",
-        "u1",
-        "Office",
-        "Menh",
-        "Road 2004",
-        "House 576",
-        "Thong Lor",
-        "Thong Lor",
-        "Bangkok",
-        false,
-        "098-765-4321"
-    )
-)
 val productData = arrayListOf(
     Product(
         "t1",

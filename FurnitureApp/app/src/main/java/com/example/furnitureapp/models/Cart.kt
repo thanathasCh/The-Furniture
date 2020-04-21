@@ -3,10 +3,10 @@ package com.example.furnitureapp.models
 import com.google.firebase.database.Exclude
 
 data class CartViewModel (
-    var Id: String? = null,
-    val ProductId: String? = null,
-    var Product: ProductViewModel? = null,
-    var UserId: String? = null,
+    var Id: String = "",
+    val ProductId: String = "",
+    var Product: ProductViewModel = ProductViewModel(),
+    var UserId: String = "",
     var Quantity: Int = 0
 ) {
     @Exclude

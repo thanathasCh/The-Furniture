@@ -19,6 +19,7 @@ import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
+import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
 //import com.example.furnitureapp.data.api.Examples
 import com.example.furnitureapp.models.*
@@ -112,8 +113,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     main_srl.isRefreshing = false
                 }
-                R.id.cart -> {
-                    main_srl.isRefreshing = false
+                R.layout.fragment_cart -> {
+                    CartRepository(this).fetchCartByUserId(true) {
+                        with (CartFragment.carts) {
+                            clear()
+                            addAll(it)
+                        }
+                        CartFragment.cartAdapter.notifyDataSetChanged()
+                        main_srl.isRefreshing = false
+                    }
                 }
                 R.id.search_icon -> {
                     CategoryRepository(this).fetchCategory(true) {
