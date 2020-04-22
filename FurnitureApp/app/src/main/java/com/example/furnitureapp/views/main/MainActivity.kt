@@ -16,6 +16,7 @@ import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
+import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -26,6 +27,7 @@ import com.example.furnitureapp.models.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.views.user.UserSettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
@@ -51,10 +53,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
-
         mainThis = this
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
         homeFragment = HomeFragment()
+
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_layout, homeFragment)
@@ -174,6 +176,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     main_srl.isRefreshing = false
+                }
+                R.id.user_purchase_list -> {
+
                 }
                 else -> {
                     main_srl.isRefreshing = false

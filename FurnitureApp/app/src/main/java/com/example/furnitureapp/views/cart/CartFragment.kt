@@ -1,11 +1,8 @@
 package com.example.furnitureapp.views.cart
 
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +11,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
-import com.example.furnitureapp.views.purchase.ConfirmPurchaseFragment
 import com.example.furnitureapp.views.user.LoginFragment
-import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.models.CartViewModel
-import com.example.furnitureapp.models.CategoriesController
-import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_cart.*
 
 /**
  * A simple [Fragment] subclass.

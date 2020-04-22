@@ -12,7 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.furnitureapp.*
 import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.interfaces.ClickEventHandler
-import com.example.furnitureapp.models.CategoriesController
+import com.example.furnitureapp.views.category.CategoriesController
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.ProductViewModel
@@ -28,7 +28,8 @@ class BrowseItemFragment : Fragment(),
     }
     var product = ArrayList<Product>()
     var singleton = ProductController()
-    var categories = CategoriesController()
+    var categories =
+        CategoriesController()
     lateinit var mainSrl: SwipeRefreshLayout
 
     override fun onCreateView(

@@ -1,6 +1,7 @@
-package com.example.furnitureapp.models
+package com.example.furnitureapp.views.address
 
 import android.app.Application
+import com.example.furnitureapp.models.Address
 
 class AddressController : Application() {
 

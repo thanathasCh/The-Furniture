@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.api.TransactionApi
+import com.example.furnitureapp.models.TransactionViewModel
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.userIndex
 
@@ -16,31 +18,34 @@ import com.example.furnitureapp.services.userIndex
  * A simple [Fragment] subclass.
  */
 class UserPurchaseListFragment : Fragment() {
-
+    companion object UserPurchase {
+        val purchases = ArrayList<TransactionViewModel>()
+        lateinit var userPurchaseAdapter: UserPurchaseListAdapter
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view =  inflater.inflate(R.layout.fragment_user_purchase_list, container, false)
-        var back = view.findViewById<View>(R.id.user_purchase_back)
+        val view =  inflater.inflate(R.layout.fragment_user_purchase_list, container, false)
+        val back = view.findViewById<View>(R.id.user_purchase_back)
 
-        val listofPurchase = view.findViewById<RecyclerView>(R.id.recycler_view_user_purchase_list) as RecyclerView
-        listofPurchase.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
+        val listOfPurchase = view.findViewById<RecyclerView>(R.id.recycler_view_user_purchase_list) as RecyclerView
+        listOfPurchase.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
+        userPurchaseAdapter = UserPurchaseListAdapter(purchases, this)
+        listOfPurchase.adapter = userPurchaseAdapter
 
+        TransactionApi().getTransaction {
+            purchases.clear()
+            purchases.addAll(it)
+            userPurchaseAdapter.notifyDataSetChanged()
+        }
 
         //Button Action
         back.setOnClickListener {
-            var fragmentManager = activity!!.supportFragmentManager
+            val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
-
-        //RecyclerView
-        listofPurchase.adapter =
-            UserPurchaseListAdapter(
-                allUser[userIndex!!].productList,
-                this
-            )
 
         return view
     }

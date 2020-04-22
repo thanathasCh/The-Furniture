@@ -6,6 +6,18 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().collection("Products")) {
+    fun getProductByName(name: String, callback: (ArrayList<ProductViewModel>) -> Unit) {
+        db.orderBy("Name")
+            .startAt(name)
+            .endAt(name + '\uf8ff')
+            .get()
+            .addOnCompleteListener {
+                for (i in it.result!!) {
+                    Log.d("DEBUG", i.toObject(ProductViewModel::class.java).toString())
+                }
+            }
+    }
+
     fun getProducts(callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
         db.get().addOnCompleteListener {

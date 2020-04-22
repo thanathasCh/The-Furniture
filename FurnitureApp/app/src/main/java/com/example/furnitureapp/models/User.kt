@@ -33,17 +33,17 @@ class User{
 }
 
 data class UserViewModel (
-    var Id: String? = null,
-    var FirstName: String? = null,
-    var LastName: String? = null,
+    var Id: String = "",
+    var FirstName: String = "",
+    var LastName: String = "",
     var Gender: Int = -1, // 0 = male, 1 = female, else = undefined
-    var UserName: String? = null,
-    var Password: String? = null,
-    var Email: String? = null,
-    var TelephoneNumber: String? = null,
-    var ImageUrl: String? = null,
-    var CreatedAt: Date? = null,
-    var UpdatedAt: Date? = null
+    var UserName: String = "",
+    var Password: String = "",
+    var Email: String = "",
+    var TelephoneNumber: String = "",
+    var ImageUrl: String = "",
+    var CreatedAt: Date = Date(),
+    var UpdatedAt: Date = Date()
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
