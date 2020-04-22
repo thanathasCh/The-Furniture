@@ -18,6 +18,23 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             }
     }
 
+    fun getProductNames(callback: (ArrayList<String>) -> Unit) {
+        val names = ArrayList<String>()
+        db.get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (item in it.result!!) {
+                    val product = item.toObject(ProductViewModel::class.java)
+                    names.add(product.Name)
+                }
+                callback(names)
+            } else {
+                callback(names)
+            }
+        }.addOnFailureListener {
+            callback(names)
+        }
+    }
+
     fun getProducts(callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
         db.get().addOnCompleteListener {
