@@ -9,6 +9,7 @@ import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.AddressViewModel
 
 class AddressRepository(private val context: Context) {
+    // Get address
     fun fetchAddresses(isRemotePreferred: Boolean, callback: (ArrayList<AddressViewModel>) -> Unit) {
         val userId = UserSharedPreference(context).retrieveUser().Id ?: ""
         if (isRemotePreferred) {
@@ -22,6 +23,7 @@ class AddressRepository(private val context: Context) {
         }
     }
 
+    // add new address to user
     fun addAddress(address: AddressViewModel, callback: (Boolean) -> Unit) {
         AddressApi().addAddress(address) {
             if (it) {
@@ -33,6 +35,7 @@ class AddressRepository(private val context: Context) {
         }
     }
 
+    // remove address from db, pass address id
     fun removeAddress(id: String, callback: (Boolean) -> Unit) {
         AddressApi().removeAddress(id) {
             if (it) {
@@ -44,6 +47,7 @@ class AddressRepository(private val context: Context) {
         }
     }
 
+    // update address, pass the whole address model with id. it will automatically look and update the database
     fun updateAddress(address: AddressViewModel, callback: (Boolean) -> Unit) {
         val addressApi = AddressApi()
         addressApi.updateAddress(address) {

@@ -10,6 +10,7 @@ class UserSharedPreference(private val context: Context) {
     private val isLogin = "Logged"
     private val userInfo = "UserInfo"
 
+    // login the user
     fun logIn() {
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putBoolean(isLogin, true)
@@ -17,11 +18,13 @@ class UserSharedPreference(private val context: Context) {
         }
     }
 
+    // check if user is logged in or not
     fun isLogin(): Boolean {
         return context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
             .getBoolean(isLogin, false)
     }
 
+    // log out the user
     fun logOut() {
         context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
             .edit().clear().apply()
@@ -35,6 +38,7 @@ class UserSharedPreference(private val context: Context) {
         }
     }
 
+    // get user id from shared preference
     fun getUserId(): String {
         return retrieveUser().Id ?: ""
     }

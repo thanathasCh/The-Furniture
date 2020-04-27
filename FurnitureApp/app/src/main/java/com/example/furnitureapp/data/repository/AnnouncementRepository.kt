@@ -6,6 +6,7 @@ import com.example.furnitureapp.data.local.AnnouncementSharedPreference
 import com.example.furnitureapp.models.AnnouncementViewModel
 
 class AnnouncementRepository(private val context: Context) {
+    //Get Announcement and save in Shared Preferences
     fun fetchAnnouncement(isRemotePreferred: Boolean, callback: (ArrayList<AnnouncementViewModel>) -> Unit) {
         if (isRemotePreferred) {
             requestAnnouncementApi(callback)

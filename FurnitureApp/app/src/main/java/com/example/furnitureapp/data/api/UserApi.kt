@@ -8,6 +8,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstance().collection("Users")) {
+
+    // check if the user with this password is existed or not
     fun isExist(userName: String, hashedPassword: String, callback: (Boolean) -> Unit) {
         db.whereEqualTo("Username", userName)
             .whereEqualTo("Password", hashedPassword)
@@ -28,6 +30,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    // check if the user name is already existed or not
     fun isDuplicated(userName: String, callback: (Boolean) -> Unit) {
         db.whereEqualTo("UserName", userName)
             .get()
@@ -39,6 +42,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    // create accunt
     fun createAccount(user: UserViewModel, callback: (Boolean) -> Unit) {
         db.add(user.toMap())
             .addOnSuccessListener {
@@ -52,6 +56,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    // update user's name
     fun updateName(firstName: String, lastName: String, callback: (Boolean) -> Unit) {
         val userPreference = UserSharedPreference(MainActivity.mainThis)
         val user = userPreference.retrieveUser()
@@ -66,6 +71,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         callback(true)
     }
 
+    // update user's password
     fun updatePassword(newPassword: String, callback: (Boolean) -> Unit) {
         val userPreference = UserSharedPreference(MainActivity.mainThis)
         val user = userPreference.retrieveUser()
@@ -86,6 +92,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    // get user from db by user id
     fun getUser(userId: String, callback: (UserViewModel) -> Unit) {
         db.document(userId)
             .get()
@@ -102,6 +109,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    //update telephone number
     fun updateTelephoneNumber(telephoneNumber: String, callback: (Boolean) -> Unit) {
         val userPreference = UserSharedPreference(MainActivity.mainThis)
         val user = userPreference.retrieveUser()
@@ -123,6 +131,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
 
     }
 
+    // update user's email
     fun updateEmail(email: String, callback: (Boolean) -> Unit) {
         val userPreference = UserSharedPreference(MainActivity.mainThis)
         val user = userPreference.retrieveUser()

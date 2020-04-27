@@ -6,6 +6,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().collection("Products")) {
+    // get product by name or search product
     fun getProductByName(name: String, callback: (ArrayList<ProductViewModel>) -> Unit) {
         db.orderBy("Name")
             .startAt(name)
@@ -18,6 +19,7 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             }
     }
 
+    // get list of product names
     fun getProductNames(callback: (ArrayList<String>) -> Unit) {
         val names = ArrayList<String>()
         db.get().addOnCompleteListener {
@@ -35,6 +37,7 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
         }
     }
 
+    // get all products in db
     fun getProducts(callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
         db.get().addOnCompleteListener {
@@ -53,6 +56,7 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
         }
     }
 
+    // get a specific product by id
     fun getProductById(id: String, callback: (ProductViewModel) -> Unit) {
         var product = ProductViewModel()
         db.document(id)
@@ -69,6 +73,7 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             }
     }
 
+    // get product by its category, pass category id
     fun getProductByCategoryId(id: String, callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
         db.whereEqualTo("CategoryId", id)
@@ -88,6 +93,7 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
             }
     }
 
+    // get a list of products by passing a list of product ids
     fun getProductByIds(ids: ArrayList<String>, callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
         db.get().addOnCompleteListener {

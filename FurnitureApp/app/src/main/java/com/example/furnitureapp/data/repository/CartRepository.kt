@@ -8,6 +8,8 @@ import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.views.main.MainActivity
 
 class CartRepository(private val context: Context) {
+
+    //Get Cart by user (don't have to pass parameter)
     fun fetchCartByUserId(isRemotePreferred: Boolean, callback: (ArrayList<CartViewModel>) -> Unit) {
         val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
 
@@ -22,6 +24,7 @@ class CartRepository(private val context: Context) {
         }
     }
 
+    //Add Cart to db, use only product id
     fun addCart(productId: String, callback: (Boolean) -> Unit) {
         if (UserSharedPreference(context).isLogin()) {
             val user = UserSharedPreference(context).retrieveUser()
@@ -41,6 +44,7 @@ class CartRepository(private val context: Context) {
         }
     }
 
+    // update quantity of specific product in cart, pass product id and quantity
     fun updateCart(id: String, quantity: Int, callback: (Boolean) -> Unit) {
         if (UserSharedPreference(context).isLogin()) {
             val user = UserSharedPreference(context).retrieveUser()

@@ -7,6 +7,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TransactionApi(val db: CollectionReference = FirebaseFirestore.getInstance().collection("Transactions")) {
+
+    // get user transaction or Purchase History
     fun getTransaction(callback: (ArrayList<TransactionViewModel>) -> Unit) {
         val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
         val transaction = ArrayList<TransactionViewModel>()
@@ -25,6 +27,7 @@ class TransactionApi(val db: CollectionReference = FirebaseFirestore.getInstance
         }
     }
 
+    // add new transaction or Purchase History to db
     fun addTransaction(item: TransactionViewModel, callback: (Boolean) -> Unit) {
         db.add(item.toMap())
             .addOnCompleteListener {

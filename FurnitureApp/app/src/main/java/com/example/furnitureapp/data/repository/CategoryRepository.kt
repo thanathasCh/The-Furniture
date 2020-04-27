@@ -6,6 +6,7 @@ import com.example.furnitureapp.data.local.CategorySharedPreference
 import com.example.furnitureapp.models.CategoryViewModel
 
 class CategoryRepository(private val context: Context) {
+    // Get Category and save it in Shared Preference
     fun fetchCategory(isRemotePreferred: Boolean, callback: (ArrayList<CategoryViewModel>) -> Unit) {
         if (isRemotePreferred) {
             requestCategoryApi(callback)
