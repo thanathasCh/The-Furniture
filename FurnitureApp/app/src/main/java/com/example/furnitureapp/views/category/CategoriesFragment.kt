@@ -1,10 +1,13 @@
 package com.example.furnitureapp.views.category
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +18,7 @@ import com.example.furnitureapp.data.api.ProductApi
 import kotlinx.android.synthetic.main.fragment_categories.view.*
 import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.interfaces.Communicator
+import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.views.main.MainActivity
 
 
@@ -32,6 +36,7 @@ class CategoriesFragment : Fragment(),
     }
 
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +46,7 @@ class CategoriesFragment : Fragment(),
 //        createCategories()
         val search = view.findViewById<View>(R.id.search_btn) as ImageView
         val back = view.findViewById<View>(R.id.back) as ImageView
+        val searchedProduct = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
 
 
         back.setOnClickListener{
@@ -49,14 +55,21 @@ class CategoriesFragment : Fragment(),
             fragmentManager.popBackStack()
         }
 
+        ProductApi().getProductNames {
+            val adapter = activity?.let { it1 ->
+                ArrayAdapter<String>(
+                    it1,android.R.layout.simple_list_item_1 ,it
+                )
+            }
+            searchedProduct.threshold = 0
+            searchedProduct.setAdapter(adapter)
+
+        }
+
         search.setOnClickListener {
-            var searchedProduct = view.search_bar.text.toString()
+
             var name:String? = null
-//            for (i in productData){
-////                if (searchedProduct.equals(i.name)){
-////                    name = searchedProduct
-////                }
-////            }
+
             var bundle = Bundle()
             bundle.putBoolean("from search bar", true)
             bundle.putString("search",name)

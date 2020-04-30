@@ -1,6 +1,7 @@
 package com.example.furnitureapp.views.cart
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +22,8 @@ class CartAdapter(
     val context: CartFragment
 ) : RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
 
-//    var selectProductCode = ArrayList<String>()
-//    var selectProductAmount = ArrayList<Int>()
-//    var selectProudctPosition = ArrayList<ProductViewModel>()
+
+    var selectProudctPosition = ArrayList<ProductViewModel>()
 
 
     override fun onCreateViewHolder(
@@ -32,15 +32,16 @@ class CartAdapter(
     ): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.cart_cell, parent, false)
+
         return CustomViewHolder(
             cellForRow
         )
     }
 
-    fun removeAt(cart:CartViewModel) {
-        carts.remove(cart)
-        notifyDataSetChanged()
-    }
+//    fun removeAt(cart:CartViewModel) {
+//        carts.remove(cart)
+//        notifyDataSetChanged()
+//    }
 
     override fun getItemCount(): Int {
         return carts.size
@@ -51,8 +52,8 @@ class CartAdapter(
         var currentAmount = 1
         holder.itemView.name.text = cart.Product.Name
         holder.itemView.code.text = cart.Product.Code
-        holder.itemView.price.text = cart.Product.Name.toString()
-
+        holder.itemView.price.text = cart.Product.Price.toString()
+//        Log.e("Cart in share pref: ", cart.Product.Name)
         Glide.with(context)
             .load(cart.Product.ImageUrls[0])
             .placeholder(R.drawable.loading)
@@ -91,21 +92,18 @@ class CartAdapter(
         }
 
 
-
-        holder.itemView.select.setOnClickListener {
-            if (select) {
-                holder.itemView.select.setBackgroundResource(R.drawable.black_cell)
-//                selectProductAmount.add(currentAmount)
-//                selectProudctPosition.add(product)
-                select = false
-            } else {
-                holder.itemView.select.setBackgroundResource(R.drawable.border)
-//                selectProductCode.remove(product.Id)
-//                selectProductAmount.remove(currentAmount)
-//                selectProudctPosition.remove(product)
-                select = true
-            }
-        }
+//
+//        holder.itemView.select.setOnClickListener {
+//            if (select) {
+//                holder.itemView.select.setBackgroundResource(R.drawable.black_cell)
+//                selectProudctPosition.add(cart)
+//                select = false
+//            } else {
+//                holder.itemView.select.setBackgroundResource(R.drawable.border)
+//                selectProudctPosition.remove(cart)
+//                select = true
+//            }
+//        }
 
 //        holder.itemView.setOnClickListener {
 //            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)

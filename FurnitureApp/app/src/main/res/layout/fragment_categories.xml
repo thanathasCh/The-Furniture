@@ -19,7 +19,7 @@
             android:layout_marginLeft="5dp"
             android:src="@drawable/back" />
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <AutoCompleteTextView
             android:id="@+id/search_bar"
             android:layout_width="290dp"
             android:layout_height="40dp"

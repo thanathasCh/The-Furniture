@@ -1,6 +1,7 @@
 package com.example.furnitureapp.data.local
 
 import android.content.Context
+import android.util.Log
 import com.example.furnitureapp.services.fromJson
 import com.example.furnitureapp.models.CartViewModel
 import com.google.gson.Gson
@@ -12,6 +13,7 @@ class CartSharedPreference(private val context: Context) {
     // save carts to shared preference
     fun saveCarts(carts: ArrayList<CartViewModel>) {
         val cartJson = Gson().toJson(carts)
+//        Log.e("CARTS", cartJson)
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putString(sharedPreferenceCart, cartJson)
             apply()
@@ -23,7 +25,7 @@ class CartSharedPreference(private val context: Context) {
         val cartJson = context.getSharedPreferences(
             sharedPreferenceKey, Context.MODE_PRIVATE
         ).getString(sharedPreferenceCart, "")
-
+//        Log.e("CARTS", cartJson)
         return if (cartJson.isNullOrEmpty()) {
             ArrayList()
         } else {

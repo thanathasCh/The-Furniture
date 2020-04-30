@@ -3,6 +3,7 @@ package com.example.furnitureapp.views.cart
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.models.CartViewModel
+import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
 
@@ -25,6 +28,7 @@ class CartFragment : Fragment() {
     companion object Cart {
         lateinit var cartAdapter: CartAdapter
         val carts = arrayListOf<CartViewModel>()
+        val product = arrayListOf<ProductViewModel>()
     }
 
 //    var currentKey: String = ""
@@ -39,13 +43,33 @@ class CartFragment : Fragment() {
         MainActivity.pageId = R.layout.fragment_cart
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
 //        val arrayKey = currentKey.split(",")
+
+        val cart = activity?.let { CartSharedPreference(it) }
+        val cartPref = CartSharedPreference(MainActivity.mainThis)
+        e("product in shared", cartPref.retrieveCarts().toString())
+//        e("product in share pref: ",cart.toString())
+//        if (cart != null) {
+////            cart.retrieveCarts().add((CartViewModel(ProductId = "hello", Quantity = 1,Product = ProductViewModel(Id="1",Name = "h",Price = 1.1))))
+//            for (i in cart.retrieveCarts()){
+//                e("product in share pref: ",i.toString())
+//                e("size:  ",cart.retrieveCarts().size.toString())
+//            }
+//        }else{
+//            e("cart is, ","null")
+//        }
+
         val listOfProduct = view.findViewById(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
         val delete = view.findViewById<View>(R.id.delete_cart) as ImageView
         MainActivity.mainSrl.isRefreshing = true
-        cartAdapter = CartAdapter(carts, this)
+        if (cart != null) {
+            listOfProduct.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+            cartAdapter = CartAdapter(cart.retrieveCarts(), this)
 
-        delete.setOnClickListener {
+            listOfProduct.adapter = cartAdapter
+        }
+
+//        delete.setOnClickListener {
 //            if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
 //                val adapter = recycler_view_cart.adapter as CartAdapter
 //                for (i in adapter.selectProudctPosition) {
@@ -55,9 +79,9 @@ class CartFragment : Fragment() {
 //                    e("after delete:", returnSharePref())
 //                }
 //            }
-        }
+//        }
 
-        listOfProduct.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+
         CartRepository(MainActivity.mainThis).fetchCartByUserId(false) {
             carts.clear()
             carts.addAll(it)
@@ -100,6 +124,7 @@ class CartFragment : Fragment() {
         editor?.apply()
         return sharedPref?.getString(name, null).toString()
     }
+
 
 //    private fun getAllSharePref() {
 //        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)

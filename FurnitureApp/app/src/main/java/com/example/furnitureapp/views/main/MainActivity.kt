@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.furnitureapp.R
@@ -16,7 +15,6 @@ import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
-import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -27,9 +25,7 @@ import com.example.furnitureapp.models.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.views.user.UserSettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
 import kotlinx.android.synthetic.main.fragment_user_setting.view.*
 

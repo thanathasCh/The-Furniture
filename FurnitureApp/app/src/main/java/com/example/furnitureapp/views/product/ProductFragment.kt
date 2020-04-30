@@ -1,11 +1,9 @@
 package com.example.furnitureapp.views.product
 
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +12,11 @@ import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.purchase.PurchaseFragment
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.models.CartViewModel
+import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.ToastBuilder
 import kotlinx.android.synthetic.main.fragment_product.view.*
@@ -29,18 +30,19 @@ class ProductFragment : Fragment() {
     companion object Product {
         lateinit var productView: View
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         productView = inflater.inflate(R.layout.fragment_product, container, false)
-
+//        clearSharePref()
         val back = productView.findViewById<View>(R.id.back_product_btn)
         val img = productView.findViewById<View>(R.id.prod_img) as SliderImage
         val addToCart = productView.findViewById<View>(R.id.add_to_cart)
         val purchase = productView.findViewById<View>(R.id.purchase)
-//        clearSharePref()
+        clearSharePref()
         val id = arguments?.getString("id")
         val name = arguments?.getString("name")
         val code = arguments?.getString("code")
@@ -67,61 +69,101 @@ class ProductFragment : Fragment() {
             fragmentManager.popBackStack()
         }
         addToCart.setOnClickListener {
-            if (id != null) {
-                storeSharePref(code.toString(), id)
-                ToastBuilder().createShortToast(getString(R.string.added_cart))
+
+//            if (userSharePref != null && !userSharePref.isLogin()) {
+//                val cartPref = CartSharedPreference(MainActivity.mainThis)
+//                val carts = cartPref.retrieveCarts()
+//                carts.add(CartViewModel(Id="testing"))
+//                cartPref.saveCarts(carts)
+//                if (id != null) {
+//                    if (cartPref != null) {
+//                        var cart = ArrayList<CartViewModel>()
+//                        if (cartPref.retrieveCarts() == null) {
+//                            e("cart is pref,", "null")
+//                            cart.add(
+//                                (CartViewModel(
+//                                    ProductId = id,
+//                                    Quantity = 1,
+//                                    Product = ProductViewModel(
+//                                        Id = id!!,
+//                                        Name = name!!,
+//                                        Price = price!!,
+//                                        ImageUrls = images!!
+//                                    )
+//                                ))
+//                            )
+//                            cartPref?.saveCarts(cart)
+//                        }else{
+//                            for( i in cartPref.retrieveCarts()){
+//                                cart.add(i)
+//                                e("print cart pref : ",cartPref.retrieveCarts()[i].toString())
+//                                e("print cart: ",cart[i].toString())
+//                            }
+//                            cartPref.addCart(id)
+//                            e("size :", cartPref.retrieveCarts().size.toString())
+//                            cart.add((CartViewModel(ProductId = id, Quantity = 1,Product = ProductViewModel(Id= id!!,Name = name!!,Price = price!!, ImageUrls = images!!))))
+//                            cartPref?.saveCarts(cart)
+//                            e("cart pref,","not null")
+//                        }
+
+//                        }
+//
+//                        ToastBuilder().createShortToast(getString(R.string.added_cart))
+//                    }
+//                }
+
             }
-        }
 
 
-        purchase.setOnClickListener {
-            val alertBuilder = AlertBuilder()
+            purchase.setOnClickListener {
+                val alertBuilder = AlertBuilder()
 
-            if (!available!!) {
-                alertBuilder.showOkAlert(getString(R.string.product_not_available))
-            } else {
-                MainActivity.mainSrl.isRefreshing = true
-                if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                    alertBuilder.showYesNoAlert(getString(R.string.login_required),
-                        yesOpt = {
-                            val login = LoginFragment()
-                            val fragmentManager = activity!!.supportFragmentManager
-                            val fragmentTransaction = fragmentManager.beginTransaction()
-                            fragmentTransaction.replace(R.id.frame_layout, login)
-                            fragmentTransaction.addToBackStack(null)
-                            fragmentTransaction.commit()
-                        })
+                if (!available!!) {
+                    alertBuilder.showOkAlert(getString(R.string.product_not_available))
                 } else {
-                    val bundle = Bundle()
-                    val purchaseFragment = PurchaseFragment()
-                    bundle.putString("id", id)
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val fragmentTransaction = fragmentManager.beginTransaction()
-                    purchaseFragment.arguments = bundle
-                    fragmentTransaction.replace(R.id.frame_layout, purchaseFragment)
-                    fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.commit()
-                }
+                    MainActivity.mainSrl.isRefreshing = true
+                    if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
+                        alertBuilder.showYesNoAlert(getString(R.string.login_required),
+                            yesOpt = {
+                                val login = LoginFragment()
+                                val fragmentManager = activity!!.supportFragmentManager
+                                val fragmentTransaction = fragmentManager.beginTransaction()
+                                fragmentTransaction.replace(R.id.frame_layout, login)
+                                fragmentTransaction.addToBackStack(null)
+                                fragmentTransaction.commit()
+                            })
+                    } else {
+                        val bundle = Bundle()
+                        val purchaseFragment = PurchaseFragment()
+                        bundle.putString("id", id)
+                        val fragmentManager = activity!!.supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        purchaseFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frame_layout, purchaseFragment)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
+                    }
 
-                MainActivity.mainSrl.isRefreshing = false
+                    MainActivity.mainSrl.isRefreshing = false
+                }
             }
+
+            return productView
         }
 
-        return productView
+        private fun storeSharePref(code: String, id: String) {
+            val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
+            val editor = sharedPref?.edit()
+            editor?.putString(code, id)
+            editor?.apply()
+        }
+
+
+        fun clearSharePref() {
+            val sharedPref = this.activity?.getSharedPreferences("Cart", Context.MODE_PRIVATE)
+            val editor = sharedPref?.edit()?.clear()
+            editor?.apply()
+        }
+
+
     }
-
-    private fun storeSharePref(code:String, id: String) {
-        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-        val editor = sharedPref?.edit()
-        editor?.putString(code, id)
-        editor?.apply()
-    }
-
-    fun clearSharePref() {
-        val sharedPref = this.activity?.getSharedPreferences("Furniture", Context.MODE_PRIVATE)
-        val editor = sharedPref?.edit()?.clear()
-        editor?.apply()
-    }
-
-
-}
