@@ -3,6 +3,7 @@ package com.example.furnitureapp.views.cart
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
@@ -45,6 +47,8 @@ class CartFragment : Fragment() {
         MainActivity.mainSrl.isRefreshing = true
         cartAdapter = CartAdapter(carts, this)
 
+        val cartShare = CartSharedPreference(MainActivity.mainThis)
+        Log.e("Product After Add", cartShare.retrieveCarts().size.toString())
         delete.setOnClickListener {
 //            if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
 //                val adapter = recycler_view_cart.adapter as CartAdapter

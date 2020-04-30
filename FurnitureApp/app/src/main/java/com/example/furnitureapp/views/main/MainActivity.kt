@@ -18,6 +18,7 @@ import com.example.furnitureapp.data.api.AnnouncementApi
 import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.data.repository.CartRepository
@@ -104,6 +105,13 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        val cartShare = CartSharedPreference(mainThis)
+        val carts = cartShare.retrieveCarts()
+        carts.add(CartViewModel(Id="TEST"))
+        cartShare.saveCarts(carts)
+
+        Log.d("DEBUG", cartShare.retrieveCarts().toString())
 
         main_srl.setOnRefreshListener {
             main_srl.setColorSchemeColors(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light)

@@ -14,8 +14,10 @@ import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.purchase.PurchaseFragment
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.ToastBuilder
 import kotlinx.android.synthetic.main.fragment_product.view.*
@@ -68,6 +70,11 @@ class ProductFragment : Fragment() {
         }
         addToCart.setOnClickListener {
             if (id != null) {
+                val cartShare = CartSharedPreference(MainActivity.mainThis)
+                val carts = cartShare.retrieveCarts()
+                Log.e("Product Before Add", carts.size.toString())
+                carts.add(CartViewModel(ProductId=id))
+                cartShare.saveCarts(carts)
                 storeSharePref(code.toString(), id)
                 ToastBuilder().createShortToast(getString(R.string.added_cart))
             }
