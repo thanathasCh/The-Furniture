@@ -99,7 +99,13 @@ class PurchaseFragment : Fragment() {
         next.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("id", id)
+            bundle.putString("name",name)
+            bundle.putString("code",code)
+            bundle.putStringArrayList("image",images)
             bundle.putInt("amount", currentAmount)
+            if (price != null) {
+                bundle.putDouble("price", price)
+            }
             val confirmPurchase = ConfirmPurchaseFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()

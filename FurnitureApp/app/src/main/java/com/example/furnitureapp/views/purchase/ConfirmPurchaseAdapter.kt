@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.R
+import com.example.furnitureapp.models.ProductViewModel
+import kotlinx.android.synthetic.main.browse_cell.view.*
 import kotlinx.android.synthetic.main.purchase_cell.view.*
 
 
 class ConfirmPurchaseAdapter(
-    val product: ArrayList<Product>,
+    val product: ArrayList<ProductViewModel>,
     val context: ConfirmPurchaseFragment
 ) : RecyclerView.Adapter<ConfirmPurchaseAdapter.CustomViewHolder>() {
 
@@ -38,12 +41,15 @@ class ConfirmPurchaseAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val product = product[position]
-        holder.itemView.con_name.text = product.name
-        holder.itemView.con_code.text = product.code
-        holder.itemView.con_price.text = product.price.toString()
-        holder.itemView.con_amount.text = "x"+product.available
-        holder.itemView.con_total.text = (product.price*product.available).toString()
-        holder.itemView.con_img.setImageResource(product.image)
+        holder.itemView.con_name.text = product.Name
+        holder.itemView.con_code.text = product.Code
+        holder.itemView.con_price.text = product.Price.toString()
+        holder.itemView.con_amount.text = "x"+product.ProductStock
+        holder.itemView.con_total.text = (product.Price*product.ProductStock).toString()
+        Glide.with(context)
+            .load(product.ImageUrls[0])
+            .placeholder(R.drawable.loading)
+            .into(holder.itemView.con_img)
 
 
     }

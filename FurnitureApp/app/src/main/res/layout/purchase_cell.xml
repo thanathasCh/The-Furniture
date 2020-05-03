@@ -2,6 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/whitecell"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:layout_height="120dp">
 
     <ImageView
@@ -95,11 +99,12 @@
         android:layout_toLeftOf="@id/baht"
         android:text="Total:"
         android:layout_marginRight="5dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/light_grey"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:background="@color/light_grey"/>-->
 
 
 

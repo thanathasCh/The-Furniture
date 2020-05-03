@@ -121,6 +121,8 @@
         android:layout_height="1dp"
         android:layout_below="@id/address"
         android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@color/black"/>
     <TextView
         android:id="@+id/purchase_detail"

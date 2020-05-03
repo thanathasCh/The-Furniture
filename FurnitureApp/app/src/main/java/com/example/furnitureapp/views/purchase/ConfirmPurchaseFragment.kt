@@ -17,6 +17,7 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
+import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.productData
@@ -30,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_n
  */
 class ConfirmPurchaseFragment : Fragment() {
 
-    var currentPurchaseItem = ArrayList<Product>()
+    var currentPurchaseItem = ArrayList<ProductViewModel>()
     var product = ProductController()
     var isPickUp = true
     var index = ArrayList<Int>()
@@ -52,8 +53,14 @@ class ConfirmPurchaseFragment : Fragment() {
 
         val id = arguments?.getString("id")
         val amount = arguments?.getInt("amount")
+        val name = arguments?.getString("name")
+        val code = arguments?.getString("code")
+        val size = arguments?.getString("size")
+        val price = arguments?.getDouble("price")
+        val images = arguments?.getStringArrayList("image")
         val listOfID = arguments?.getStringArrayList("cart product")
         val listOfAmount = arguments?.getIntegerArrayList("cart amount")
+        currentPurchaseItem.add(ProductViewModel(Id=id!!, Name = name!!, Price = price!!,ImageUrls = images!!, ProductStock = amount!!,Code = code!!))
 
 
 //        for (userAddress in allUser[userIndex!!].addressList) {
@@ -69,14 +76,14 @@ class ConfirmPurchaseFragment : Fragment() {
 //        }
 
         //Find and Create the in confirm purchase
-        if (id != null) {
-            findProduct(id.toString(), amount!!)
-        } else {
-            for (i in 0 until listOfID!!.size) {
-                e("list of id", listOfID[i])
-                findProduct(listOfID[i], listOfAmount!![i])
-            }
-        }
+//        if (id != null) {
+//            findProduct(id.toString(), amount!!)
+//        } else {
+//            for (i in 0 until listOfID!!.size) {
+//                e("list of id", listOfID[i])
+//                findProduct(listOfID[i], listOfAmount!![i])
+//            }
+//        }
 
         //RecyclerView
         val listOfConfirmPurchase =
@@ -135,30 +142,30 @@ class ConfirmPurchaseFragment : Fragment() {
 
 
     // implement Function
-    fun findProduct(id: String, amount: Int) {
-//        currentPurchaseItem.clear()
-        for (i in productData) {
-            if (i.id.equals(id)) {
-                currentPurchaseItem.add(
-                    Product(
-                        i.id.toString(),
-                        i.name.toString(),
-                        i.size.toString(),
-                        i.code.toString(),
-                        i.price,
-                        i.image,
-                        i.material.toString(),
-                        amount
-                    )
-                )
-            }
-        }
-        for (i in 0 until productData.size-1){
-            if (productData[i].id.equals(id)){
-                index.add(i)
-            }
-        }
-    }
+//    fun findProduct(id: String, amount: Int) {
+////        currentPurchaseItem.clear()
+//        for (i in productData) {
+//            if (i.id.equals(id)) {
+//                currentPurchaseItem.add(
+//                    Product(
+//                        i.id.toString(),
+//                        i.name.toString(),
+//                        i.size.toString(),
+//                        i.code.toString(),
+//                        i.price,
+//                        i.image,
+//                        i.material.toString(),
+//                        amount
+//                    )
+//                )
+//            }
+//        }
+//        for (i in 0 until productData.size-1){
+//            if (productData[i].id.equals(id)){
+//                index.add(i)
+//            }
+//        }
+//    }
 
 
 }
