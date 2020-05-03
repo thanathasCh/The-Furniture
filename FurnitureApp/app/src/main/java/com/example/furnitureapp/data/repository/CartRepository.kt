@@ -31,7 +31,7 @@ class CartRepository(private val context: Context) {
             val cartApi = CartApi()
             cartApi.addCart(user.Id ?: "", productId) {
                 if (it) {
-                    cartApi.getCartByUserId(user.Id ?: "") { carts ->
+                    cartApi.getCartByUserId(user.Id) { carts ->
                         CartSharedPreference(context).saveCarts(carts)
                         callback(true)
                     }

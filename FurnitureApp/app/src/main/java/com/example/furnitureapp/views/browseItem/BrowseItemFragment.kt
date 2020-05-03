@@ -2,6 +2,7 @@ package com.example.furnitureapp.views.browseItem
 
 
 import android.os.Bundle
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,7 @@ class BrowseItemFragment : Fragment(),
         bundle.putStringArrayList("image", product.ImageUrls)
         bundle.putString("material", product.Material)
         bundle.putBoolean("available", product.IsActive)
+        bundle.putInt("stock", product.ProductStock)
         val productFragment = ProductFragment()
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

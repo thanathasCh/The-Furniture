@@ -23,7 +23,7 @@ class CartAdapter(
 ) : RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
 
 
-    var selectProudctPosition = ArrayList<ProductViewModel>()
+    var selectProudctPosition = ArrayList<CartViewModel>()
 
 
     override fun onCreateViewHolder(
@@ -38,10 +38,10 @@ class CartAdapter(
         )
     }
 
-//    fun removeAt(cart:CartViewModel) {
-//        carts.remove(cart)
-//        notifyDataSetChanged()
-//    }
+    fun removeAt(cart:CartViewModel) {
+        carts.remove(cart)
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return carts.size
@@ -61,21 +61,22 @@ class CartAdapter(
         var select = true
 
         //Increase And Decrease Operation
-//        if(product.ProductStock == currentAmount){
-//            holder.itemView.plus.isEnabled = false
-//        }else if(1 == currentAmount){
-//            holder.itemView.minus.isEnabled = false
-//        }
-//
-//        holder.itemView.plus.setOnClickListener {
-//            if(product.ProductStock == currentAmount){
-//                holder.itemView.plus.isEnabled = false
-//            }else{
-//                currentAmount += 1
-//                holder.itemView.quantity.setText(currentAmount.toString())
-//                holder.itemView.minus.isEnabled = true
-//            }
-//        }
+        if(cart.Product.ProductStock == currentAmount){
+            holder.itemView.plus.isEnabled = false
+        }else if(1 == currentAmount){
+            holder.itemView.minus.isEnabled = false
+        }
+
+        holder.itemView.plus.setOnClickListener {
+            if(cart.Product.ProductStock == currentAmount){
+                holder.itemView.plus.isEnabled = false
+            }else{
+                currentAmount += 1
+                holder.itemView.quantity.setText(currentAmount.toString())
+                holder.itemView.minus.isEnabled = true
+            }
+        }
+
         holder.itemView.minus.setOnClickListener {
             if(1 == currentAmount){
                 holder.itemView.minus.isEnabled = false
@@ -92,18 +93,18 @@ class CartAdapter(
         }
 
 
-//
-//        holder.itemView.select.setOnClickListener {
-//            if (select) {
-//                holder.itemView.select.setBackgroundResource(R.drawable.black_cell)
-//                selectProudctPosition.add(cart)
-//                select = false
-//            } else {
-//                holder.itemView.select.setBackgroundResource(R.drawable.border)
-//                selectProudctPosition.remove(cart)
-//                select = true
-//            }
-//        }
+
+        holder.itemView.select.setOnClickListener {
+            if (select) {
+                holder.itemView.select.setBackgroundResource(R.drawable.black_cell)
+                selectProudctPosition.add(cart)
+                select = false
+            } else {
+                holder.itemView.select.setBackgroundResource(R.drawable.border)
+                selectProudctPosition.remove(cart)
+                select = true
+            }
+        }
 
 //        holder.itemView.setOnClickListener {
 //            clickHandler.forwardClick(it,product.name.toString(),product.size.toString(),product.code.toString(),product.price,product.image,product.material.toString(),product.available)

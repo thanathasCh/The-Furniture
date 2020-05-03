@@ -56,17 +56,17 @@ class ConfirmPurchaseFragment : Fragment() {
         val listOfAmount = arguments?.getIntegerArrayList("cart amount")
 
 
-        for (userAddress in allUser[userIndex!!].addressList) {
-            e("address", userAddress.isCurrentAddress.toString())
-            if (userAddress.isCurrentAddress!!) {
-                view.customer.text = userAddress.name
-                view.con_phone_number.text = userAddress.phoneNumber
-                view.con_address_detail.text =
-                    userAddress.road + ", " + userAddress.house + ", " +
-                            userAddress.sub_district + ", " + userAddress.district +
-                            ", " + userAddress.province + "."
-            }
-        }
+//        for (userAddress in allUser[userIndex!!].addressList) {
+//            e("address", userAddress.isCurrentAddress.toString())
+//            if (userAddress.isCurrentAddress!!) {
+//                view.customer.text = userAddress.name
+//                view.con_phone_number.text = userAddress.phoneNumber
+//                view.con_address_detail.text =
+//                    userAddress.road + ", " + userAddress.house + ", " +
+//                            userAddress.sub_district + ", " + userAddress.district +
+//                            ", " + userAddress.province + "."
+//            }
+//        }
 
         //Find and Create the in confirm purchase
         if (id != null) {

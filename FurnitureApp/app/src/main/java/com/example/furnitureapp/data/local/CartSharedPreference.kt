@@ -33,7 +33,6 @@ class CartSharedPreference(private val context: Context) {
         }
     }
 
-    // add cart to shared preference
     fun addCart(productId: String): Boolean {
         val carts = retrieveCarts()
 

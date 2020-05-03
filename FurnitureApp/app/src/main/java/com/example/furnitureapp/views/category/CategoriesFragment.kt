@@ -3,6 +3,7 @@ package com.example.furnitureapp.views.category
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.views.browseItem.BrowseItemFragment
 import com.example.furnitureapp.data.api.ProductApi
+import com.example.furnitureapp.data.local.CartSharedPreference
 import kotlinx.android.synthetic.main.fragment_categories.view.*
 import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.interfaces.Communicator
@@ -81,6 +83,8 @@ class CategoriesFragment : Fragment(),
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+        val cartShare = CartSharedPreference(MainActivity.mainThis)
+        Log.d("DEBUG", cartShare.retrieveCarts().toString())
 
         val categoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
         categoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)

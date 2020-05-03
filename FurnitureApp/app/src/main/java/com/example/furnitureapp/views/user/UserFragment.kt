@@ -1,8 +1,6 @@
 package com.example.furnitureapp.views.user
 
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +11,9 @@ import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.services.AlertBuilder
+import kotlinx.android.synthetic.main.yes_no_dialog.*
+import kotlinx.android.synthetic.main.yes_no_dialog.view.*
+import kotlinx.android.synthetic.main.yes_no_dialog.view.yes_btn
 
 //import com.example.furnitureapp.isLogin
 
@@ -58,8 +59,9 @@ class UserFragment : Fragment() {
 
         //Logout Button
         logout.setOnClickListener{
-            AlertBuilder().showYesNoAlert(getString(R.string.logout_confirm),
-            yesOpt = {
+            val alertBuilder = AlertBuilder()
+            val alert = alertBuilder.showYesNoAlert("Logout", getString(R.string.logout_confirm))
+            alert?.yes_btn?.setOnClickListener {
                 UserSharedPreference(MainActivity.mainThis).logOut()
                 val login = LoginFragment()
                 val  fragmentManager = activity!!.supportFragmentManager
@@ -67,7 +69,10 @@ class UserFragment : Fragment() {
                 fragmentTransaction.replace(R.id.frame_layout, login)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
-            })
+                alertBuilder.dismiss()
+            }
+
+
         }
 
         return view
