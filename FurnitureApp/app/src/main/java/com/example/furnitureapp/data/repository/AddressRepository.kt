@@ -7,6 +7,7 @@ import com.example.furnitureapp.data.api.AddressApi
 import com.example.furnitureapp.data.local.AddressSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.AddressViewModel
+import com.example.furnitureapp.views.main.MainActivity
 
 class AddressRepository(private val context: Context) {
     // Get address
@@ -21,6 +22,10 @@ class AddressRepository(private val context: Context) {
                 requestAddressApi(userId, callback)
             }
         }
+    }
+
+    fun saveAddresses(addresses: ArrayList<AddressViewModel>) {
+        AddressSharedPreference(MainActivity.mainThis).saveAddresses(addresses)
     }
 
     // add new address to user
