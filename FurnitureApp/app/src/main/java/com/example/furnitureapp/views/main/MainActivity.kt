@@ -104,11 +104,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val cartShare = CartSharedPreference(mainThis)
-
-
-        Log.d("DEBUG", cartShare.retrieveCarts().toString())
-
         main_srl.setOnRefreshListener {
             main_srl.setColorSchemeColors(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light)
             when (pageId) {
