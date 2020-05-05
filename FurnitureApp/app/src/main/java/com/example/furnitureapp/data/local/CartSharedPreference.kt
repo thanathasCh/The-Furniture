@@ -22,7 +22,6 @@ class CartSharedPreference(private val context: Context) {
     }
     fun saveLoginCart(carts: ArrayList<CartViewModel>) {
         val cartJson = Gson().toJson(carts)
-//        Log.e("CARTS", cartJson)
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putString(sharePreferenceLogin, cartJson)
             apply()
@@ -33,7 +32,6 @@ class CartSharedPreference(private val context: Context) {
         val cartJson = context.getSharedPreferences(
             sharedPreferenceKey, Context.MODE_PRIVATE
         ).getString(sharePreferenceLogin, "")
-//        Log.e("CARTS", cartJson)
         return if (cartJson.isNullOrEmpty()) {
             ArrayList()
         } else {

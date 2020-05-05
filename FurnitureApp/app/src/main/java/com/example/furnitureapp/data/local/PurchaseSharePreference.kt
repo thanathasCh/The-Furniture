@@ -5,13 +5,13 @@ import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.services.fromJson
 import com.google.gson.Gson
 
-class PurchaseSharePreference (private val context: Context){
+class PurchaseSharePreference (private val context: Context) {
     private val sharedPreferenceKey = "Purchase"
     private val sharedPreferencePurchase = "CartPurchase"
 
     fun savePurchase(carts: ArrayList<CartViewModel>){
         val cartJson = Gson().toJson(carts)
-//        Log.e("CARTS", cartJson)
+
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putString(sharedPreferencePurchase, cartJson)
             apply()

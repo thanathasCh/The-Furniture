@@ -48,12 +48,12 @@ class CartRepository(private val context: Context) {
     // update quantity of specific product in cart, pass product id and quantity
     fun updateCart(id: String, quantity: Int, callback: (Boolean) -> Unit) {
         if (UserSharedPreference(context).isLogin()) {
-            val user = UserSharedPreference(context).retrieveUser()
+            val userId = UserSharedPreference(context).getUserId()
             val cartApi = CartApi()
 
-            cartApi.updateCart(user.Id ?: "", quantity) {
+            cartApi.updateCart(userId, quantity) {
                 if (it) {
-                    cartApi.getCartByUserId(user.Id ?: "") { cart ->
+                    cartApi.getCartByUserId(userId) { cart ->
                         CartSharedPreference(context).saveCarts(cart)
                         callback(true)
                     }
@@ -63,6 +63,22 @@ class CartRepository(private val context: Context) {
             }
         } else {
             callback(CartSharedPreference(context).updateCart(id, quantity))
+        }
+    }
+
+    fun removeCart(id: String, callback: (Boolean) -> Unit) {
+        val userId = UserSharedPreference(context).getUserId()
+        val cartApi = CartApi()
+
+        cartApi.removeCart(id) {
+            if (it) {
+                cartApi.getCartByUserId(userId) { cart ->
+                    CartSharedPreference(context).saveCarts(cart)
+                    callback(true)
+                }
+            } else {
+                callback(false)
+            }
         }
     }
 

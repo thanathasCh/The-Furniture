@@ -43,6 +43,16 @@ class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
+    fun removeCart(id: String, callback: (Boolean) -> Unit) {
+        db.document(id).delete()
+            .addOnCompleteListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(true)
+            }
+    }
+
     private fun getCarts(userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
         val carts = ArrayList<CartViewModel>()
         db.whereEqualTo("UserId", userId)
