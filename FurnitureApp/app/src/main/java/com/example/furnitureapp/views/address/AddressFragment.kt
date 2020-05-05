@@ -101,10 +101,15 @@ class AddressFragment : Fragment(),
                 var saveAddress = address[0]
                 address[0] = address[index]
                 address[index] = saveAddress
+
+                addresses.clear()
+                addresses.addAll(address)
+                addressAdapter.notifyDataSetChanged()
+
                 AddressRepository(MainActivity.mainThis).saveAddresses(address)
                 MainActivity.mainSrl.isRefreshing = false
+                alertBuilder.dismiss()
             }
-            alertBuilder.dismiss()
         }
     }
 
