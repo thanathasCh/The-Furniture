@@ -14,15 +14,18 @@ import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.local.PurchaseSharePreference
+import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.AddressRepository
+import com.example.furnitureapp.models.*
 import com.example.furnitureapp.views.address.AddressFragment
-import com.example.furnitureapp.models.Product
-import com.example.furnitureapp.models.ProductController
-import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.allUser
 import com.example.furnitureapp.services.productData
 import com.example.furnitureapp.services.userIndex
+import com.example.furnitureapp.views.address.AddressAdapter
 import com.example.furnitureapp.views.main.HomeFragment
+import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
 
@@ -31,9 +34,10 @@ import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_n
  */
 class ConfirmPurchaseFragment : Fragment() {
 
-    var currentPurchaseItem = ArrayList<ProductViewModel>()
+    var currentPurchaseItem = ArrayList<CartViewModel>()
     var product = ProductController()
     var isPickUp = true
+    var addresses = ArrayList<AddressViewModel>()
     var index = ArrayList<Int>()
 
 
@@ -58,9 +62,19 @@ class ConfirmPurchaseFragment : Fragment() {
         val size = arguments?.getString("size")
         val price = arguments?.getDouble("price")
         val images = arguments?.getStringArrayList("image")
-        val listOfID = arguments?.getStringArrayList("cart product")
-        val listOfAmount = arguments?.getIntegerArrayList("cart amount")
-        currentPurchaseItem.add(ProductViewModel(Id=id!!, Name = name!!, Price = price!!,ImageUrls = images!!, ProductStock = amount!!,Code = code!!))
+        val fromCart = arguments?.getBoolean("cart")
+        val userSharePreference = UserSharedPreference(MainActivity.mainThis)
+
+        AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+            var address = it
+            addresses.clear()
+            addresses.addAll(it)
+            view.customer.text = addresses[0].Name
+            view.con_phone_number.text = addresses[0].TelephoneNumber
+            view.con_address_detail.text =
+                addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
+            MainActivity.mainSrl.isRefreshing = false
+        }
 
 
 //        for (userAddress in allUser[userIndex!!].addressList) {
@@ -86,11 +100,32 @@ class ConfirmPurchaseFragment : Fragment() {
 //        }
 
         //RecyclerView
-        val listOfConfirmPurchase =
-            view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
-        listOfConfirmPurchase.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
-        listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem, this)
+        if (fromCart == true) {
+            val purchaseSharePreference = PurchaseSharePreference(MainActivity.mainThis)
+            val listOfConfirmPurchase =
+                view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
+            listOfConfirmPurchase.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+            listOfConfirmPurchase.adapter =
+                ConfirmPurchaseAdapter(purchaseSharePreference.retrievePurchase(), this)
+        } else {
+            currentPurchaseItem.add(
+                CartViewModel(
+                    Id = userSharePreference.getUserId(), Product = ProductViewModel(
+                        Id = id!!,
+                        Name = name!!,
+                        Price = price!!,
+                        ImageUrls = images!!,
+                        Code = code!!
+                    ), Quantity = amount!!
+                )
+            )
+            val listOfConfirmPurchase =
+                view.findViewById<RecyclerView>(R.id.purchase_recycler_view) as RecyclerView
+            listOfConfirmPurchase.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+            listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem, this)
+        }
 
 
         //Button Action

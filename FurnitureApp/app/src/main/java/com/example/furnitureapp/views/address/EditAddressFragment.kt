@@ -45,7 +45,6 @@ class EditAddressFragment : Fragment(){
 
         if (!isAdd) {
             val addressBuf = Gson().fromJson<AddressViewModel>(addressJson)
-
             name.setText(addressBuf.Name)
             phone.setText(addressBuf.TelephoneNumber)
             house.setText(addressBuf.Address)
@@ -53,6 +52,8 @@ class EditAddressFragment : Fragment(){
             subDistrict.setText(addressBuf.Subdistrict)
             district.setText(addressBuf.District)
             province.setText(addressBuf.Province)
+        }else{
+
         }
 
         view.edit_home.setOnClickListener {

@@ -137,6 +137,8 @@
         android:layout_marginTop="10dp"
         android:textStyle="bold"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@drawable/whitecell"
+        android:layout_margin="5dp"
         android:id="@+id/purchase_recycler_view"
         android:layout_below="@id/purchase_detail"
         android:layout_width="match_parent"

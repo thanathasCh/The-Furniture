@@ -15,6 +15,7 @@ import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
@@ -74,14 +75,18 @@ class ProductFragment : Fragment() {
             fragmentManager.popBackStack()
         }
         addToCart.setOnClickListener {
-
             if (UserSharedPreference(MainActivity.mainThis).isLogin()) {
-
+                var cartRepository = CartRepository(MainActivity.mainThis)
+                id?.let { it1 ->
+                    cartRepository.addCart(it1) {
+                        Log.e("Success ?", it.toString())
+                    }
+                }
+                ToastBuilder().createShortToast(getString(R.string.added_cart))
             } else {
                 if (id != null) {
                     val cartShare = CartSharedPreference(MainActivity.mainThis)
                     val carts = cartShare.retrieveCarts()
-                    Log.e("Product Before Add", carts.size.toString())
                     carts.add(
                         CartViewModel(
                             ProductId = id,
@@ -112,7 +117,8 @@ class ProductFragment : Fragment() {
             } else {
                 MainActivity.mainSrl.isRefreshing = true
                 if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                    val alert = alertBuilder.showYesNoAlert("Login",getString(R.string.login_required))
+                    val alert =
+                        alertBuilder.showYesNoAlert("Login", getString(R.string.login_required))
                     alert?.yes_btn?.setOnClickListener {
                         val login = LoginFragment()
                         val fragmentManager = activity!!.supportFragmentManager
@@ -126,9 +132,9 @@ class ProductFragment : Fragment() {
                     val bundle = Bundle()
                     val purchaseFragment = PurchaseFragment()
                     bundle.putString("id", id)
-                    bundle.putString("name",name)
-                    bundle.putString("code",code)
-                    bundle.putStringArrayList("image",images)
+                    bundle.putString("name", name)
+                    bundle.putString("code", code)
+                    bundle.putStringArrayList("image", images)
                     if (price != null) {
                         bundle.putDouble("price", price)
                     }

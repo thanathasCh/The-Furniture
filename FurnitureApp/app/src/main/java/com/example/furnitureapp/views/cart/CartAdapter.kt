@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.browse_cell.view.item_img
 import kotlinx.android.synthetic.main.browse_cell.view.name
 import kotlinx.android.synthetic.main.browse_cell.view.price
 import kotlinx.android.synthetic.main.cart_cell.view.*
+import kotlin.math.log
 
 
 class CartAdapter(
@@ -50,10 +51,11 @@ class CartAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val cart = carts[position]
         var currentAmount = 1
+        var currentPrice = cart.Product.Price
         holder.itemView.name.text = cart.Product.Name
         holder.itemView.code.text = cart.Product.Code
         holder.itemView.price.text = cart.Product.Price.toString()
-//        Log.e("Cart in share pref: ", cart.Product.Name)
+//        Log.e("image url: ", cart.Product.ImageUrls[0])
         Glide.with(context)
             .load(cart.Product.ImageUrls[0])
             .placeholder(R.drawable.loading)
@@ -72,6 +74,8 @@ class CartAdapter(
                 holder.itemView.plus.isEnabled = false
             }else{
                 currentAmount += 1
+                currentPrice += cart.Product.Price
+                holder.itemView.price.text = currentPrice.toString()
                 holder.itemView.quantity.setText(currentAmount.toString())
                 holder.itemView.minus.isEnabled = true
             }
@@ -81,7 +85,9 @@ class CartAdapter(
             if(1 == currentAmount){
                 holder.itemView.minus.isEnabled = false
             }else{
+                currentPrice -= cart.Product.Price
                 currentAmount -= 1
+                holder.itemView.price.text = currentPrice.toString()
                 holder.itemView.quantity.setText(currentAmount.toString())
                 holder.itemView.plus.isEnabled = true
             }
@@ -97,7 +103,11 @@ class CartAdapter(
         holder.itemView.select.setOnClickListener {
             if (select) {
                 holder.itemView.select.setBackgroundResource(R.drawable.black_cell)
-                selectProudctPosition.add(cart)
+                var localCart = cart
+                localCart.Quantity = currentAmount
+                Log.e("current amount: ", localCart.Quantity.toString())
+                selectProudctPosition.add(localCart)
+
                 select = false
             } else {
                 holder.itemView.select.setBackgroundResource(R.drawable.border)

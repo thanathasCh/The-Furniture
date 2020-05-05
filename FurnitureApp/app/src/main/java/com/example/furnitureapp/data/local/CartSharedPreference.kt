@@ -9,6 +9,7 @@ import com.google.gson.Gson
 class CartSharedPreference(private val context: Context) {
     private val sharedPreferenceKey = "Cart"
     private val sharedPreferenceCart = "UserCart"
+    private val sharePreferenceLogin = "LoginCart"
 
     // save carts to shared preference
     fun saveCarts(carts: ArrayList<CartViewModel>) {
@@ -17,6 +18,26 @@ class CartSharedPreference(private val context: Context) {
         with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
             putString(sharedPreferenceCart, cartJson)
             apply()
+        }
+    }
+    fun saveLoginCart(carts: ArrayList<CartViewModel>) {
+        val cartJson = Gson().toJson(carts)
+//        Log.e("CARTS", cartJson)
+        with(context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE).edit()) {
+            putString(sharePreferenceLogin, cartJson)
+            apply()
+        }
+    }
+
+    fun retrieveLoginCart(): ArrayList<CartViewModel>{
+        val cartJson = context.getSharedPreferences(
+            sharedPreferenceKey, Context.MODE_PRIVATE
+        ).getString(sharePreferenceLogin, "")
+//        Log.e("CARTS", cartJson)
+        return if (cartJson.isNullOrEmpty()) {
+            ArrayList()
+        } else {
+            Gson().fromJson<ArrayList<CartViewModel>>(cartJson)
         }
     }
 
@@ -44,6 +65,12 @@ class CartSharedPreference(private val context: Context) {
             }
         }
         return false
+    }
+
+    fun clearCart() {
+        val sharedPref = context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()?.clear()
+        editor?.apply()
     }
 
     // update cart in shared preference

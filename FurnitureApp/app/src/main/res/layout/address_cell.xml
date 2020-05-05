@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/address_cell"
     android:layout_width="match_parent"
     android:background="@drawable/border"
     android:layout_margin="5dp"
@@ -25,6 +26,15 @@
         android:fontFamily="@font/custom"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"/>
+    <TextView
+        android:id="@+id/current_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/custom"
+        android:layout_toRightOf="@id/address_phone_number"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/address_detail"

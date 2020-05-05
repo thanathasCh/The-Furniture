@@ -47,6 +47,9 @@ class AddressAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
+        if (position == 0){
+            holder.itemView.current_address.text = "Current Address"
+        }
         holder.itemView.address_name.text  = address.Name
         holder.itemView.address_phone_number.text = address.TelephoneNumber
         holder.itemView.address_detail.text = address.getFullAddress()
@@ -55,8 +58,9 @@ class AddressAdapter(
             clickHandler.clickWithDataTransfer(it, Gson().toJson(address))
         }
 
-        holder.itemView.address_name.setOnClickListener {
-            clickHandler.clickToSelect(it,address.Id)
+        holder.itemView.address_cell.setOnClickListener {
+            clickHandler.clickToSelect(it,position)
+            notifyDataSetChanged()
         }
     }
 

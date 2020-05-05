@@ -1,6 +1,7 @@
 package com.example.furnitureapp.data.repository
 
 import android.content.Context
+import android.util.Log.e
 import com.example.furnitureapp.data.api.CartApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
@@ -12,12 +13,12 @@ class CartRepository(private val context: Context) {
     //Get Cart by user (don't have to pass parameter)
     fun fetchCartByUserId(isRemotePreferred: Boolean, callback: (ArrayList<CartViewModel>) -> Unit) {
         val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
-
+        e("user id ", userId)
         if (isRemotePreferred) {
             requestCartApi(userId, callback)
         } else {
             if (isExisted()) {
-                callback(CartSharedPreference(context).retrieveCarts())
+                callback(CartSharedPreference(context).retrieveLoginCart())
             } else {
                 requestCartApi(userId, callback)
             }
@@ -80,6 +81,6 @@ class CartRepository(private val context: Context) {
     }
 
     private fun saveCart(carts: ArrayList<CartViewModel>) {
-        CartSharedPreference(context).saveCarts(carts)
+        CartSharedPreference(context).saveLoginCart(carts)
     }
 }

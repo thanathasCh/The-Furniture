@@ -17,9 +17,11 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.models.AddressViewModel
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_address.*
+import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -37,6 +39,7 @@ class AddressFragment : Fragment(),
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private var colorDrawableBackground = ColorDrawable(parseColor("#f7f7f7"))
     private lateinit var deleteIcon: Drawable
+    lateinit var addressAdapter: AddressAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,12 +93,19 @@ class AddressFragment : Fragment(),
         return view
     }
 
-    override fun clickToSelect(holder: View, id: String) {
-//        for(i in currentUserAddress){
-//            i.isCurrentAddress = i.id.equals(id)
-//        }
-//        val fragment = activity!!.supportFragmentManager
-//        fragment.popBackStack()
+    override fun clickToSelect(holder: View, index: Int) {
+        var alertBuilder = AlertBuilder()
+        alertBuilder.showYesNoAlert("Address","Set as Current Address").yes_btn.setOnClickListener {
+            AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+                var address = it
+                var saveAddress = address[0]
+                address[0] = address[index]
+                address[index] = saveAddress
+                AddressRepository(MainActivity.mainThis).saveAddresses(address)
+                MainActivity.mainSrl.isRefreshing = false
+            }
+            alertBuilder.dismiss()
+        }
     }
 
     override fun clickListener(holder: View, id: String?) {

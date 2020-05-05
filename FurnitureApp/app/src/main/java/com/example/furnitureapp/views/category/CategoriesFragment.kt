@@ -125,7 +125,7 @@ class CategoriesFragment : Fragment(),
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun clickToSelect(holder: View, id: String) {
+    override fun clickToSelect(holder: View, id: Int) {
         TODO("Not yet implemented")
     }
 }
