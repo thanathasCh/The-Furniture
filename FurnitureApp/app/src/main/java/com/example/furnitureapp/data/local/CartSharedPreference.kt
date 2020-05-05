@@ -76,7 +76,6 @@ class CartSharedPreference(private val context: Context) {
     // update cart in shared preference
     fun updateCart(productId: String, quantity: Int): Boolean {
         val carts = retrieveCarts()
-
         for (i in carts) {
             if (i.ProductId == productId) {
                 i.Quantity = quantity
