@@ -12,12 +12,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.encrypt
 import com.example.furnitureapp.services.hideKeyboard
+import com.example.furnitureapp.views.cart.CartAdapter
+import com.example.furnitureapp.views.cart.CartFragment
 import com.example.furnitureapp.views.main.HomeFragment
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.view.*
@@ -35,9 +40,9 @@ class LoginFragment : Fragment() {
         var isFromUser = false
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        isFromUser = if(arguments?.getBoolean("from user") != null) {
+        isFromUser = if (arguments?.getBoolean("from user") != null) {
             arguments?.getBoolean("from user")!!
-        }else{
+        } else {
             false
         }
         e("is from ", isFromUser.toString())
@@ -58,14 +63,29 @@ class LoginFragment : Fragment() {
         login.setOnClickListener {
             view.hideKeyboard()
             val alertBuilder = AlertBuilder()
+            var cartShare = CartSharedPreference(MainActivity.mainThis)
             MainActivity.mainSrl.isRefreshing = true
 
-            UserApi().isExist(view.login_email.text.toString(), view.login_password.text.toString().encrypt()) {
+            UserApi().isExist(
+                view.login_email.text.toString(),
+                view.login_password.text.toString().encrypt()
+            ) {
                 if (it) {
                     UserSharedPreference(MainActivity.mainThis).logIn()
 
                     if (isFromUser) {
+
                         alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                            CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
+                                if (cartShare.retrieveCarts().size != 0) {
+                                    for (i in cartShare.retrieveCarts()) {
+                                        CartRepository(MainActivity.mainThis).addCart(i.ProductId) {
+                                            e("success ?:", it.toString())
+                                        }
+                                    }
+                                }
+                                MainActivity.mainSrl.isRefreshing = false
+                            }
                             val home = HomeFragment()
                             val fragmentManager = activity!!.supportFragmentManager
                             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -75,6 +95,16 @@ class LoginFragment : Fragment() {
                         }
                     } else {
                         alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                            CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
+                                if (cartShare.retrieveCarts().size != 0) {
+                                    for (i in cartShare.retrieveCarts()) {
+                                        CartRepository(MainActivity.mainThis).addCart(i.ProductId) {
+                                            e("success ?:", it.toString())
+                                        }
+                                    }
+                                }
+                                MainActivity.mainSrl.isRefreshing = false
+                            }
                             val fragment = activity!!.supportFragmentManager
                             fragment.popBackStack()
                         }

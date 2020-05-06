@@ -71,7 +71,11 @@ class CartFragment : Fragment() {
                     }
                 }else{
                     for (i in adapter.selectProudctPosition){
-                        CartRepository(MainActivity.mainThis)
+                        CartRepository(MainActivity.mainThis).removeCart(i.Id){
+                            e("delete? ", i.Product.toString())
+                            e("delete? ", it.toString())
+                            adapter.removeAt(i)
+                        }
                     }
                 }
                 alertBuilder.dismiss()
@@ -79,19 +83,8 @@ class CartFragment : Fragment() {
         }
         if (UserSharedPreference(MainActivity.mainThis).isLogin()) {
             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
-                if (cartShare.retrieveCarts().size!=0){
-                    for(i in cartShare.retrieveCarts()){
-                        var cartRepository = CartRepository(MainActivity.mainThis).addCart(i.ProductId) {
-                            e("success ?:", it.toString())
-
-                        }
-                    }
-                }
-
+                e("size of db cart,",it.size.toString())
                 var cart = it
-                for(i in cart){
-                    e("images url", i.Product.ImageUrls.toString())
-                }
                 cartAdapter = CartAdapter(cart, this)
                 listOfProduct.layoutManager =
                     LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)

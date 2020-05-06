@@ -25,19 +25,25 @@
         android:fontFamily="@font/custom"
         android:layout_toRightOf="@+id/back_product_btn"/>
 
+    <RelativeLayout
+        android:id="@+id/border_margin"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_below="@id/back"
+        android:layout_margin="5dp"
+        android:background="@drawable/border">
 
         <com.custom.sliderimage.logic.SliderImage
             android:id="@+id/prod_img"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/back"
-            android:padding="10dp"
-            android:background="@drawable/border"/>
+            android:layout_centerInParent="true"
+            android:padding="10dp" />
 
-
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/description"
@@ -48,7 +54,7 @@
         android:text="Description:"
         android:textStyle="bold"
         android:textSize="30dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="310dp"
         android:fontFamily="@font/custom"
         android:layout_marginLeft="10dp"/>
     <LinearLayout

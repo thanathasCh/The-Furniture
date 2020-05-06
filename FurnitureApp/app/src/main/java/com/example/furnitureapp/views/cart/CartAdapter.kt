@@ -55,6 +55,7 @@ class CartAdapter(
         holder.itemView.name.text = cart.Product.Name
         holder.itemView.code.text = cart.Product.Code
         holder.itemView.price.text = cart.Product.Price.toString()
+        holder.itemView.quantity.setText(cart.Quantity.toString())
 //        Log.e("image url: ", cart.Product.ImageUrls[0])
         Glide.with(context)
             .load(cart.Product.ImageUrls[0])
@@ -93,12 +94,6 @@ class CartAdapter(
             }
 
         }
-
-        holder.itemView.select.setOnClickListener {
-
-        }
-
-
 
         holder.itemView.select.setOnClickListener {
             if (select) {

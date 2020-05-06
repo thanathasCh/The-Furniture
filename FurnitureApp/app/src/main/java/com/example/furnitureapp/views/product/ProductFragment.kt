@@ -4,6 +4,7 @@ package com.example.furnitureapp.views.product
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,20 +88,30 @@ class ProductFragment : Fragment() {
                 if (id != null) {
                     val cartShare = CartSharedPreference(MainActivity.mainThis)
                     val carts = cartShare.retrieveCarts()
-                    carts.add(
-                        CartViewModel(
-                            ProductId = id,
-                            Quantity = 1,
-                            Id = id,
-                            Product = ProductViewModel(
-                                Name = name!!,
-                                ImageUrls = images!!,
-                                Code = code!!,
-                                Price = price!!,
-                                ProductStock = stock!!
+                    var exist = false
+                    for (i in carts){
+                        if (id == i.ProductId){
+                            i.Quantity += 1
+                            exist = true
+                        }
+                    }
+                    if (!exist){
+                        carts.add(
+                            CartViewModel(
+                                ProductId = id,
+                                Quantity = 1,
+                                Id = id,
+                                Product = ProductViewModel(
+                                    Name = name!!,
+                                    ImageUrls = images!!,
+                                    Code = code!!,
+                                    Price = price!!,
+                                    ProductStock = stock!!
+                                )
                             )
                         )
-                    )
+                    }
+                    e("check exit,", exist.toString())
                     cartShare.saveCarts(carts)
                     ToastBuilder().createShortToast(getString(R.string.added_cart))
                 }
