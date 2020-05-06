@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainThis = this
+
+        val cartRep = CartRepository(this)
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
         homeFragment = HomeFragment()
         supportFragmentManager

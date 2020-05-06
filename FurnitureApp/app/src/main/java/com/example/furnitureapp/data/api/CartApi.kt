@@ -3,7 +3,9 @@ package com.example.furnitureapp.data.api
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Document
 
 class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstance().collection("Carts")) {
 
@@ -52,6 +54,22 @@ class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
                 callback(true)
             }
     }
+
+    fun removeCarts(ids: ArrayList<String>, callback: (Boolean) -> Unit) {
+        val batch = FirebaseFirestore.getInstance().batch()
+        for (id in ids) {
+            batch.delete(db.document(id))
+        }
+
+        batch.commit()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
 
     private fun getCarts(userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
         val carts = ArrayList<CartViewModel>()

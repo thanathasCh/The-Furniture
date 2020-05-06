@@ -82,6 +82,22 @@ class CartRepository(private val context: Context) {
         }
     }
 
+    fun removeCarts(ids: ArrayList<String>, callback: (Boolean) -> Unit) {
+        val userId = UserSharedPreference(context).getUserId()
+        val cartApi = CartApi()
+
+        cartApi.removeCarts(ids) {
+            if (it) {
+                cartApi.getCartByUserId(userId) { cart ->
+                    CartSharedPreference(context).saveCarts(cart)
+                    callback(true)
+                }
+            } else {
+                callback(false)
+            }
+        }
+    }
+
     private fun requestCartApi(userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
         val cartApi = CartApi()
         cartApi.getCartByUserId(userId) {
