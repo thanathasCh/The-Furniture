@@ -15,6 +15,7 @@ import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
+import com.example.furnitureapp.data.api.CartApi
 import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.CartSharedPreference
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainThis = this
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
         homeFragment = HomeFragment()
         supportFragmentManager

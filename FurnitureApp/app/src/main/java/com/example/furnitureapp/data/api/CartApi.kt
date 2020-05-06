@@ -1,9 +1,12 @@
 package com.example.furnitureapp.data.api
 
+import android.util.Log
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Document
 
 class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstance().collection("Carts")) {
 
@@ -52,6 +55,48 @@ class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
                 callback(true)
             }
     }
+
+    fun removeCarts(ids: ArrayList<String>, callback: (Boolean) -> Unit) {
+        val batch = FirebaseFirestore.getInstance().batch()
+        for (id in ids) {
+            batch.delete(db.document(id))
+        }
+
+        batch.commit()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
+    fun isExisted(userId: String, productId: String, callback: (String) -> Unit) {
+        db.whereEqualTo("UserId", userId)
+            .whereEqualTo("ProductId", productId)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful && it.result != null && !it.result!!.isEmpty) {
+                    for (item in it.result!!) {
+                        callback(item.id)
+                    }
+                } else {
+                    callback("")
+                }
+            }
+            .addOnFailureListener {
+                callback("")
+            }
+    }
+
+    fun getQuantityById(id: String, callback: (Int) -> Unit) {
+        db.document(id)
+            .get()
+            .addOnCompleteListener {
+                callback(it.result!!["Quantity"].toString().toInt())
+            }
+    }
+
 
     private fun getCarts(userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
         val carts = ArrayList<CartViewModel>()
