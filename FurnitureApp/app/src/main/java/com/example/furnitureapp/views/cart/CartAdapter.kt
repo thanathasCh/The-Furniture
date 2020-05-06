@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.furnitureapp.R
+import com.example.furnitureapp.interfaces.ClickEventHandler
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import kotlinx.android.synthetic.main.browse_cell.view.code
@@ -25,6 +26,7 @@ class CartAdapter(
 
 
     var selectProudctPosition = ArrayList<CartViewModel>()
+    var clickEventHandler : ClickEventHandler =context
 
 
     override fun onCreateViewHolder(
@@ -50,11 +52,11 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val cart = carts[position]
-        var currentAmount = 1
-        var currentPrice = cart.Product.Price
+        var currentAmount = cart.Quantity
+        var currentPrice = cart.Product.Price*currentAmount
         holder.itemView.name.text = cart.Product.Name
         holder.itemView.code.text = cart.Product.Code
-        holder.itemView.price.text = cart.Product.Price.toString()
+        holder.itemView.price.text = currentPrice.toString()
         holder.itemView.quantity.setText(cart.Quantity.toString())
 //        Log.e("image url: ", cart.Product.ImageUrls[0])
         Glide.with(context)
@@ -93,6 +95,9 @@ class CartAdapter(
                 holder.itemView.plus.isEnabled = true
             }
 
+        }
+        holder.itemView.cart_cell.setOnClickListener {
+            clickEventHandler.forwardClick(it, ProductViewModel(Id = cart.ProductId,Name = cart.Product.Name, Description = cart.Product.Description,Code = cart.Product.Code,Price = cart.Product.Price,ImageUrls = cart.Product.ImageUrls, Material = cart.Product.Material,IsActive = cart.Product.IsActive,ProductStock = cart.Product.ProductStock))
         }
 
         holder.itemView.select.setOnClickListener {

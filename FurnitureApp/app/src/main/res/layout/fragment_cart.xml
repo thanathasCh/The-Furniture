@@ -1,59 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".views.cart.CartFragment">
 
     <RelativeLayout
+        android:id="@+id/title_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/custom"
+            android:padding="10dp"
+            android:text="Cart"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/delete_cart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/delete" />
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/display_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Cart"
-        android:textSize="30dp"
+        android:layout_below="@id/title_cart"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/custom"
         android:textColor="@color/black"
-        android:textStyle="bold" />
-    <ImageView
-        android:id="@+id/delete_cart"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/delete"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"/>
-    </RelativeLayout>
+        android:textSize="30dp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title_cart"
+        android:layout_above="@id/place_order"
         android:layout_margin="5dp" />
-    <RelativeLayout
+
+    <Button
+        android:id="@+id/place_order"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/place_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red_cell"
-            android:text="Place Order"
-            android:fontFamily="@font/custom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"
-            android:textAllCaps="false"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/red_cell"
+        android:fontFamily="@font/custom"
+        android:text="Place Order"
+        android:textAllCaps="false" />
 
 
-
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

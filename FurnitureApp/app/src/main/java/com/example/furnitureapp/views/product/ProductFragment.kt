@@ -106,6 +106,9 @@ class ProductFragment : Fragment() {
                                     ImageUrls = images!!,
                                     Code = code!!,
                                     Price = price!!,
+                                    Description = size!!,
+                                    Material = material!!,
+                                    IsActive = available!!,
                                     ProductStock = stock!!
                                 )
                             )

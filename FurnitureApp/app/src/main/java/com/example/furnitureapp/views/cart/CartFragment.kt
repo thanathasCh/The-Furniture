@@ -18,9 +18,12 @@ import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
+import com.example.furnitureapp.interfaces.ClickEventHandler
 import com.example.furnitureapp.models.CartViewModel
+import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
+import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.purchase.ConfirmPurchaseFragment
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.yes_no_dialog.*
@@ -28,7 +31,7 @@ import kotlinx.android.synthetic.main.yes_no_dialog.*
 /**
  * A simple [Fragment] subclass.
  */
-class CartFragment : Fragment() {
+class CartFragment : Fragment(),ClickEventHandler {
     companion object Cart {
         lateinit var cartAdapter: CartAdapter
         val carts = arrayListOf<CartViewModel>()
@@ -85,6 +88,9 @@ class CartFragment : Fragment() {
             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
                 e("size of db cart,",it.size.toString())
                 var cart = it
+                if (cart.size ==0){
+                    display_empty.text = "Cart is empty"
+                }
                 cartAdapter = CartAdapter(cart, this)
                 listOfProduct.layoutManager =
                     LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
@@ -94,6 +100,9 @@ class CartFragment : Fragment() {
             }
         } else {
             cartAdapter = CartAdapter(cartInLocal, this)
+            if (cartInLocal.size ==0){
+                display_empty.text = "Cart is empty"
+            }
             listOfProduct.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
             listOfProduct.adapter = cartAdapter
@@ -141,6 +150,29 @@ class CartFragment : Fragment() {
         val editor = sharedPref?.edit()
         editor?.apply()
         return sharedPref?.getString(name, null).toString()
+    }
+
+    override fun forwardClick(holder: View, product: ProductViewModel) {
+        val bundle = Bundle()
+        bundle.putString("id", product.Id)
+        bundle.putString("name", product.Name)
+        bundle.putString("size", product.Description)
+        bundle.putString("code", product.Code)
+        bundle.putDouble("price", product.Price)
+        bundle.putStringArrayList("image", product.ImageUrls)
+        bundle.putString("material", product.Material)
+        bundle.putBoolean("available", product.IsActive)
+        bundle.putInt("stock", product.ProductStock)
+        val productFragment = ProductFragment()
+        val fragmentManager = activity!!.supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        productFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frame_layout, productFragment)
+        MainActivity.pageId = R.layout.fragment_product
+        MainActivity.productId = product.Id ?: ""
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+
     }
 
 //    private fun getAllSharePref() {
