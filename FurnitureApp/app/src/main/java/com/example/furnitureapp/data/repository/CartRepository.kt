@@ -3,6 +3,8 @@ package com.example.furnitureapp.data.repository
 import android.content.Context
 import android.util.Log.e
 import com.example.furnitureapp.data.api.CartApi
+import com.example.furnitureapp.data.api.ProductApi
+import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CartViewModel
@@ -121,6 +123,25 @@ class CartRepository(private val context: Context) {
         cartApi.getCartByUserId(userId) {
             saveCart(it)
             callback(it)
+        }
+    }
+
+    fun purchaseCarts(carts: ArrayList<CartViewModel>, callback: (ArrayList<String>?) -> Unit) {
+        val productApi = ProductApi()
+        val transactionApi = TransactionApi()
+
+        productApi.purchaseProducts(carts) {
+            if (it.isEmpty()) {
+                transactionApi.addCartsToTransaction(carts) { it2 ->
+                    if (it2) {
+                        callback(it)
+                    } else {
+                        callback(null)
+                    }
+                }
+            } else {
+                callback(it)
+            }
         }
     }
 

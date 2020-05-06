@@ -2,8 +2,11 @@ package com.example.furnitureapp.data.local
 
 import android.content.Context
 import android.util.Log
+import com.example.furnitureapp.data.api.CartApi
+import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.services.fromJson
 import com.example.furnitureapp.models.CartViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 
 class CartSharedPreference(private val context: Context) {

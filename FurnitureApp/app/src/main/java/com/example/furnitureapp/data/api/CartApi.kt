@@ -97,7 +97,6 @@ class CartApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
-
     private fun getCarts(userId: String, callback: (ArrayList<CartViewModel>) -> Unit) {
         val carts = ArrayList<CartViewModel>()
         db.whereEqualTo("UserId", userId)

@@ -1,6 +1,7 @@
 package com.example.furnitureapp.data.api
 
 import android.util.Log
+import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -112,5 +113,34 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
         }.addOnFailureListener {
             callback(products)
             }
+    }
+
+    fun purchaseProducts(carts: ArrayList<CartViewModel>, callback: (ArrayList<String>) -> Unit) {
+        val failedProducts = ArrayList<String>()
+
+        val batch = FirebaseFirestore.getInstance().batch()
+        val productIds = ArrayList(carts.map { it.ProductId })
+
+        getProductByIds(productIds) { products ->
+            for (i in carts) {
+                val ref = db.document(i.ProductId)
+                val quantity = (products.find { x -> x.Id == i.ProductId } ?: ProductViewModel()).ProductStock
+
+                if (quantity >= i.Quantity) {
+                    batch.update(ref, "ProductStock", quantity - i.Quantity)
+                } else {
+                    failedProducts.add(ref.id)
+                }
+            }
+
+            if (failedProducts.isEmpty()) {
+                batch.commit()
+                    .addOnCompleteListener {
+                        callback(failedProducts)
+                    }
+            } else {
+                callback(failedProducts)
+            }
+        }
     }
 }

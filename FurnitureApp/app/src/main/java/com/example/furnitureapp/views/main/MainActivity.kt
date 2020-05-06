@@ -8,16 +8,13 @@ import android.util.Log
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.api.*
 import com.example.furnitureapp.views.browseItem.BrowseItemFragment
 import com.example.furnitureapp.views.cart.CartFragment
 import com.example.furnitureapp.views.category.CategoriesFragment
 import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
-import com.example.furnitureapp.data.api.AnnouncementApi
-import com.example.furnitureapp.data.api.CartApi
-import com.example.furnitureapp.data.api.ProductApi
-import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -54,6 +51,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainThis = this
+
+        val cartRep = CartRepository(mainThis)
+
+        cartRep.fetchCartByUserId(true) {
+            cartRep.purchaseCarts(it) { it2 ->
+                Log.d("DEBUG", it2.toString())
+            }
+        }
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
         homeFragment = HomeFragment()
