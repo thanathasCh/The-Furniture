@@ -134,7 +134,13 @@ class CartRepository(private val context: Context) {
             if (it.isEmpty()) {
                 transactionApi.addCartsToTransaction(carts) { it2 ->
                     if (it2) {
-                        callback(it)
+                        removeCarts(ArrayList(carts.map { x -> x.Id })) { it3 ->
+                            if (it3) {
+                                callback(it)
+                            } else {
+                                callback(null)
+                            }
+                        }
                     } else {
                         callback(null)
                     }
