@@ -28,16 +28,27 @@ class CartRepository(private val context: Context) {
     //Add Cart to db, use only product id
     fun addCart(productId: String, callback: (Boolean) -> Unit) {
         if (UserSharedPreference(context).isLogin()) {
-            val user = UserSharedPreference(context).retrieveUser()
+            val userId = UserSharedPreference(context).getUserId()
             val cartApi = CartApi()
-            cartApi.addCart(user.Id ?: "", productId) {
-                if (it) {
-                    cartApi.getCartByUserId(user.Id) { carts ->
-                        CartSharedPreference(context).saveCarts(carts)
-                        callback(true)
+
+            cartApi.isExisted(userId, productId) {
+                if (it.isEmpty()) {
+                    cartApi.addCart(userId, productId) { it2 ->
+                        if (it2) {
+                            cartApi.getCartByUserId(userId) { carts ->
+                                CartSharedPreference(context).saveCarts(carts)
+                                callback(true)
+                            }
+                        } else {
+                            callback(false)
+                        }
                     }
                 } else {
-                    callback(false)
+                    cartApi.getQuantityById(it) { quantity ->
+                        cartApi.updateCart(it, quantity + 1) { it3 ->
+                            callback(it3)
+                        }
+                    }
                 }
             }
         } else {
