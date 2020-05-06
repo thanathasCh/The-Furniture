@@ -46,7 +46,14 @@ class CartRepository(private val context: Context) {
                 } else {
                     cartApi.getQuantityById(it) { quantity ->
                         cartApi.updateCart(it, quantity + 1) { it3 ->
-                            callback(it3)
+                            if (it3) {
+                                cartApi.getCartByUserId(userId) { carts ->
+                                    CartSharedPreference(context).saveCarts(carts)
+                                    callback(true)
+                                }
+                            } else {
+                                callback(false)
+                            }
                         }
                     }
                 }
