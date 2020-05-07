@@ -11,19 +11,20 @@ data class TransactionViewModel (
     var PaymentMethod: Int = -1,
     var TotalAmount: Double = 0.0,
     var IsPaid: Boolean = false,
-    var PaidAt: Date = Date(),
+    var PaidAt: Date? = null,
     var IsReserved: Boolean = false,
-    var ReservedAt: Date = Date(),
+    var ReservedAt: Date? = null,
     var IsDelivered: Boolean = false,
-    var DeliveredAt: Date = Date(),
+    var DeliveredAt: Date? = null,
     var IsReceived: Boolean = false,
-    var ReceivedAt: Date = Date(),
+    var ReceivedAt: Date? = null,
     var AddressId: String = "",
+    var IsPickup: Boolean = false,
     var TransactionItems: ArrayList<TransactionItemViewModel> = arrayListOf()
     ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
-        return mapOf(
+        return mapOf (
             "UserId" to UserId,
             "PaymentMethod" to PaymentMethod,
             "TotalAmount" to TotalAmount,
@@ -34,6 +35,7 @@ data class TransactionViewModel (
             "IsDelivered" to IsDelivered,
             "DeliveredAt" to DeliveredAt,
             "AddressId" to AddressId,
+            "IsPickup" to IsPickup,
             "TransactionItems" to TransactionItems.map { x -> x.toMap() }
         )
     }
