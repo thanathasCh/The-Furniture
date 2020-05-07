@@ -84,7 +84,7 @@ class CartAdapter(
                     holder.itemView.plus.isEnabled = false
                 }else{
                     currentAmount += 1
-                    CartRepository(MainActivity.mainThis).updateCart(cart.ProductId,currentAmount){
+                    CartRepository(MainActivity.mainThis).updateCart(cart.Id,currentAmount){
                         e("Update amount in db:", it.toString())
                         e("cart id is:", cart.Id)
                     }

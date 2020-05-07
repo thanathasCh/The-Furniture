@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
         val cartRep = CartRepository(mainThis)
 
         cartRep.fetchCartByUserId(true) {
-            cartRep.purchaseCarts(it) { it2 ->
-                Log.d("DEBUG", it2.toString())
-            }
+//            cartRep.purchaseCarts(it) { it2 ->
+//                Log.d("DEBUG", it2.toString())
+//            }
         }
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)

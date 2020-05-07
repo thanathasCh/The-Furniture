@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
+import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -127,28 +128,6 @@ class ConfirmPurchaseFragment : Fragment() {
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
             listOfConfirmPurchase.adapter = ConfirmPurchaseAdapter(currentPurchaseItem, this)
         }
-
-
-        //Button Action
-        //set button
-        placeOrder.setOnClickListener {
-        if (fromCart!!){
-            val purchaseSharePreference = PurchaseSharePreference(MainActivity.mainThis)
-            CartRepository(MainActivity.mainThis).purchaseCarts(purchaseSharePreference.retrievePurchase()){
-                returnTransition
-            }
-
-        }
-            AlertBuilder().showOkAlert(getString(R.string.purchase_successful)) {
-                val home = HomeFragment()
-                val fragmentManager = activity!!.supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.frame_layout, home)
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
-            }
-        }
-
         pickUp.setOnClickListener {
             isPickUp = true
             delivery.setBackgroundResource(R.drawable.grey_border)
@@ -160,6 +139,45 @@ class ConfirmPurchaseFragment : Fragment() {
             delivery.setBackgroundResource(R.drawable.border)
             address.setBackgroundResource(R.drawable.border)
         }
+
+
+        //Button Action
+        //set button
+        placeOrder.setOnClickListener {
+            var cartRepository = CartRepository(MainActivity.mainThis)
+            if (fromCart!!) {
+                cartRepository.purchaseCarts(PurchaseSharePreference(MainActivity.mainThis).retrievePurchase(), addresses[0].Id, isPickUp){
+                   e("purchase is ", it.toString())
+                }
+                AlertBuilder().showOkAlert(getString(R.string.purchase_successful)) {
+                    val home = HomeFragment()
+                    val fragmentManager = activity!!.supportFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.frame_layout, home)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }
+            } else {
+                var alertBuilder = AlertBuilder()
+                cartRepository.purchaseProduct(id!!,amount!!,addresses[0].Id,isPickUp){
+                   if (it){
+                       alertBuilder.showOkAlert("Purchase Success"){
+                           val home = HomeFragment()
+                           val fragmentManager = activity!!.supportFragmentManager
+                           val fragmentTransaction = fragmentManager.beginTransaction()
+                           fragmentTransaction.replace(R.id.frame_layout, home)
+                           fragmentTransaction.addToBackStack(null)
+                           fragmentTransaction.commit()
+                       }
+                   }else{
+                       alertBuilder.showOkAlert("Purchase Failed")
+                   }
+                }
+            }
+
+        }
+
+
         address.setOnClickListener {
             val address = AddressFragment()
             val fragmentManager = activity!!.supportFragmentManager
