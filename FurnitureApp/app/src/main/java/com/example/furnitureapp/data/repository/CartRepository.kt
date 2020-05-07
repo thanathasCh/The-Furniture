@@ -8,7 +8,12 @@ import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CartViewModel
+import com.example.furnitureapp.models.Product
+import com.example.furnitureapp.models.TransactionItemViewModel
+import com.example.furnitureapp.models.TransactionViewModel
 import com.example.furnitureapp.views.main.MainActivity
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CartRepository(private val context: Context) {
 
@@ -126,13 +131,13 @@ class CartRepository(private val context: Context) {
         }
     }
 
-    fun purchaseCarts(carts: ArrayList<CartViewModel>, addressId: String, callback: (ArrayList<String>?) -> Unit) {
+    fun purchaseCarts(carts: ArrayList<CartViewModel>, addressId: String, isPickUp: Boolean , callback: (ArrayList<String>?) -> Unit) {
         val productApi = ProductApi()
         val transactionApi = TransactionApi()
 
         productApi.purchaseProducts(carts) {
             if (it.isEmpty()) {
-                transactionApi.addCartsToTransaction(carts, addressId) { it2 ->
+                transactionApi.addCartsToTransaction(carts, addressId, isPickUp) { it2 ->
                     if (it2) {
                         removeCarts(ArrayList(carts.map { x -> x.Id })) { it3 ->
                             if (it3) {
@@ -150,6 +155,55 @@ class CartRepository(private val context: Context) {
             }
         }
     }
+
+    fun purchaseProduct(productId: String, quantity: Int, addressId: String, isPickUp: Boolean, callback: (Boolean) -> Unit) {
+        val productApi = ProductApi()
+        val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
+        val transactionApi = TransactionApi()
+
+        productApi.getProductById(productId) { product ->
+            if (product.ProductStock >= quantity) {
+                productApi.purchaseProduct(product.Id, product.ProductStock - quantity) {
+                    if (it) {
+                        val futureDate = Date()
+                        futureDate.date = futureDate.date + 4
+
+                        val transaction = TransactionViewModel (
+                            UserId = userId,
+                            TotalAmount = product.Price * quantity,
+                            AddressId = addressId,
+                            IsPickup = isPickUp,
+                            PaidAt = Date(),
+                            ReceivedAt = if (isPickUp) null else futureDate
+                        )
+
+                        transaction.TransactionItems.add(TransactionItemViewModel(
+                            Product = product,
+                            Quantity = quantity,
+                            TotalAmount = product.Price * quantity
+                        ))
+
+                        transactionApi.addTransaction(transaction, callback)
+                    } else {
+                        callback(false)
+                    }
+                }
+            } else {
+                callback(false)
+            }
+        }
+    }
+
+    /*
+
+        for (cart in carts) {
+            transaction.TransactionItems.add(TransactionItemViewModel(
+                Product = cart.Product,
+                Quantity = cart.Quantity,
+                TotalAmount = cart.Product.Price * cart.Quantity)
+            )
+        }
+     */
 
     private fun isExisted(): Boolean {
         return context.getSharedPreferences(

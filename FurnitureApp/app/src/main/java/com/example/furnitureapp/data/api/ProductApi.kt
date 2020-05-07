@@ -3,6 +3,7 @@ package com.example.furnitureapp.data.api
 import android.util.Log
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
+import com.google.common.math.Quantiles
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -142,5 +143,16 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
                 callback(failedProducts)
             }
         }
+    }
+
+    fun purchaseProduct(productId: String, quantityLeft: Int, callback: (Boolean) -> Unit) {
+        db.document(productId)
+            .update("ProductStock", quantityLeft)
+            .addOnCompleteListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 }

@@ -40,14 +40,21 @@ class TransactionApi(val db: CollectionReference = FirebaseFirestore.getInstance
             }
     }
 
-    fun addCartsToTransaction(carts: ArrayList<CartViewModel>, addressId: String, callback: (Boolean) -> Unit) {
+    fun addCartsToTransaction(carts: ArrayList<CartViewModel>, addressId: String, isPickUp: Boolean,callback: (Boolean) -> Unit) {
         val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
+
+        val futureDate = Date()
+        futureDate.date = futureDate.date + 4
+
         val transaction = TransactionViewModel (
             UserId = userId,
             PaymentMethod = 0,
             TotalAmount = carts.sumByDouble { x -> x.Product.Price * x.Quantity },
             AddressId = addressId,
-            IsPaid = true
+            IsPickup = isPickUp,
+            IsPaid = true,
+            PaidAt = Date(),
+            ReceivedAt = if (isPickUp) null else futureDate
         )
 
         for (cart in carts) {
