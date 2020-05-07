@@ -100,9 +100,9 @@ class CartFragment : Fragment(),ClickEventHandler {
             }
         } else {
             cartAdapter = CartAdapter(cartInLocal, this)
-            if (cartInLocal.size ==0){
-                display_empty.text = "Cart is empty"
-            }
+//            if (cartInLocal.size ==0){
+//                display_empty.text = "Cart is empty"
+//            }
             listOfProduct.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
             listOfProduct.adapter = cartAdapter

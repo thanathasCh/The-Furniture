@@ -2,15 +2,21 @@ package com.example.furnitureapp.views.cart
 
 
 import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.api.CartApi
+import com.example.furnitureapp.data.local.CartSharedPreference
+import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.interfaces.ClickEventHandler
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.browse_cell.view.code
 import kotlinx.android.synthetic.main.browse_cell.view.item_img
 import kotlinx.android.synthetic.main.browse_cell.view.name
@@ -73,27 +79,60 @@ class CartAdapter(
         }
 
         holder.itemView.plus.setOnClickListener {
-            if(cart.Product.ProductStock == currentAmount){
-                holder.itemView.plus.isEnabled = false
+            if (UserSharedPreference(MainActivity.mainThis).isLogin()){
+                if(cart.Product.ProductStock == currentAmount){
+                    holder.itemView.plus.isEnabled = false
+                }else{
+                    currentAmount += 1
+                    CartRepository(MainActivity.mainThis).updateCart(cart.ProductId,currentAmount){
+                        e("Update amount in db:", it.toString())
+                        e("cart id is:", cart.Id)
+                    }
+                    currentPrice += cart.Product.Price
+                    holder.itemView.price.text = currentPrice.toString()
+                    holder.itemView.quantity.setText(currentAmount.toString())
+                    holder.itemView.minus.isEnabled = true
+                }
             }else{
-                currentAmount += 1
-                currentPrice += cart.Product.Price
+                if(cart.Product.ProductStock == currentAmount){
+                    holder.itemView.plus.isEnabled = false
+                }else{
+                    currentAmount += 1
+                    cart.Quantity = currentAmount
+                    CartSharedPreference(MainActivity.mainThis).saveCarts(carts)
+                    currentPrice += cart.Product.Price
+                    holder.itemView.price.text = currentPrice.toString()
+                    holder.itemView.quantity.setText(currentAmount.toString())
+                    holder.itemView.minus.isEnabled = true
+                }
+            }
+
+        }
+
+        holder.itemView.minus.setOnClickListener {
+            if (UserSharedPreference(MainActivity.mainThis).isLogin()){
+                if(1 == currentAmount){
+                    holder.itemView.minus.isEnabled = false
+                }else{
+                    currentPrice -= cart.Product.Price
+                    currentAmount -= 1
+                    CartRepository(MainActivity.mainThis).updateCart(cart.Id,currentAmount){
+                        e("Update amount in db:", it.toString())
+                    }
+                    holder.itemView.price.text = currentPrice.toString()
+                    holder.itemView.quantity.setText(currentAmount.toString())
+                    holder.itemView.plus.isEnabled = true
+                }
+            }else{
+                currentAmount -= 1
+                cart.Quantity = currentAmount
+                CartSharedPreference(MainActivity.mainThis).saveCarts(carts)
+                currentPrice -= cart.Product.Price
                 holder.itemView.price.text = currentPrice.toString()
                 holder.itemView.quantity.setText(currentAmount.toString())
                 holder.itemView.minus.isEnabled = true
             }
-        }
 
-        holder.itemView.minus.setOnClickListener {
-            if(1 == currentAmount){
-                holder.itemView.minus.isEnabled = false
-            }else{
-                currentPrice -= cart.Product.Price
-                currentAmount -= 1
-                holder.itemView.price.text = currentPrice.toString()
-                holder.itemView.quantity.setText(currentAmount.toString())
-                holder.itemView.plus.isEnabled = true
-            }
 
         }
         holder.itemView.cart_cell.setOnClickListener {

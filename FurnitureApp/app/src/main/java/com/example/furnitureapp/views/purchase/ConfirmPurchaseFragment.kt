@@ -17,6 +17,7 @@ import com.example.furnitureapp.*
 import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
+import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.models.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.services.AlertBuilder
@@ -131,13 +132,13 @@ class ConfirmPurchaseFragment : Fragment() {
         //Button Action
         //set button
         placeOrder.setOnClickListener {
-//            for (i in currentPurchaseItem) {
-//                allUser[userIndex!!].productList.add(i)
-//                for (j in productData){
-//                    if (j.id!!.equals(i.id)){
-//                        j.available -= amount!!
-//                    }
-//                }
+        if (fromCart!!){
+            val purchaseSharePreference = PurchaseSharePreference(MainActivity.mainThis)
+            CartRepository(MainActivity.mainThis).purchaseCarts(purchaseSharePreference.retrievePurchase()){
+                returnTransition
+            }
+
+        }
             AlertBuilder().showOkAlert(getString(R.string.purchase_successful)) {
                 val home = HomeFragment()
                 val fragmentManager = activity!!.supportFragmentManager
