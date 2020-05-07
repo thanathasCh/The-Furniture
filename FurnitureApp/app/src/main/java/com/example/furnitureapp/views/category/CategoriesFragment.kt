@@ -59,13 +59,12 @@ class CategoriesFragment : Fragment(),
 
         ProductApi().getProductNames {
             val adapter = activity?.let { it1 ->
-                ArrayAdapter<String>(
+                ArrayAdapter(
                     it1,android.R.layout.simple_list_item_1 ,it
                 )
             }
             searchedProduct.threshold = 0
             searchedProduct.setAdapter(adapter)
-
         }
 
         search.setOnClickListener {

@@ -42,7 +42,8 @@ class ProductApi(val db: CollectionReference = FirebaseFirestore.getInstance().c
     // get all products in db
     fun getProducts(callback: (ArrayList<ProductViewModel>) -> Unit) {
         val products = ArrayList<ProductViewModel>()
-        db.get().addOnCompleteListener {
+        db.get()
+            .addOnCompleteListener {
             if (it.isSuccessful) {
                 for (item in it.result!!) {
                     val bufferProduct = item.toObject(ProductViewModel::class.java)
