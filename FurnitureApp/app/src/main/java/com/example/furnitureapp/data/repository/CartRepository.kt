@@ -71,7 +71,7 @@ class CartRepository(private val context: Context) {
             val userId = UserSharedPreference(context).getUserId()
             val cartApi = CartApi()
 
-            cartApi.updateCart(userId, quantity) {
+            cartApi.updateCart(id, quantity) {
                 if (it) {
                     cartApi.getCartByUserId(userId) { cart ->
                         CartSharedPreference(context).saveCarts(cart)
