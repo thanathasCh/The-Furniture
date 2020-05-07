@@ -40,12 +40,13 @@ class TransactionApi(val db: CollectionReference = FirebaseFirestore.getInstance
             }
     }
 
-    fun addCartsToTransaction(carts: ArrayList<CartViewModel>, callback: (Boolean) -> Unit) {
+    fun addCartsToTransaction(carts: ArrayList<CartViewModel>, addressId: String, callback: (Boolean) -> Unit) {
         val userId = UserSharedPreference(MainActivity.mainThis).getUserId()
         val transaction = TransactionViewModel (
             UserId = userId,
             PaymentMethod = 0,
             TotalAmount = carts.sumByDouble { x -> x.Product.Price * x.Quantity },
+            AddressId = addressId,
             IsPaid = true
         )
 
