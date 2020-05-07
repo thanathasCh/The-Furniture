@@ -18,6 +18,7 @@ data class TransactionViewModel (
     var DeliveredAt: Date = Date(),
     var IsReceived: Boolean = false,
     var ReceivedAt: Date = Date(),
+    var AddressId: String = "",
     var TransactionItems: ArrayList<TransactionItemViewModel> = arrayListOf()
     ) {
     @Exclude
@@ -32,6 +33,7 @@ data class TransactionViewModel (
             "ReservedAt" to ReservedAt,
             "IsDelivered" to IsDelivered,
             "DeliveredAt" to DeliveredAt,
+            "AddressId" to AddressId,
             "TransactionItems" to TransactionItems.map { x -> x.toMap() }
         )
     }

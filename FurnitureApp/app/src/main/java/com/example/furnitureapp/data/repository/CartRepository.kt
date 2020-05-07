@@ -71,7 +71,7 @@ class CartRepository(private val context: Context) {
             val userId = UserSharedPreference(context).getUserId()
             val cartApi = CartApi()
 
-            cartApi.updateCart(userId, quantity) {
+            cartApi.updateCart(id, quantity) {
                 if (it) {
                     cartApi.getCartByUserId(userId) { cart ->
                         CartSharedPreference(context).saveCarts(cart)
@@ -126,13 +126,13 @@ class CartRepository(private val context: Context) {
         }
     }
 
-    fun purchaseCarts(carts: ArrayList<CartViewModel>, callback: (ArrayList<String>?) -> Unit) {
+    fun purchaseCarts(carts: ArrayList<CartViewModel>, addressId: String, callback: (ArrayList<String>?) -> Unit) {
         val productApi = ProductApi()
         val transactionApi = TransactionApi()
 
         productApi.purchaseProducts(carts) {
             if (it.isEmpty()) {
-                transactionApi.addCartsToTransaction(carts) { it2 ->
+                transactionApi.addCartsToTransaction(carts, addressId) { it2 ->
                     if (it2) {
                         removeCarts(ArrayList(carts.map { x -> x.Id })) { it3 ->
                             if (it3) {
