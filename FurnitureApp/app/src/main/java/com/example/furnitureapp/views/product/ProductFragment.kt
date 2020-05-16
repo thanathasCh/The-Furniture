@@ -127,7 +127,9 @@ class ProductFragment : Fragment() {
 
 
             if (!available!!) {
-                alertBuilder.showOkAlert(getString(R.string.product_not_available))
+
+                alertBuilder.showOkAlert("Purchase Failed",getString(R.string.product_not_available))
+                alertBuilder.dismiss()
             } else {
                 MainActivity.mainSrl.isRefreshing = true
                 if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {

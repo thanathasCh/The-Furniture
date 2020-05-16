@@ -8,20 +8,22 @@ import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furnitureapp.*
-import com.example.furnitureapp.views.browseItem.BrowseItemFragment
+import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.local.CartSharedPreference
-import kotlinx.android.synthetic.main.fragment_categories.view.*
 import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.interfaces.Communicator
-import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.services.hideKeyboard
+import com.example.furnitureapp.views.browseItem.BrowseItemFragment
 import com.example.furnitureapp.views.main.MainActivity
 
 
@@ -52,6 +54,17 @@ class CategoriesFragment : Fragment(),
         val searchedProduct = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
 
 
+        searchedProduct.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                activity?.let { it1 -> KeyBoardHidder().hideKeyboard(it1) }
+                searchItemCickerListener(searchedProduct)
+                view.hideKeyboard()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+
         back.setOnClickListener {
             MainActivity.pageId = R.id.home
             val fragmentManager = activity!!.supportFragmentManager
@@ -68,33 +81,11 @@ class CategoriesFragment : Fragment(),
             searchedProduct.setAdapter(adapter)
         }
 
-        search.setOnClickListener {
-            var name: String? = null
-            var search = searchedProduct.text.toString()
-            MainActivity.products.clear()
-            if (search.equals(" ")) {
-                MainActivity.products.clear()
-            } else if (search.equals("")) {
-                MainActivity.products.clear()
-            } else {
-                ProductApi().getProducts {
-                    for (i in it) {
-                        if (i.Name.toLowerCase().contains(search.toLowerCase())) {
-                            e("product is ", i.Name)
-                            MainActivity.products.add(i)
-                            BrowseItemFragment.browseAdapter.notifyDataSetChanged()
-                            MainActivity.mainSrl.isRefreshing = false
-                        }
-                    }
-                }
-            }
 
-            val item = BrowseItemFragment()
-            val fragmentManager = activity!!.supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, item)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+
+        search.setOnClickListener {
+            view.hideKeyboard()
+            searchItemCickerListener(searchedProduct)
         }
         val cartShare = CartSharedPreference(MainActivity.mainThis)
         Log.d("DEBUG", cartShare.retrieveCarts().toString())
@@ -112,10 +103,42 @@ class CategoriesFragment : Fragment(),
             MainActivity.mainSrl.isRefreshing = false
         }
 
+
+
+
         return view
 
     }
 
+
+    fun searchItemCickerListener(search: EditText) {
+        var name: String? = null
+        var search = search.text.toString()
+        MainActivity.products.clear()
+        if (search.equals(" ")) {
+            MainActivity.products.clear()
+        } else if (search.equals("")) {
+            MainActivity.products.clear()
+        } else {
+            ProductApi().getProducts {
+                for (i in it) {
+                    if (i.Name.toLowerCase().contains(search.toLowerCase())) {
+                        e("product is ", i.Name)
+                        MainActivity.products.add(i)
+                        BrowseItemFragment.browseAdapter.notifyDataSetChanged()
+                        MainActivity.mainSrl.isRefreshing = false
+                    }
+                }
+            }
+        }
+
+        val item = BrowseItemFragment()
+        val fragmentManager = activity!!.supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, item)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 
     override fun clickListener(holder: View, id: String?) {
         val item = BrowseItemFragment()

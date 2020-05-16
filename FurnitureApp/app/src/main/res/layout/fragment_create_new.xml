@@ -62,6 +62,7 @@
                 android:drawableLeft="@drawable/user_left"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/custom"
+                android:inputType="text"
                 android:hint="User Name"
                 android:padding="10dp" />
 
@@ -141,6 +142,7 @@
                 android:drawableLeft="@drawable/user_left"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/custom"
+                android:inputType="text"
                 android:hint="First Name"
                 android:padding="10dp" />
 
@@ -154,6 +156,7 @@
                 android:drawableLeft="@drawable/user_left"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/custom"
+                android:inputType="text"
                 android:hint="Last Name"
                 android:padding="10dp" />
 
@@ -184,83 +187,83 @@
                 android:hint="Phone Number"
                 android:inputType="number"
                 android:padding="10dp" />
-            <TextView
-                android:id="@+id/address_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:fontFamily="@font/custom"
-                android:text="Address Information"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="5dp"
-                android:layout_below="@id/phone_number"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_grey"
-                android:layout_below="@id/address_info"/>
-            <EditText
-                android:id="@+id/create_new_house_number"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/address_info"
-                android:background="@drawable/border"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/custom"
-                android:hint="House"
-                android:padding="8dp"
-                android:drawableLeft="@drawable/address_left"/>
-            <EditText
-                android:id="@+id/create_new_road"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/create_new_house_number"
-                android:background="@drawable/border"
-                android:layout_margin="5dp"
-                android:hint="Road"
-                android:fontFamily="@font/custom"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/address_left"/>
-            <EditText
-                android:id="@+id/create_new_subdistrict"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/create_new_road"
-                android:background="@drawable/border"
-                android:layout_margin="5dp"
-                android:hint="Sub-District"
-                android:fontFamily="@font/custom"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/address_left"/>
-            <EditText
-                android:id="@+id/create_new_district"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/create_new_subdistrict"
-                android:background="@drawable/border"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/custom"
-                android:hint="District"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/address_left"/>
-            <EditText
-                android:id="@+id/create_new_province"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/create_new_district"
-                android:background="@drawable/border"
-                android:layout_margin="5dp"
-                android:hint="Province/City"
-                android:fontFamily="@font/custom"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/address_left"/>
+<!--            <TextView-->
+<!--                android:id="@+id/address_info"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="20dp"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:text="Address Information"-->
+<!--                android:layout_marginTop="25dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_below="@id/phone_number"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/light_grey"-->
+<!--                android:layout_below="@id/address_info"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/create_new_house_number"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@id/address_info"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:hint="House"-->
+<!--                android:padding="8dp"-->
+<!--                android:drawableLeft="@drawable/address_left"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/create_new_road"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@id/create_new_house_number"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:hint="Road"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:padding="10dp"-->
+<!--                android:drawableLeft="@drawable/address_left"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/create_new_subdistrict"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@id/create_new_road"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:hint="Sub-District"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:padding="10dp"-->
+<!--                android:drawableLeft="@drawable/address_left"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/create_new_district"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@id/create_new_subdistrict"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:hint="District"-->
+<!--                android:padding="10dp"-->
+<!--                android:drawableLeft="@drawable/address_left"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/create_new_province"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@id/create_new_district"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:hint="Province/City"-->
+<!--                android:fontFamily="@font/custom"-->
+<!--                android:padding="10dp"-->
+<!--                android:drawableLeft="@drawable/address_left"/>-->
 
             <Button
                 android:id="@+id/create_new_create_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/border"
-                android:layout_below="@id/create_new_province"
+                android:layout_below="@id/phone_number"
                 android:text="Create New"
                 android:textAllCaps="false"
                 android:layout_marginLeft="5dp"

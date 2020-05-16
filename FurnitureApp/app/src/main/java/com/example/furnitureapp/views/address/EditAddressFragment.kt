@@ -18,11 +18,12 @@ import com.example.furnitureapp.services.*
 import com.example.furnitureapp.views.main.MainActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_edit_address.view.*
+import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class EditAddressFragment : Fragment(){
+class EditAddressFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +53,7 @@ class EditAddressFragment : Fragment(){
             subDistrict.setText(addressBuf.Subdistrict)
             district.setText(addressBuf.District)
             province.setText(addressBuf.Province)
-        }else{
+        } else {
 
         }
 
@@ -70,7 +71,7 @@ class EditAddressFragment : Fragment(){
 
         //Save Button
         view.edit_save.setOnClickListener {
-            with (address) {
+            with(address) {
                 Name = name.text.toString()
                 UserId = UserSharedPreference(MainActivity.mainThis).getUserId()
                 TelephoneNumber = phone.text.toString()
@@ -85,15 +86,25 @@ class EditAddressFragment : Fragment(){
 
             if (checkAddress(address)) {
                 MainActivity.mainSrl.isRefreshing = true
-
-                alertBuilder.showYesNoAlert(getString(R.string.save_confirm),
-                yesOpt = {
+                val alertBuilder = AlertBuilder()
+                alertBuilder.showYesNoAlert(
+                    "Save Address",
+                    getString(R.string.save_confirm)
+                ).yes_btn.setOnClickListener {
                     if (isAdd) {
                         AddressRepository(MainActivity.mainThis).addAddress(address) {
                             if (it) {
-                                alertBuilder.showOkAlert(getString(R.string.success))
+                                alertBuilder.showOkAlert(
+                                    "Save Address",
+                                    getString(R.string.success)
+                                )
+                                alertBuilder.dismiss()
                             } else {
-                                alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                                alertBuilder.showOkAlert(
+                                    "Save Failed",
+                                    getString(R.string.error_occurred)
+                                )
+                                alertBuilder.dismiss()
                             }
 
                             MainActivity.mainSrl.isRefreshing = false
@@ -103,9 +114,17 @@ class EditAddressFragment : Fragment(){
                     } else {
                         AddressRepository(MainActivity.mainThis).updateAddress(address) {
                             if (it) {
-                                alertBuilder.showOkAlert(getString(R.string.success))
+                                alertBuilder.showOkAlert(
+                                    "Update Address",
+                                    getString(R.string.success)
+                                )
+                                alertBuilder.dismiss()
                             } else {
-                                alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                                alertBuilder.showOkAlert(
+                                    "Update Failed",
+                                    getString(R.string.error_occurred)
+                                )
+                                alertBuilder.dismiss()
                             }
 
                             MainActivity.mainSrl.isRefreshing = false
@@ -113,9 +132,61 @@ class EditAddressFragment : Fragment(){
                             fragmentManager.popBackStack()
                         }
                     }
-                }, noOpt = {
-                        MainActivity.mainSrl.isRefreshing = false
-                    })
+                }
+
+                val alertBuilderWithAction = alertBuilder.showYesNoAlertWithAction(
+                    "Save Address",
+                    getString(R.string.save_confirm)
+                )
+
+
+                alertBuilderWithAction.yes_btn.setOnClickListener {
+                    if (isAdd) {
+                        AddressRepository(MainActivity.mainThis).addAddress(address) {
+                            if (it) {
+                                alertBuilder.showOkAlert(
+                                    "Save Address",
+                                    getString(R.string.success)
+                                )
+                                alertBuilder.dismiss()
+                            } else {
+                                alertBuilder.showOkAlert(
+                                    "Save Failed",
+                                    getString(R.string.error_occurred)
+                                )
+                                alertBuilder.dismiss()
+                            }
+
+                            MainActivity.mainSrl.isRefreshing = false
+                            val fragmentManager = activity!!.supportFragmentManager
+                            fragmentManager.popBackStack()
+                        }
+                    } else {
+                        AddressRepository(MainActivity.mainThis).updateAddress(address) {
+                            if (it) {
+                                alertBuilder.showOkAlert(
+                                    "Update Address",
+                                    getString(R.string.success)
+                                )
+                                alertBuilder.dismiss()
+                            } else {
+                                alertBuilder.showOkAlert(
+                                    "Update Failed",
+                                    getString(R.string.error_occurred)
+                                )
+                                alertBuilder.dismiss()
+                            }
+
+                            MainActivity.mainSrl.isRefreshing = false
+                            val fragmentManager = activity!!.supportFragmentManager
+                            fragmentManager.popBackStack()
+                        }
+                    }
+                }
+                alertBuilderWithAction.no_btn.setOnClickListener {
+                    MainActivity.mainSrl.isRefreshing = false
+                }
+
             }
 
         }
@@ -124,21 +195,52 @@ class EditAddressFragment : Fragment(){
         view.edit_delete.setOnClickListener {
             MainActivity.mainSrl.isRefreshing = true
             val alertBuilder = AlertBuilder()
-            alertBuilder.showYesNoAlert(getString(R.string.delete_confirm),
-            yesOpt = {
+            val alertBuilderWithAction = alertBuilder.showYesNoAlertWithAction(
+                "Delete Address",
+                getString(R.string.delete_confirm)
+            )
+
+            alertBuilderWithAction.yes_btn.setOnClickListener {
                 AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
                     if (it) {
-                        alertBuilder.showOkAlert(getString(R.string.success))
+                        alertBuilder.showOkAlert("Delete Address", getString(R.string.success))
+                        alertBuilder.dismiss()
                     } else {
-                        alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                        alertBuilder.showOkAlert(
+                            "Delete Failed",
+                            getString(R.string.error_occurred)
+                        )
+                        alertBuilder.dismiss()
                     }
                     MainActivity.mainSrl.isRefreshing = false
                     val fragmentManager = activity!!.supportFragmentManager
                     fragmentManager.popBackStack()
                 }
-            }, noOpt = {
+            }
+            val alertBuilderWithYesNo = alertBuilder.showYesNoAlertWithAction(
+                "Confirm Delete",
+                getString(R.string.delete_confirm)
+            )
+            alertBuilderWithYesNo.dismiss()
+            alertBuilderWithYesNo.yes_btn.setOnClickListener {
+                AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
+                    if (it) {
+                        alertBuilder.showOkAlert("Delete Address",getString(R.string.success))
+                        alertBuilder.dismiss()
+                    } else {
+                        alertBuilder.showOkAlert("Delete Address",getString(R.string.error_occurred))
+                        alertBuilder.dismiss()
+                    }
                     MainActivity.mainSrl.isRefreshing = false
-                })
+                    val fragmentManager = activity!!.supportFragmentManager
+                    fragmentManager.popBackStack()
+                }
+            }
+            alertBuilderWithYesNo.no_btn.setOnClickListener {
+                MainActivity.mainSrl.isRefreshing = false
+            }
+
+
         }
 
         //Back Button
@@ -152,8 +254,13 @@ class EditAddressFragment : Fragment(){
 
     private fun checkAddress(address: AddressViewModel): Boolean {
         if (address.Address.isNullOrEmpty() || address.District.isNullOrEmpty() || address.Name.isNullOrEmpty() || address.Province.isNullOrEmpty()
-            || address.TelephoneNumber.isNullOrEmpty() || address.Road.isNullOrEmpty() || address.Subdistrict.isNullOrEmpty() || address.Type < 0) {
-            AlertBuilder().showOkAlert(getString(R.string.require_information))
+            || address.TelephoneNumber.isNullOrEmpty() || address.Road.isNullOrEmpty() || address.Subdistrict.isNullOrEmpty() || address.Type < 0
+        ) {
+            AlertBuilder().showOkAlert(
+                "Information Invalid",
+                getString(R.string.require_information)
+            )
+            AlertBuilder().dismiss()
             return false
         } else {
             return true

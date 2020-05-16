@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/user_name_back"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textColor="@color/black"
         android:text="User Name"
         android:fontFamily="@font/custom"

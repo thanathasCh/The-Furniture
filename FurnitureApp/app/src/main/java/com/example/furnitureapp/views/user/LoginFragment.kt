@@ -26,6 +26,7 @@ import com.example.furnitureapp.views.cart.CartFragment
 import com.example.furnitureapp.views.main.HomeFragment
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.view.*
+import kotlinx.android.synthetic.main.ok_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -75,7 +76,7 @@ class LoginFragment : Fragment() {
 
                     if (isFromUser) {
 
-                        alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                        alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_successful)).ok_btn.setOnClickListener{
                             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
                                 if (cartShare.retrieveCarts().size != 0) {
                                     for (i in cartShare.retrieveCarts()) {
@@ -85,6 +86,7 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                                 MainActivity.mainSrl.isRefreshing = false
+                                alertBuilder.dismiss()
                             }
                             val home = HomeFragment()
                             val fragmentManager = activity!!.supportFragmentManager
@@ -94,7 +96,7 @@ class LoginFragment : Fragment() {
                             fragmentTransaction.commit()
                         }
                     } else {
-                        alertBuilder.showOkAlert(getString(R.string.login_successful)) {
+                        alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_successful)).ok_btn.setOnClickListener {
                             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
                                 if (cartShare.retrieveCarts().size != 0) {
                                     for (i in cartShare.retrieveCarts()) {
@@ -104,13 +106,15 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                                 MainActivity.mainSrl.isRefreshing = false
+                                alertBuilder.dismiss()
                             }
                             val fragment = activity!!.supportFragmentManager
                             fragment.popBackStack()
                         }
                     }
                 } else {
-                    alertBuilder.showOkAlert(getString(R.string.login_fail))
+                    alertBuilder.showOkAlert("Login",getString(R.string.login_fail))
+                    alertBuilder.dismiss()
                 }
 
                 MainActivity.mainSrl.isRefreshing = false

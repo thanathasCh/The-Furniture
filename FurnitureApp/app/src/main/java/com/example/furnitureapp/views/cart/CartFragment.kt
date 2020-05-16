@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
@@ -26,6 +27,7 @@ import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.purchase.ConfirmPurchaseFragment
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.ok_dialog.*
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 /**
@@ -52,7 +54,10 @@ class CartFragment : Fragment(),ClickEventHandler {
         val listOfProduct = view.findViewById(R.id.recycler_view_cart) as RecyclerView
         val placeOrder = view.findViewById<View>(R.id.place_order)
         val delete = view.findViewById<View>(R.id.delete_cart) as ImageView
+        val display_empty = view.findViewById<View>(R.id.display_empty) as TextView
         MainActivity.mainSrl.isRefreshing = true
+
+        display_empty.text = ""
 
 
         val cartShare = CartSharedPreference(MainActivity.mainThis)
@@ -90,6 +95,8 @@ class CartFragment : Fragment(),ClickEventHandler {
                 var cart = it
                 if (cart.size ==0){
                     display_empty.text = "Cart is empty"
+                }else{
+                    display_empty.text = ""
                 }
                 cartAdapter = CartAdapter(cart, this)
                 listOfProduct.layoutManager =
@@ -99,10 +106,12 @@ class CartFragment : Fragment(),ClickEventHandler {
                 MainActivity.mainSrl.isRefreshing = false
             }
         } else {
+            if (cartInLocal.size ==0){
+                display_empty.text = "Cart is empty"
+            }else{
+                display_empty.text = ""
+            }
             cartAdapter = CartAdapter(cartInLocal, this)
-//            if (cartInLocal.size ==0){
-//                display_empty.text = "Cart is empty"
-//            }
             listOfProduct.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
             listOfProduct.adapter = cartAdapter
@@ -118,14 +127,16 @@ class CartFragment : Fragment(),ClickEventHandler {
         placeOrder.setOnClickListener {
             val alertBuilder = AlertBuilder()
             if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                alertBuilder.showOkAlert(getString(R.string.login_required)) {
+                alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_required)).ok_btn.setOnClickListener {
                     val login = LoginFragment()
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     fragmentTransaction.replace(R.id.frame_layout, login)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
+                    alertBuilder.dismiss()
                 }
+
             } else {
                 val bundle = Bundle()
                 bundle.putBoolean("cart", true)

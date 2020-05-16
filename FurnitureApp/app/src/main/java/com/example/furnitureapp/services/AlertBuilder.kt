@@ -7,32 +7,35 @@ import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import com.example.furnitureapp.R
 import com.example.furnitureapp.views.main.MainActivity
+import kotlinx.android.synthetic.main.ok_dialog.*
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 class AlertBuilder {
     private val context = MainActivity.mainThis
     val dialogs = Dialog(context)
 
-    fun showOkAlert(title: String) {
-        val builder = AlertDialog.Builder(context)
-
-        with(builder) {
-            setTitle(title)
-            setPositiveButton("Okay") { _, _ -> }
-            show()
-        }
+    fun showOkAlertWithAction(title: String, description: String): Dialog {
+        dialogs.setContentView(R.layout.ok_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.show()
+        dialogs.ok_title.text = title
+        dialogs.ok_description.text = description
+        return dialogs
     }
 
-    fun showOkAlert(title: String, opt: () -> Unit) {
-        val builder = AlertDialog.Builder(context)
+    fun showOkAlert(title: String, description: String): Dialog {
+        dialogs.setContentView(R.layout.ok_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.show()
 
-        with(builder) {
-            setTitle(title)
-            setPositiveButton("Okay") { _, _ ->
-                opt()
-            }
-            show()
+        dialogs.ok_btn.setOnClickListener {
+            dismiss()
         }
+
+        dialogs.title.text = title
+        dialogs.description.text = description
+
+        return dialogs
     }
 
     fun dismiss() {
@@ -54,18 +57,14 @@ class AlertBuilder {
         return dialogs
     }
 
-    fun showYesNoAlert(title: String, yesOpt: () -> Unit, noOpt: () -> Unit) {
-        val builder = AlertDialog.Builder(context)
+    fun showYesNoAlertWithAction(title: String, description: String): Dialog {
+        dialogs.setContentView(R.layout.yes_no_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.show()
 
-        with(builder) {
-            setTitle(title)
-            setPositiveButton("Yes") { _, _ ->
-                yesOpt()
-            }
-            setNegativeButton("No") { _, _ ->
-                noOpt()
-            }
-            show()
-        }
+        dialogs.title.text = title
+        dialogs.description.text = description
+
+        return dialogs
     }
 }

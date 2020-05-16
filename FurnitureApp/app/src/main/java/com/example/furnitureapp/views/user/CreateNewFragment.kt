@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.female
 import kotlinx.android.synthetic.main.fragment_create_new.view.male
+import kotlinx.android.synthetic.main.ok_dialog.*
 import java.util.*
 
 /**
@@ -70,11 +71,11 @@ class CreateNewFragment : Fragment() {
             val lastName = view.last_name.text.toString()
             val email = view.email.text.toString()
             val telephoneNumber = view.phone_number.text.toString()
-            val house = view.create_new_house_number.text.toString()
-            val road = view.create_new_road.text.toString()
-            val subDistrict = view.create_new_subdistrict.text.toString()
-            val district = view.create_new_district.text.toString()
-            val province = view.create_new_province.text.toString()
+//            val house = view.create_new_house_number.text.toString()
+//            val road = view.create_new_road.text.toString()
+//            val subDistrict = view.create_new_subdistrict.text.toString()
+//            val district = view.create_new_district.text.toString()
+//            val province = view.create_new_province.text.toString()
 
             val now = Date()
             val user = UserViewModel (
@@ -90,8 +91,8 @@ class CreateNewFragment : Fragment() {
                 now,
                 now
             )
-
             val alertBuilder = AlertBuilder()
+            val alertBuilderWithAction = AlertBuilder().showOkAlertWithAction("Create Account",getString(R.string.account_created))
             val userApi = UserApi()
 
             if (checkUser(user, passwordLength, confirmPassowrd)) {
@@ -99,17 +100,19 @@ class CreateNewFragment : Fragment() {
                     if (!it) {
                         userApi.createAccount(user) { result ->
                             if (result) {
-                                alertBuilder.showOkAlert(getString(R.string.account_created)) {
+                                alertBuilderWithAction.ok_btn.setOnClickListener {
                                     val fragment = activity!!.supportFragmentManager
                                     fragment.popBackStack()
                                 }
                             } else {
-                                alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                                alertBuilder.showOkAlert("Create Account",getString(R.string.error_occurred))
+                                alertBuilder.dismiss()
                             }
                             MainActivity.mainSrl.isRefreshing = false
                         }
                     } else {
-                        alertBuilder.showOkAlert(getString(R.string.duplicate_username))
+                        alertBuilder.showOkAlert("Invalid Username",getString(R.string.duplicate_username))
+                        alertBuilder.dismiss()
                         MainActivity.mainSrl.isRefreshing = true
                     }
                 }
@@ -125,13 +128,17 @@ class CreateNewFragment : Fragment() {
         val alertBuilder = AlertBuilder()
         if (user.UserName.isNullOrEmpty() || user.FirstName.isNullOrEmpty() || user.LastName.isNullOrEmpty()
             || user.Password.isNullOrEmpty() || user.Email.isNullOrEmpty() || user.TelephoneNumber.isNullOrEmpty()) {
-            alertBuilder.showOkAlert(getString(R.string.require_information))
+            alertBuilder.showOkAlert("Invalid Information",getString(R.string.require_information))
+            alertBuilder.dismiss()
         } else if (passwordLength < 8) {
-            alertBuilder.showOkAlert(getString(R.string.password_length))
+            alertBuilder.showOkAlert("Invalid Password",getString(R.string.password_length))
+            alertBuilder.dismiss()
         } else if (!user.Password.equals(confirmPassword)) {
-            alertBuilder.showOkAlert(getString(R.string.password_not_match))
+            alertBuilder.showOkAlert("Invalid Password",getString(R.string.password_not_match))
+            alertBuilder.dismiss()
         } else if (!isEmailValid(user.Email)){
-            alertBuilder.showOkAlert(getString(R.string.email_invalid))
+            alertBuilder.showOkAlert("Invalid Email",getString(R.string.email_invalid))
+            alertBuilder.dismiss()
         } else {
             return true
         }

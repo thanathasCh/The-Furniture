@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/con_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_margin="5dp"
         android:src="@drawable/back"/>
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:layout_marginBottom="3dp"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="Name"
+            android:text=""
             android:layout_marginLeft="7dp"
             android:layout_marginTop="7dp"
             app:fontFamily="@font/custom"
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/customer"
-            android:text="Phone Number"
+            android:text=""
             android:fontFamily="@font/custom"
             android:layout_marginTop="13dp"
             android:layout_marginLeft="5dp"/>
@@ -105,7 +105,7 @@
                 android:text="No Address Yet"
                 app:fontFamily="@font/custom"
                 android:layout_marginTop="10dp"
-                android:textSize="15dp"/>
+                android:textSize="18dp"/>
             <ImageView
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
@@ -151,8 +151,21 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="315dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: "
+            android:textSize="20dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/orange"
+            />
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="8dp"
+            />
         <Button
             android:id="@+id/btn_confirm_place_order"
             android:layout_width="wrap_content"
@@ -161,6 +174,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/red_cell"
             android:text="Place Order"
+            android:textColor="@color/white"
             android:fontFamily="@font/custom"
             android:textAllCaps="false"
             />

@@ -30,7 +30,7 @@ class PurchaseSharePreference (private val context: Context) {
         }
     }
 
-    fun clearCart(){
+    fun clearPurchase(){
         val sharedPref = context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()?.clear()
         editor?.apply()

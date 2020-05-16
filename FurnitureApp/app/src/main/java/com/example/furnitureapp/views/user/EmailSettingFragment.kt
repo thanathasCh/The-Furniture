@@ -13,6 +13,8 @@ import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.isEmailValid
 import kotlinx.android.synthetic.main.fragment_email_setting.view.*
+import kotlinx.android.synthetic.main.ok_dialog.*
+import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,16 +35,19 @@ class EmailSettingFragment : Fragment() {
             if (isEmailValid(newEmail.text.toString())) {
                 UserApi().updateEmail(newEmail.text.toString()) {
                     if (it) {
-                        alertBuilder.showOkAlert(getString(R.string.success)) {
+                        alertBuilder.showOkAlertWithAction("Email Updated",getString(R.string.success)).ok_btn.setOnClickListener {
                             val fragment = activity!!.supportFragmentManager
+                            alertBuilder.dismiss()
                             fragment.popBackStack()
                         }
                     } else {
-                        alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                        alertBuilder.showOkAlert("Email Updated",getString(R.string.error_occurred))
+                        alertBuilder.dismiss()
                     }
                 }
             } else {
-                alertBuilder.showOkAlert(getString(R.string.incorrect_email_format))
+                alertBuilder.showOkAlert("Email Updated",getString (R.string.incorrect_email_format))
+                alertBuilder.dismiss()
             }
         }
 

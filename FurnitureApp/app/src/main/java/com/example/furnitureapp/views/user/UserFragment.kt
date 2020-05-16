@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
+import com.example.furnitureapp.data.local.AddressSharedPreference
 import com.example.furnitureapp.data.local.CartSharedPreference
+import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.services.AlertBuilder
 import kotlinx.android.synthetic.main.yes_no_dialog.*
@@ -65,6 +67,8 @@ class UserFragment : Fragment() {
             alert?.yes_btn?.setOnClickListener {
                 UserSharedPreference(MainActivity.mainThis).logOut()
                 CartSharedPreference(MainActivity.mainThis).clearCart()
+                PurchaseSharePreference(MainActivity.mainThis).clearPurchase()
+                AddressSharedPreference(MainActivity.mainThis).clearAddress()
                 val login = LoginFragment()
                 val  fragmentManager = activity!!.supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()

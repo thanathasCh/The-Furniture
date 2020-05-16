@@ -24,7 +24,7 @@
         android:layout_below="@+id/back_btn"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/custom"
-        android:textSize="30dp"/>
+        android:textSize="25dp"/>
 
     <EditText
         android:id="@+id/login_email"

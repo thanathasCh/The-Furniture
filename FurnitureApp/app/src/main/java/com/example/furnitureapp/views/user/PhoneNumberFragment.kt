@@ -15,6 +15,7 @@ import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_phone_number.*
 import kotlinx.android.synthetic.main.fragment_phone_number.view.*
 import kotlinx.android.synthetic.main.fragment_phone_number.view.verification_code
+import kotlinx.android.synthetic.main.ok_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +33,7 @@ class PhoneNumberFragment : Fragment() {
         val random = ((Math.random() * 9000) + 1000).toInt()
 
         view.verification_code.setOnClickListener {
-            AlertBuilder().showOkAlert(getString(R.string.verification_code, random))
+            AlertBuilder().showOkAlert(getString(R.string.verification_code),random.toString())
         }
 
         view.phone_setting_back.setOnClickListener {
@@ -45,24 +46,28 @@ class PhoneNumberFragment : Fragment() {
             val alertBuilder = AlertBuilder()
 
             if (newPhoneNumber.text.toString().length != 10) {
-                alertBuilder.showOkAlert(getString(R.string.phone_number_incorrect)) {
+                alertBuilder.showOkAlert("Update Failed",getString(R.string.phone_number_incorrect)).ok_btn.setOnClickListener {
                     MainActivity.mainSrl.isRefreshing = false
+                    alertBuilder.dismiss()
                 }
             } else {
                 if (newVerification.text.toString() == random.toString()) {
                     UserApi().updateTelephoneNumber(newPhoneNumber.text.toString()) {
                         if (it) {
-                            alertBuilder.showOkAlert(getString(R.string.success)) {
+                            alertBuilder.showOkAlert("Phone Number Updated",getString(R.string.success)).ok_btn.setOnClickListener {
                                 val fragment = activity!!.supportFragmentManager
+                                alertBuilder.dismiss()
                                 fragment.popBackStack()
                             }
                         } else {
-                            alertBuilder.showOkAlert(getString(R.string.error_occurred))
+                            alertBuilder.showOkAlert("Phone Number Invalid",getString(R.string.error_occurred))
+                            alertBuilder.dismiss()
                         }
                         MainActivity.mainSrl.isRefreshing = false
                     }
                 } else {
-                    alertBuilder.showOkAlert(getString(R.string.incorrect_code))
+                    alertBuilder.showOkAlert("Phone Number Invalid",getString(R.string.incorrect_code))
+                    alertBuilder.dismiss()
                     MainActivity.mainSrl.isRefreshing = false
                 }
             }

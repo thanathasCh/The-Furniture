@@ -59,4 +59,9 @@ class AddressSharedPreference(private val context: Context) {
         addresses.add(address)
         saveAddresses(addresses)
     }
+    fun clearAddress(){
+        val sharedPref = context.getSharedPreferences(sharedPreferenceKey, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()?.clear()
+        editor?.apply()
+    }
 }

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/address_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/back"
         android:layout_margin="5dp"/>
     <TextView
@@ -19,14 +19,14 @@
         android:textSize="25dp"
         android:text="Address"
         android:fontFamily="@font/custom"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/address_back"
         android:textColor="@color/black"
         android:textStyle="bold"/>
     <ImageView
         android:id="@+id/add_address"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_margin="5dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/plus"/>

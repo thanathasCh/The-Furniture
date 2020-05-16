@@ -28,8 +28,10 @@ import com.example.furnitureapp.services.userIndex
 import com.example.furnitureapp.views.address.AddressAdapter
 import com.example.furnitureapp.views.main.HomeFragment
 import com.example.furnitureapp.views.main.MainActivity
+import com.example.furnitureapp.views.user.LoginFragment
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
+import kotlinx.android.synthetic.main.ok_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -145,11 +147,12 @@ class ConfirmPurchaseFragment : Fragment() {
         //set button
         placeOrder.setOnClickListener {
             var cartRepository = CartRepository(MainActivity.mainThis)
+            val alertBuilder = AlertBuilder()
             if (fromCart!!) {
                 cartRepository.purchaseCarts(PurchaseSharePreference(MainActivity.mainThis).retrievePurchase(), addresses[0].Id, isPickUp){
                    e("purchase is ", it.toString())
                 }
-                AlertBuilder().showOkAlert(getString(R.string.purchase_successful)) {
+                alertBuilder.showOkAlertWithAction("Purchase",getString(R.string.login_required)).ok_btn.setOnClickListener {
                     val home = HomeFragment()
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
@@ -161,7 +164,8 @@ class ConfirmPurchaseFragment : Fragment() {
                 var alertBuilder = AlertBuilder()
                 cartRepository.purchaseProduct(id!!,amount!!,addresses[0].Id,isPickUp){
                    if (it){
-                       alertBuilder.showOkAlert("Purchase Success"){
+
+                       alertBuilder.showOkAlertWithAction("Purchase",getString(R.string.login_required)).ok_btn.setOnClickListener{
                            val home = HomeFragment()
                            val fragmentManager = activity!!.supportFragmentManager
                            val fragmentTransaction = fragmentManager.beginTransaction()
@@ -170,7 +174,7 @@ class ConfirmPurchaseFragment : Fragment() {
                            fragmentTransaction.commit()
                        }
                    }else{
-                       alertBuilder.showOkAlert("Purchase Failed")
+                       alertBuilder.showOkAlert("Purchase","Purchase Failed")
                    }
                 }
             }
