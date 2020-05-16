@@ -18,6 +18,7 @@ import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.ProductController
 import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.views.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_browse_item.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -38,13 +39,18 @@ class BrowseItemFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_browse_item, container, false)
+        val view = inflater.inflate(R.layout.fragment_browse_item,  container, false)
+        val alertText = view.findViewById<View>(R.id.alert_text)
+        view.alert_text.setText(" ")
 
         val back = view.findViewById<View>(R.id.back_btn_browse)
         back.setOnClickListener{
             val fragmentManager = activity!!.supportFragmentManager
             MainActivity.pageId = R.id.search_icon
             fragmentManager.popBackStack()
+        }
+        if (MainActivity.products.size.equals(0)){
+            view.alert_text.setText("Product not found!")
         }
 
 

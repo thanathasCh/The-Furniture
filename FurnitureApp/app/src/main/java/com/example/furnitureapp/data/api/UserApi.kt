@@ -13,6 +13,7 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
     fun isExist(userName: String, hashedPassword: String, callback: (Boolean) -> Unit) {
         db.whereEqualTo("Username", userName)
             .whereEqualTo("Password", hashedPassword)
+
             .get().addOnCompleteListener {
                 if (it.isSuccessful && it.result != null && !it.result!!.isEmpty) {
                     for (item in it.result!!) {
@@ -42,12 +43,11 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
             }
     }
 
-    // create accunt
+    // create account
     fun createAccount(user: UserViewModel, callback: (Boolean) -> Unit) {
         db.add(user.toMap())
             .addOnSuccessListener {
-
-                getUser(it.id ?: "") {
+                getUser(it.id) {
                     callback(true)
                 }
             }
@@ -64,8 +64,8 @@ class UserApi(private val db: CollectionReference = FirebaseFirestore.getInstanc
         user.FirstName = firstName
         user.LastName = lastName
 
-        db.document(user.Id ?: "").update("FirstName", firstName)
-        db.document(user.Id ?: "").update("LastName", lastName)
+        db.document(user.Id).update("FirstName", firstName)
+        db.document(user.Id).update("LastName", lastName)
 
         userPreference.saveUser(user)
         callback(true)

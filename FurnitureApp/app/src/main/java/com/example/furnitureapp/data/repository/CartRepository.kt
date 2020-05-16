@@ -134,12 +134,13 @@ class CartRepository(private val context: Context) {
     fun purchaseCarts(carts: ArrayList<CartViewModel>, addressId: String, isPickUp: Boolean , callback: (ArrayList<String>?) -> Unit) {
         val productApi = ProductApi()
         val transactionApi = TransactionApi()
+        val cartApi = CartApi()
 
         productApi.purchaseProducts(carts) {
             if (it.isEmpty()) {
                 transactionApi.addCartsToTransaction(carts, addressId, isPickUp) { it2 ->
                     if (it2) {
-                        removeCarts(ArrayList(carts.map { x -> x.Id })) { it3 ->
+                        cartApi.removeCarts(ArrayList(carts.map { x -> x.Id })) { it3 ->
                             if (it3) {
                                 callback(it)
                             } else {

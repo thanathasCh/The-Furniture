@@ -20,8 +20,10 @@ import com.example.furnitureapp.services.userIndex
 class UserPurchaseListFragment : Fragment() {
     companion object UserPurchase {
         val purchases = ArrayList<TransactionViewModel>()
-        lateinit var userPurchaseAdapter: UserPurchaseListAdapter
+        lateinit var userPurchaseAdapter: ParentPurchaseAdapter
+        var date = ""
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,17 +31,18 @@ class UserPurchaseListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_user_purchase_list, container, false)
         val back = view.findViewById<View>(R.id.user_purchase_back)
-
-        val listOfPurchase = view.findViewById<RecyclerView>(R.id.recycler_view_user_purchase_list) as RecyclerView
-        listOfPurchase.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
-        userPurchaseAdapter = UserPurchaseListAdapter(purchases, this)
-        listOfPurchase.adapter = userPurchaseAdapter
-
         TransactionApi().getTransaction {
             purchases.clear()
             purchases.addAll(it)
             userPurchaseAdapter.notifyDataSetChanged()
         }
+
+        val listOfPurchase = view.findViewById<RecyclerView>(R.id.recycler_view_user_purchase_list) as RecyclerView
+        listOfPurchase.layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, true)
+        userPurchaseAdapter = ParentPurchaseAdapter(purchases, this)
+        listOfPurchase.adapter = userPurchaseAdapter
+
+
 
         //Button Action
         back.setOnClickListener {

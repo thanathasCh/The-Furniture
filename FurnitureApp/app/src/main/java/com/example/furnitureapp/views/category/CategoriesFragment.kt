@@ -4,6 +4,7 @@ package com.example.furnitureapp.views.category
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ import com.example.furnitureapp.views.main.MainActivity
 class CategoriesFragment : Fragment(),
     Communicator {
 
-//    var categories = CategoriesController()
+    //    var categories = CategoriesController()
 //    val adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,
 //        productData)
     companion object Category {
@@ -51,7 +52,7 @@ class CategoriesFragment : Fragment(),
         val searchedProduct = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
 
 
-        back.setOnClickListener{
+        back.setOnClickListener {
             MainActivity.pageId = R.id.home
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
@@ -59,40 +60,54 @@ class CategoriesFragment : Fragment(),
 
         ProductApi().getProductNames {
             val adapter = activity?.let { it1 ->
-                ArrayAdapter<String>(
-                    it1,android.R.layout.simple_list_item_1 ,it
+                ArrayAdapter(
+                    it1, android.R.layout.simple_list_item_1, it
                 )
             }
             searchedProduct.threshold = 0
             searchedProduct.setAdapter(adapter)
-
         }
 
         search.setOnClickListener {
+            var name: String? = null
+            var search = searchedProduct.text.toString()
+            MainActivity.products.clear()
+            if (search.equals(" ")) {
+                MainActivity.products.clear()
+            } else if (search.equals("")) {
+                MainActivity.products.clear()
+            } else {
+                ProductApi().getProducts {
+                    for (i in it) {
+                        if (i.Name.toLowerCase().contains(search.toLowerCase())) {
+                            e("product is ", i.Name)
+                            MainActivity.products.add(i)
+                            BrowseItemFragment.browseAdapter.notifyDataSetChanged()
+                            MainActivity.mainSrl.isRefreshing = false
+                        }
+                    }
+                }
+            }
 
-            var name:String? = null
-
-            var bundle = Bundle()
-            bundle.putBoolean("from search bar", true)
-            bundle.putString("search",name)
             val item = BrowseItemFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            item.arguments = bundle
-            fragmentTransaction.replace(R.id.frame_layout,item)
+            fragmentTransaction.replace(R.id.frame_layout, item)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
         val cartShare = CartSharedPreference(MainActivity.mainThis)
         Log.d("DEBUG", cartShare.retrieveCarts().toString())
 
-        val categoriesView = view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
-        categoriesView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
+        val categoriesView =
+            view.findViewById<RecyclerView>(R.id.recyclerCategories) as RecyclerView
+        categoriesView.layoutManager =
+            GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, true)
 
         MainActivity.mainSrl.isRefreshing = true
         CategoryRepository(MainActivity.mainThis).fetchCategory(false) {
             MainActivity.categories = it
-            categoryAdapter = CategoriesAdapter(MainActivity.categories,this)
+            categoryAdapter = CategoriesAdapter(MainActivity.categories, this)
             categoriesView.adapter = categoryAdapter
             MainActivity.mainSrl.isRefreshing = false
         }
@@ -100,7 +115,6 @@ class CategoriesFragment : Fragment(),
         return view
 
     }
-
 
 
     override fun clickListener(holder: View, id: String?) {

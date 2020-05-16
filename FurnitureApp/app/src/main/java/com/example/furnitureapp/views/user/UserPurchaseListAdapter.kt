@@ -1,32 +1,27 @@
 package com.example.furnitureapp.views.user
 
 import android.os.Build
-import com.example.furnitureapp.models.Product
-
-
-
-
-
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.furnitureapp.R
+import com.example.furnitureapp.models.ProductViewModel
+import com.example.furnitureapp.models.TransactionItemViewModel
 import com.example.furnitureapp.models.TransactionViewModel
 import kotlinx.android.synthetic.main.user_purchaselist_cell.view.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+
 
 
 class UserPurchaseListAdapter(
-    val transactions: ArrayList<TransactionViewModel>,
+    val product: ArrayList<TransactionItemViewModel>,
     val context: UserPurchaseListFragment
 ) : RecyclerView.Adapter<UserPurchaseListAdapter.CustomViewHolder>() {
 
 
+    var purchaseList = UserPurchaseListFragment
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -39,12 +34,12 @@ class UserPurchaseListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return transactions.size
+        return product.size
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val transaction = transactions[position]
+        val products = product[position]
         //Get Current Date
 //        val current = LocalDateTime.now()
 //        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
@@ -55,11 +50,15 @@ class UserPurchaseListAdapter(
 //        with (holder.itemView) {
 //
 //        }
-//        holder.itemView.upurchase_name.text = transaction.name
-//        holder.itemView.upurchase_code.text = transaction.code
-//        holder.itemView.upurchase_quantity.text = transaction.available.toString()
-//        holder.itemView.upurchase_price.text = (transaction.price*transaction.available).toString()
-//        holder.itemView.upurchase_delivery.text = day + month
+        holder.itemView.upurchase_name.text = products.Product.Name
+        holder.itemView.upurchase_code.text = products.Product.Code
+        holder.itemView.upurchase_quantity.text = products.Quantity.toString()
+        holder.itemView.upurchase_price.text = products.TotalAmount.toString()
+        holder.itemView.upurchase_delivery.text = purchaseList.date
+        Glide.with(context)
+            .load(products.Product.ImageUrls[0])
+            .placeholder(R.drawable.loading)
+            .into(holder.itemView.purchase_list_image)
 //        holder.itemView.purchase_list_image.setImageResource(transaction.image)
 
         val check = false

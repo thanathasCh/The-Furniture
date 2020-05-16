@@ -24,6 +24,13 @@
         android:textStyle="bold"
         android:fontFamily="@font/custom"
         android:layout_toRightOf="@+id/back_btn_browse"/>
+    <TextView
+        android:id="@+id/alert_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:fontFamily="@font/custom"
+        android:layout_centerInParent="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_list_of_product"
