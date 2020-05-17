@@ -1,13 +1,10 @@
 package com.example.furnitureapp.views.address
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.furnitureapp.R
@@ -55,7 +52,7 @@ class EditAddressFragment : Fragment() {
             phone.setText(addressBuf.TelephoneNumber)
             house.setText(addressBuf.Address)
             road.setText(addressBuf.Road)
-            subDistrict.setText(addressBuf.Subdistrict)
+            subDistrict.setText(addressBuf.SubDistrict)
             district.setText(addressBuf.District)
             province.setText(addressBuf.Province)
             address = addressBuf
@@ -83,7 +80,7 @@ class EditAddressFragment : Fragment() {
                 TelephoneNumber = phone.text.toString()
                 Address = house.text.toString()
                 Road = road.text.toString()
-                Subdistrict = subDistrict.text.toString()
+                SubDistrict = subDistrict.text.toString()
                 District = district.text.toString()
                 Province = province.text.toString()
             }
@@ -254,7 +251,7 @@ class EditAddressFragment : Fragment() {
 
     private fun checkAddress(address: AddressViewModel): Boolean {
         if (address.Address.isNullOrEmpty() || address.District.isNullOrEmpty() || address.Name.isNullOrEmpty() || address.Province.isNullOrEmpty()
-            || address.TelephoneNumber.isNullOrEmpty() || address.Road.isNullOrEmpty() || address.Subdistrict.isNullOrEmpty() || address.Type < 0
+            || address.TelephoneNumber.isNullOrEmpty() || address.Road.isNullOrEmpty() || address.SubDistrict.isNullOrEmpty() || address.Type < 0
         ) {
             AlertBuilder().showOkAlert(
                 getString(R.string.info_invalid),

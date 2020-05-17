@@ -1,10 +1,6 @@
 package com.example.furnitureapp.views.purchase
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +12,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
-import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -28,7 +23,6 @@ import com.example.furnitureapp.views.main.HomeFragment
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
-import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.ok_dialog.*
 
 /**
@@ -80,7 +74,7 @@ class ConfirmPurchaseFragment : Fragment() {
                 view.customer.text = addresses[0].Name
                 view.con_phone_number.text = addresses[0].TelephoneNumber
                 view.con_address_detail.text =
-                    addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
+                    addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].SubDistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
                 MainActivity.mainSrl.isRefreshing = false
             }
         }
