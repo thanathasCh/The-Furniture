@@ -9,14 +9,14 @@ data class AddressViewModel (
     var TelephoneNumber: String = "",
     var Address: String = "",
     var Road: String = "",
-    var Subdistrict: String = "",
+    var SubDistrict: String = "",
     var District: String = "",
     var Province: String = "",
     var Type: Int = -1
 ) {
     @Exclude
     fun getFullAddress(): String {
-        return "${if(Type == 0) "Home" else "Work"}, $Address, $Road $District $Subdistrict, $Province"
+        return "${if(Type == 0) "Home" else "Work"}, $Address, $Road $District $SubDistrict, $Province"
     }
 
     @Exclude
@@ -27,7 +27,7 @@ data class AddressViewModel (
             "TelephoneNumber" to TelephoneNumber,
             "Address" to Address,
             "Road" to Road,
-            "SubDistrict" to Subdistrict,
+            "SubDistrict" to SubDistrict,
             "District" to District,
             "Province" to Province,
             "Type" to Type
