@@ -8,12 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RelativeLayout
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.encrypt
+import com.example.furnitureapp.services.hideKeyboard
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_password_setting.view.*
+import kotlinx.android.synthetic.main.ok_dialog.*
 
 /**
  * A simple [Fragment] subclass.
@@ -25,10 +29,16 @@ class PasswordSettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_password_setting, container, false)
-        val originPasswordEditText  = view.findViewById<View>(R.id.password_origin) as EditText
+        val view = inflater.inflate(R.layout.fragment_password_setting, container, false)
+        val originPasswordEditText = view.findViewById<View>(R.id.password_origin) as EditText
         val newPasswordEditText = view.findViewById<View>(R.id.password_new_password) as EditText
-        val confirmPasswordEditText = view.findViewById<View>(R.id.password_confirm_password) as EditText
+        val confirmPasswordEditText =
+            view.findViewById<View>(R.id.password_confirm_password) as EditText
+        val emailSettingFragment  = view.findViewById<View>(R.id.email_fragment) as RelativeLayout
+
+        emailSettingFragment.setOnClickListener {
+            view.hideKeyboard()
+        }
 
         // Action Button
         view.password_save.setOnClickListener {
@@ -36,45 +46,48 @@ class PasswordSettingFragment : Fragment() {
             val originPassword = originPasswordEditText.text.toString().encrypt()
             val newPassword = newPasswordEditText.text.toString().encrypt()
             val confirmPassword = confirmPasswordEditText.text.toString().encrypt()
-            val builder = AlertDialog.Builder(this.activity)
+            val builder = AlertBuilder()
 
-            if (originPassword != user.Password){
-                builder.setTitle("Wrong Password")
-                builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
-            }else{
-                if (newPassword.isEmpty() || newPassword.length<8){
-                    with(builder) {
-                        setTitle("Password Must More than 8 character!")
-                        setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
-                    }
+            if (originPassword != user.Password) {
+                builder.showOkAlert(
+                    getString(R.string.password_invalid),
+                    getString(R.string.wrong_password)
+                )
+            } else {
+                if (newPassword.isEmpty() || newPassword.length < 8) {
+                    builder.showOkAlert(
+                        getString(R.string.password_invalid),
+                        getString(R.string.length_not_enough)
+                    )
+
                 } else {
-                    if (newPassword == confirmPassword){
-//                        allUser[userIndex!!].password = confirmPasswordEditText.text.toString()
+                    if (newPassword == confirmPassword) {
+                        val fragmentManager = activity!!.supportFragmentManager
                         UserApi().updatePassword(newPassword) {
                             if (it) {
-                                with(builder) {
-                                    setTitle("Success !")
-                                    setPositiveButton("Okay") { _: DialogInterface?, _: Int ->
-                                        val fragmentManager = activity!!.supportFragmentManager
-                                        fragmentManager.popBackStack()
-                                    }
+                                builder.showOkAlertWithAction(
+                                    getString(R.string.pw_update),
+                                    getString(R.string.success)
+                                ).ok_btn.setOnClickListener {
+                                    fragmentManager.popBackStack()
+                                    builder.dismiss()
                                 }
                             } else {
-                                with(builder) {
-                                    setTitle("Error Occurred")
-                                    setPositiveButton("Okay") {_, _ ->  }
-                                }
+                                builder.showOkAlert(
+                                    getString(R.string.password),
+                                    getString(R.string.error_occurred)
+                                )
                             }
                         }
                     } else {
-                        with(builder) {
-                            setTitle("Password Not Match")
-                            setPositiveButton("Okay") { _: DialogInterface?, _: Int -> }
-                        }
+                        builder.showOkAlert(
+                            getString(R.string.password_invalid),
+                            getString(R.string.pw_notmatch)
+                        )
+
                     }
                 }
 
-                builder.show()
             }
         }
         view.password_setting_back.setOnClickListener {

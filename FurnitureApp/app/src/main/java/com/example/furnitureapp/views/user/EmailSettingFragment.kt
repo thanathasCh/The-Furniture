@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RelativeLayout
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.hideKeyboard
 import com.example.furnitureapp.services.isEmailValid
 import kotlinx.android.synthetic.main.fragment_email_setting.view.*
 import kotlinx.android.synthetic.main.ok_dialog.*
@@ -28,6 +30,11 @@ class EmailSettingFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_email_setting, container, false)
         val newEmail = view.findViewById<View>(R.id.email_setting_new_email) as EditText
+        val emailSettingFragment = view.findViewById<View>(R.id.email_fragment) as RelativeLayout
+
+        emailSettingFragment.setOnClickListener {
+            view.hideKeyboard()
+        }
 
         view.email_save.setOnClickListener {
             val alertBuilder = AlertBuilder()
@@ -35,18 +42,18 @@ class EmailSettingFragment : Fragment() {
             if (isEmailValid(newEmail.text.toString())) {
                 UserApi().updateEmail(newEmail.text.toString()) {
                     if (it) {
-                        alertBuilder.showOkAlertWithAction("Email Updated",getString(R.string.success)).ok_btn.setOnClickListener {
+                        alertBuilder.showOkAlertWithAction(getString(R.string.email_update),getString(R.string.success)).ok_btn.setOnClickListener {
                             val fragment = activity!!.supportFragmentManager
                             alertBuilder.dismiss()
                             fragment.popBackStack()
                         }
                     } else {
-                        alertBuilder.showOkAlert("Email Updated",getString(R.string.error_occurred))
+                        alertBuilder.showOkAlert(getString(R.string.email_update),getString(R.string.error_occurred))
                         alertBuilder.dismiss()
                     }
                 }
             } else {
-                alertBuilder.showOkAlert("Email Updated",getString (R.string.incorrect_email_format))
+                alertBuilder.showOkAlert(getString(R.string.email_update),getString (R.string.incorrect_email_format))
                 alertBuilder.dismiss()
             }
         }

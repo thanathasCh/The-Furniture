@@ -1,50 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:layout_height="wrap_content">
-    
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        android:text="Purchase On"/>
-    <TextView
-        android:id="@+id/date_purchase"
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/title"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/child_purchaselist"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_below="@id/child_purchaselist"
-        android:text="Total:"
-        android:textColor="@color/orange"
-        android:fontFamily="@font/custom"
-        android:layout_margin="5dp"
-        android:layout_toLeftOf="@id/total_amount"
-        />
-    <TextView
-        android:id="@+id/total_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/child_purchaselist"
-        android:textSize="18dp"
-        android:textColor="@color/orange"
-        android:layout_alignParentRight="true"
-        android:fontFamily="@font/custom"
-        android:layout_margin="5dp"/>
+    android:background="@color/background">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/whitecell"
+            android:outlineProvider="bounds"
+            >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchase On"
+                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/date_purchase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/child_purchaselist"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/child_purchaselist"
+                android:layout_margin="5dp"
+                android:layout_toLeftOf="@id/total_amount"
+                android:fontFamily="@font/custom"
+                android:text="Total:"
+                android:textColor="@color/orange"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/child_purchaselist"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/custom"
+                android:textColor="@color/orange"
+                android:textSize="18dp" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
@@ -40,6 +41,11 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         var isFromUser = false
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val loginFragment = view.findViewById<View>(R.id.login_fragment) as RelativeLayout
+
+        loginFragment.setOnClickListener {
+            view.hideKeyboard()
+        }
 
         isFromUser = if (arguments?.getBoolean("from user") != null) {
             arguments?.getBoolean("from user")!!
@@ -76,12 +82,11 @@ class LoginFragment : Fragment() {
 
                     if (isFromUser) {
 
-                        alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_successful)).ok_btn.setOnClickListener{
+                        alertBuilder.showOkAlertWithAction(getString(R.string.login),getString(R.string.login_successful)).ok_btn.setOnClickListener{
                             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
                                 if (cartShare.retrieveCarts().size != 0) {
                                     for (i in cartShare.retrieveCarts()) {
                                         CartRepository(MainActivity.mainThis).addCart(i.ProductId) {
-                                            e("success ?:", it.toString())
                                         }
                                     }
                                 }
@@ -98,7 +103,7 @@ class LoginFragment : Fragment() {
 
                         }
                     } else {
-                        alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_successful)).ok_btn.setOnClickListener {
+                        alertBuilder.showOkAlertWithAction(getString(R.string.login),getString(R.string.login_successful)).ok_btn.setOnClickListener {
                             CartRepository(MainActivity.mainThis).fetchCartByUserId(true) {
                                 if (cartShare.retrieveCarts().size != 0) {
                                     for (i in cartShare.retrieveCarts()) {
@@ -116,7 +121,7 @@ class LoginFragment : Fragment() {
                         }
                     }
                 } else {
-                    alertBuilder.showOkAlert("Login",getString(R.string.login_fail))
+                    alertBuilder.showOkAlert(getString(R.string.login),getString(R.string.login_fail))
                     alertBuilder.dismiss()
                 }
 

@@ -33,4 +33,21 @@
     <string name="update_address_fail">Update Address Failed.</string>
     <string name="save_address">Save Address.</string>
     <string name="save_address_fail">Save Failed.</string>
+    <string name="purchase_fail">Purchase Failed.</string>
+    <string name="email_update">Email Update.</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="password_invalid">Password invalid</string>
+    <string name="wrong_password">Wrong Password.</string>
+    <string name="length_not_enough">Password Must More than 8 character!</string>
+    <string name="pw_notmatch">Password Not Match</string>
+    <string name="ok">Ok</string>
+    <string name="pw_update">Password Updated</string>
+    <string name="update_failed">Updated Failed</string>
+    <string name="phone_update">PhoneNumber Updated</string>
+    <string name="phone_invalid">Invalid Phone Number</string>
+    <string name="update_name">Update Name</string>
+    <string name="name_require">Name and LastName are required!</string>
+    <string name="purchase_failed">Purchase Failed</string>
+
 </resources>

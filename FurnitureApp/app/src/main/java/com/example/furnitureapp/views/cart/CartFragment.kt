@@ -80,8 +80,6 @@ class CartFragment : Fragment(),ClickEventHandler {
                 }else{
                     for (i in adapter.selectProudctPosition){
                         CartRepository(MainActivity.mainThis).removeCart(i.Id){
-                            e("delete? ", i.Product.toString())
-                            e("delete? ", it.toString())
                             adapter.removeAt(i)
                         }
                     }

@@ -15,7 +15,7 @@
         android:textColor="@color/black"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
-        android:textSize="28dp" />
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/ok_description"
@@ -27,12 +27,12 @@
         android:text="Description"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/ok_btn"
         android:layout_width="60dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_below="@id/ok_description"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
