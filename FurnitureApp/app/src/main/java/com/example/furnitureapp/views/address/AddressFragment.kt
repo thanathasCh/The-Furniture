@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.interfaces.Communicator
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.models.AddressViewModel
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.Page
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
 import com.google.gson.Gson
@@ -28,7 +30,7 @@ import kotlinx.android.synthetic.main.yes_no_dialog.*
 /**
  * A simple [Fragment] subclass.
  */
-class AddressFragment : Fragment(),
+class AddressFragment : Fragment(), PageInterface,
     Communicator {
 
     companion object Address {
@@ -48,10 +50,10 @@ class AddressFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        initPageId(Page.ADDRESS)
         var view =  inflater.inflate(R.layout.fragment_address, container, false)
         var back = view.findViewById<View>(R.id.address_back) as ImageView
         var add = view.findViewById<View>(R.id.add_address) as ImageView
-        MainActivity.pageId = R.layout.fragment_address
         var editCurrentAddress = view.findViewById<View>(R.id.current_next)
         val listOfAddress =  view.findViewById(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
@@ -89,7 +91,7 @@ class AddressFragment : Fragment(),
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
-            MainActivity.pageId = R.id.user
+            initPageId(Page.USER)
             fragmentManager.popBackStack()
         }
 

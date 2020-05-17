@@ -13,7 +13,9 @@ import com.example.furnitureapp.data.local.AddressSharedPreference
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.Page
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 import kotlinx.android.synthetic.main.yes_no_dialog.view.*
 import kotlinx.android.synthetic.main.yes_no_dialog.view.yes_btn
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.yes_no_dialog.view.yes_btn
 /**
  * A simple [Fragment] subclass.
  */
-class UserFragment : Fragment() {
+class UserFragment : Fragment(), PageInterface {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +33,14 @@ class UserFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user, container, false)
-        MainActivity.pageId = R.id.user
         val logout = view.findViewById<View>(R.id.logout)
         val account = view.findViewById<View>(R.id.user_account) as EditText
         var purchaseList = view.findViewById<View>(R.id.user_purchase_list) as EditText
         var about = view.findViewById<View>(R.id.about) as EditText
-
+        initPageId()
 
         // Account Button
         account.setOnClickListener {
-            MainActivity.pageId = R.id.user_account
             val setting = UserSettingFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()

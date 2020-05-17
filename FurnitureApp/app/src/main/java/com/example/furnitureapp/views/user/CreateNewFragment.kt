@@ -12,13 +12,9 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.UserApi
-import com.example.furnitureapp.models.Address
-import com.example.furnitureapp.models.Product
-import com.example.furnitureapp.models.User
 import com.example.furnitureapp.models.UserViewModel
 import com.example.furnitureapp.services.*
 import com.example.furnitureapp.views.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_confirm_purchase.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.*
 import kotlinx.android.synthetic.main.fragment_create_new.view.female
 import kotlinx.android.synthetic.main.fragment_create_new.view.male
@@ -97,7 +93,7 @@ class CreateNewFragment : Fragment() {
                 now
             )
             val alertBuilder = AlertBuilder()
-            val alertBuilderWithAction = AlertBuilder().showOkAlertWithAction("Create Account",getString(R.string.account_created))
+            val alertBuilderWithAction = AlertBuilder().showOkAlertWithAction(getString(R.string.create_account), getString(R.string.account_created))
             val userApi = UserApi()
 
             if (checkUser(user, passwordLength, confirmPassowrd)) {
@@ -110,13 +106,13 @@ class CreateNewFragment : Fragment() {
                                     fragment.popBackStack()
                                 }
                             } else {
-                                alertBuilder.showOkAlert("Create Account",getString(R.string.error_occurred))
+                                alertBuilder.showOkAlert(getString(R.string.create_account), getString(R.string.error_occurred))
                                 alertBuilder.dismiss()
                             }
                             MainActivity.mainSrl.isRefreshing = false
                         }
                     } else {
-                        alertBuilder.showOkAlert("Invalid Username",getString(R.string.duplicate_username))
+                        alertBuilder.showOkAlert(getString(R.string.info_invalid), getString(R.string.duplicate_username))
                         alertBuilder.dismiss()
                         MainActivity.mainSrl.isRefreshing = true
                     }
@@ -133,16 +129,16 @@ class CreateNewFragment : Fragment() {
         val alertBuilder = AlertBuilder()
         if (user.UserName.isNullOrEmpty() || user.FirstName.isNullOrEmpty() || user.LastName.isNullOrEmpty()
             || user.Password.isNullOrEmpty() || user.Email.isNullOrEmpty() || user.TelephoneNumber.isNullOrEmpty()) {
-            alertBuilder.showOkAlert("Invalid Information",getString(R.string.require_information))
+            alertBuilder.showOkAlert(getString(R.string.info_invalid), getString(R.string.require_information))
             alertBuilder.dismiss()
         } else if (passwordLength < 8) {
-            alertBuilder.showOkAlert("Invalid Password",getString(R.string.password_length))
+            alertBuilder.showOkAlert(getString(R.string.invalid_password), getString(R.string.password_length))
             alertBuilder.dismiss()
         } else if (!user.Password.equals(confirmPassword)) {
-            alertBuilder.showOkAlert("Invalid Password",getString(R.string.password_not_match))
+            alertBuilder.showOkAlert(getString(R.string.invalid_password), getString(R.string.password_not_match))
             alertBuilder.dismiss()
         } else if (!isEmailValid(user.Email)){
-            alertBuilder.showOkAlert("Invalid Email",getString(R.string.email_invalid))
+            alertBuilder.showOkAlert(getString(R.string.invalid_email), getString(R.string.email_invalid))
             alertBuilder.dismiss()
         } else {
             return true

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.interfaces.Communicator
 import com.example.furnitureapp.R
-import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.address_cell.view.*
@@ -48,7 +47,7 @@ class AddressAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
         if (position == 0){
-            holder.itemView.current_address.text = "Current Address"
+            holder.itemView.current_address.text = context.getString(R.string.current_address)
         }
         holder.itemView.address_name.text  = address.Name
         holder.itemView.address_phone_number.text = address.TelephoneNumber
@@ -59,7 +58,7 @@ class AddressAdapter(
         }
 
         holder.itemView.address_cell.setOnClickListener {
-            clickHandler.clickToSelect(it,position,view)
+            clickHandler.clickToSelect(it, position, view)
             notifyDataSetChanged()
         }
     }

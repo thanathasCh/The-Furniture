@@ -22,13 +22,8 @@ import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.models.*
 import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.services.AlertBuilder
-import com.example.furnitureapp.services.allUser
-import com.example.furnitureapp.services.productData
-import com.example.furnitureapp.services.userIndex
-import com.example.furnitureapp.views.address.AddressAdapter
 import com.example.furnitureapp.views.main.HomeFragment
 import com.example.furnitureapp.views.main.MainActivity
-import com.example.furnitureapp.views.user.LoginFragment
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_purchase.view.con_phone_number
 import kotlinx.android.synthetic.main.ok_dialog.*
@@ -39,7 +34,6 @@ import kotlinx.android.synthetic.main.ok_dialog.*
 class ConfirmPurchaseFragment : Fragment() {
 
     var currentPurchaseItem = ArrayList<CartViewModel>()
-    var product = ProductController()
     var isPickUp = true
     var addresses = ArrayList<AddressViewModel>()
     var index = ArrayList<Int>()

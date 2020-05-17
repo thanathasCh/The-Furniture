@@ -11,6 +11,7 @@ import android.widget.EditText
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.encrypt
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_user_name.view.*
@@ -37,6 +38,7 @@ class UserNameFragment : Fragment() {
         view.user_name_save.setOnClickListener {
             val user = UserSharedPreference(MainActivity.mainThis).retrieveUser()
             val builder = AlertDialog.Builder(this.activity)
+            val alertBuilder = AlertBuilder()
             if (firstName.text.toString().isEmpty() || lastName.text.toString().isEmpty()) {
                 builder.setTitle("Name and LastName are required!")
                 builder.setPositiveButton("Okay") { _: DialogInterface?, _: Int ->  }

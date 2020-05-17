@@ -17,9 +17,11 @@ import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.Page
 import com.example.furnitureapp.services.ToastBuilder
 import kotlinx.android.synthetic.main.fragment_product.view.*
 import kotlinx.android.synthetic.main.yes_no_dialog.*
@@ -31,7 +33,7 @@ import kotlinx.android.synthetic.main.yes_no_dialog.view.yes_btn
 /**
  * A simple [Fragment] subclass.
  */
-class ProductFragment : Fragment() {
+class ProductFragment : Fragment(), PageInterface {
 
     companion object Product {
         lateinit var productView: View
@@ -42,8 +44,9 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        initPageId(Page.PRODUCT)
         productView = inflater.inflate(R.layout.fragment_product, container, false)
-
+        initPageId(Page.PRODUCT)
         val back = productView.findViewById<View>(R.id.back_product_btn)
         val img = productView.findViewById<View>(R.id.prod_img) as SliderImage
         val addToCart = productView.findViewById<View>(R.id.add_to_cart)
@@ -72,7 +75,7 @@ class ProductFragment : Fragment() {
 
         back.setOnClickListener {
             val fragmentManager = activity!!.supportFragmentManager
-            MainActivity.pageId = R.layout.fragment_browse_item
+            initPageId(Page.PRODUCTS)
             fragmentManager.popBackStack()
         }
         addToCart.setOnClickListener {
@@ -134,7 +137,7 @@ class ProductFragment : Fragment() {
                 MainActivity.mainSrl.isRefreshing = true
                 if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
                     val alert =
-                        alertBuilder.showYesNoAlert("Login", getString(R.string.login_required))
+                        alertBuilder.showYesNoAlert(getString(R.string.login), getString(R.string.login_required))
                     alert?.yes_btn?.setOnClickListener {
                         val login = LoginFragment()
                         val fragmentManager = activity!!.supportFragmentManager

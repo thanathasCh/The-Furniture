@@ -11,11 +11,13 @@ import com.custom.sliderimage.logic.SliderImage
 import com.example.furnitureapp.R
 import com.example.furnitureapp.views.category.CategoriesFragment
 import com.example.furnitureapp.data.api.AnnouncementApi
+import com.example.furnitureapp.interfaces.PageInterface
+import com.example.furnitureapp.services.Page
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), PageInterface {
     companion object Home {
         lateinit var slider: SliderImage
     }
@@ -25,7 +27,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
+        initPageId(Page.HOME)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val sliderImage = activity?.let { SliderImage(it) }
         val search = view.findViewById<View>(R.id.search_icon) as ImageView

@@ -35,18 +35,18 @@ class EmailSettingFragment : Fragment() {
             if (isEmailValid(newEmail.text.toString())) {
                 UserApi().updateEmail(newEmail.text.toString()) {
                     if (it) {
-                        alertBuilder.showOkAlertWithAction("Email Updated",getString(R.string.success)).ok_btn.setOnClickListener {
+                        alertBuilder.showOkAlertWithAction("Email Updated", getString(R.string.success)).ok_btn.setOnClickListener {
                             val fragment = activity!!.supportFragmentManager
                             alertBuilder.dismiss()
                             fragment.popBackStack()
                         }
                     } else {
-                        alertBuilder.showOkAlert("Email Updated",getString(R.string.error_occurred))
+                        alertBuilder.showOkAlert("Email Updated", getString(R.string.error_occurred))
                         alertBuilder.dismiss()
                     }
                 }
             } else {
-                alertBuilder.showOkAlert("Email Updated",getString (R.string.incorrect_email_format))
+                alertBuilder.showOkAlert("Email Updated", getString (R.string.incorrect_email_format))
                 alertBuilder.dismiss()
             }
         }

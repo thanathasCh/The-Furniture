@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.R
 import com.example.furnitureapp.models.CartViewModel
-import com.example.furnitureapp.models.ProductViewModel
-import kotlinx.android.synthetic.main.browse_cell.view.*
 import kotlinx.android.synthetic.main.purchase_cell.view.*
 
 
@@ -45,7 +42,7 @@ class ConfirmPurchaseAdapter(
         holder.itemView.con_name.text = cart.Product.Name
         holder.itemView.con_code.text = cart.Product.Code
         holder.itemView.con_price.text = cart.Product.Price.toString()
-        holder.itemView.con_amount.text = "x"+cart.Quantity
+        holder.itemView.con_amount.text = context.getString(R.string.x_quantity, cart.Quantity)
         holder.itemView.con_total.text = (cart.Product.Price*cart.Quantity).toString()
         Glide.with(context)
             .load(cart.Product.ImageUrls[0])

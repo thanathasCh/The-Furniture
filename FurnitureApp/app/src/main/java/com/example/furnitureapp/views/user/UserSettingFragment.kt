@@ -9,12 +9,14 @@ import com.example.furnitureapp.views.address.AddressFragment
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
+import com.example.furnitureapp.interfaces.PageInterface
+import com.example.furnitureapp.services.Page
 import kotlinx.android.synthetic.main.fragment_user_setting.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class UserSettingFragment : Fragment() {
+class UserSettingFragment : Fragment(), PageInterface {
     companion object UserSetting {
         lateinit var userSettingView: View
     }
@@ -23,9 +25,9 @@ class UserSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        initPageId(Page.USER)
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_user_setting, container, false)
-
         //Set View Info
         val user = UserSharedPreference(MainActivity.mainThis).retrieveUser()
 
@@ -38,7 +40,6 @@ class UserSettingFragment : Fragment() {
 
         //Button Action
         view.img_setting_address.setOnClickListener {
-            MainActivity.pageId = R.id.img_setting_address
             val address = AddressFragment()
             val fragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -57,7 +58,7 @@ class UserSettingFragment : Fragment() {
         }
 
         view.setting_back.setOnClickListener {
-            MainActivity.pageId = R.layout.fragment_user
+            initPageId(Page.NONE)
             val fragment = activity!!.supportFragmentManager
             fragment.popBackStack()
         }

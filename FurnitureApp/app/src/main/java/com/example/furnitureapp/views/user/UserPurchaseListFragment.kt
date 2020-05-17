@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.TransactionApi
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.models.TransactionViewModel
-import com.example.furnitureapp.services.allUser
-import com.example.furnitureapp.services.userIndex
-
+import com.example.furnitureapp.services.Page
 
 /**
  * A simple [Fragment] subclass.
  */
-class UserPurchaseListFragment : Fragment() {
+class UserPurchaseListFragment : Fragment(), PageInterface {
     companion object UserPurchase {
         val purchases = ArrayList<TransactionViewModel>()
         lateinit var userPurchaseAdapter: ParentPurchaseAdapter
@@ -29,6 +28,7 @@ class UserPurchaseListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        initPageId(Page.PURCHASE)
         val view =  inflater.inflate(R.layout.fragment_user_purchase_list, container, false)
         val back = view.findViewById<View>(R.id.user_purchase_back)
         TransactionApi().getTransaction {
@@ -42,10 +42,9 @@ class UserPurchaseListFragment : Fragment() {
         userPurchaseAdapter = ParentPurchaseAdapter(purchases, this)
         listOfPurchase.adapter = userPurchaseAdapter
 
-
-
         //Button Action
         back.setOnClickListener {
+            initPageId()
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }

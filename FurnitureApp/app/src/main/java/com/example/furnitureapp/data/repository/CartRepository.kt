@@ -8,7 +8,6 @@ import com.example.furnitureapp.data.api.TransactionApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.models.CartViewModel
-import com.example.furnitureapp.models.Product
 import com.example.furnitureapp.models.TransactionItemViewModel
 import com.example.furnitureapp.models.TransactionViewModel
 import com.example.furnitureapp.views.main.MainActivity
@@ -194,17 +193,6 @@ class CartRepository(private val context: Context) {
             }
         }
     }
-
-    /*
-
-        for (cart in carts) {
-            transaction.TransactionItems.add(TransactionItemViewModel(
-                Product = cart.Product,
-                Quantity = cart.Quantity,
-                TotalAmount = cart.Product.Price * cart.Quantity)
-            )
-        }
-     */
 
     private fun isExisted(): Boolean {
         return context.getSharedPreferences(

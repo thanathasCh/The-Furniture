@@ -20,9 +20,11 @@ import com.example.furnitureapp.views.user.LoginFragment
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.interfaces.ClickEventHandler
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.models.CartViewModel
 import com.example.furnitureapp.models.ProductViewModel
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.Page
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.purchase.ConfirmPurchaseFragment
@@ -33,7 +35,7 @@ import kotlinx.android.synthetic.main.yes_no_dialog.*
 /**
  * A simple [Fragment] subclass.
  */
-class CartFragment : Fragment(),ClickEventHandler {
+class CartFragment : Fragment(), PageInterface, ClickEventHandler {
     companion object Cart {
         lateinit var cartAdapter: CartAdapter
         val carts = arrayListOf<CartViewModel>()
@@ -48,7 +50,7 @@ class CartFragment : Fragment(),ClickEventHandler {
         savedInstanceState: Bundle?
     ): View? {
 //        getAllSharePref()
-        MainActivity.pageId = R.layout.fragment_cart
+        initPageId(Page.CART)
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
 //        val arrayKey = currentKey.split(",")
         val listOfProduct = view.findViewById(R.id.recycler_view_cart) as RecyclerView
@@ -65,7 +67,6 @@ class CartFragment : Fragment(),ClickEventHandler {
         for (i in cartShare.retrieveCarts()) {
             e("Product in sharepref: ", i.toString())
         }
-//        Log.e("Product After Add", cartShare.retrieveCarts().size.toString())
 
         delete.setOnClickListener {
             val alertBuilder = AlertBuilder()
@@ -127,7 +128,7 @@ class CartFragment : Fragment(),ClickEventHandler {
         placeOrder.setOnClickListener {
             val alertBuilder = AlertBuilder()
             if (!UserSharedPreference(MainActivity.mainThis).isLogin()) {
-                alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_required)).ok_btn.setOnClickListener {
+                alertBuilder.showOkAlertWithAction("Login", getString(R.string.login_required)).ok_btn.setOnClickListener {
                     val login = LoginFragment()
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
@@ -179,7 +180,6 @@ class CartFragment : Fragment(),ClickEventHandler {
         val fragmentTransaction = fragmentManager.beginTransaction()
         productFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frame_layout, productFragment)
-        MainActivity.pageId = R.layout.fragment_product
         MainActivity.productId = product.Id ?: ""
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()

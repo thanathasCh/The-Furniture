@@ -17,31 +17,32 @@ import com.example.furnitureapp.views.category.CategoriesFragment
 import com.example.furnitureapp.views.product.ProductFragment
 import com.example.furnitureapp.views.user.UnRegisterFragment
 import com.example.furnitureapp.views.user.UserFragment
-import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
 import com.example.furnitureapp.data.repository.CartRepository
 import com.example.furnitureapp.data.repository.CategoryRepository
-//import com.example.furnitureapp.data.api.Examples
+import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.models.*
+import com.example.furnitureapp.services.Page
 import com.example.furnitureapp.views.address.AddressFragment
+import com.example.furnitureapp.views.user.UserPurchaseListFragment
 import com.example.furnitureapp.views.user.UserSettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
 import kotlinx.android.synthetic.main.fragment_user_setting.view.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PageInterface {
 
     lateinit var homeFragment: HomeFragment
     lateinit var cartFragment: CartFragment
     lateinit var userFragment: UserFragment
 
 
-    companion object Page {
+    companion object PageObjects {
         lateinit var mainThis: Context
         lateinit var mainSrl: SwipeRefreshLayout
-        var pageId = R.id.home
+        lateinit var pageId: Page
         var categories = arrayListOf<CategoryViewModel>()
         var products = arrayListOf<ProductViewModel>()
         var categoryId = ""
@@ -53,15 +54,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainThis = this
-
-        val cartRep = CartRepository(mainThis)
-
-        cartRep.fetchCartByUserId(true) {
-//            cartRep.purchaseCarts(it) { it2 ->
-//                Log.d("DEBUG", it2.toString())
-//            }
-        }
-
         val bottomNavigation: BottomNavigationView = findViewById(R.id.btm_navig)
         homeFragment = HomeFragment()
         supportFragmentManager
@@ -72,8 +64,6 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    pageId =
-                        R.id.home
                     homeFragment =
                         HomeFragment()
                     supportFragmentManager
@@ -83,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.cart -> {
-                    pageId = R.id.cart
                     cartFragment = CartFragment()
                     supportFragmentManager
                         .beginTransaction()
@@ -92,7 +81,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.user -> {
-                    pageId = 0
                     if (UserSharedPreference(mainThis).isLogin()) {
                         userFragment = UserFragment()
                         supportFragmentManager
@@ -125,14 +113,15 @@ class MainActivity : AppCompatActivity() {
 
         main_srl.setOnRefreshListener {
             main_srl.setColorSchemeColors(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light)
+            Log.d("DEBUG", pageId.toString())
             when (pageId) {
-                R.id.home -> {
+                Page.HOME -> {
                     AnnouncementApi().getAnnouncementImages {
                         HomeFragment.slider.setItems(it)
                     }
                     main_srl.isRefreshing = false
                 }
-                R.layout.fragment_cart -> {
+                Page.CART -> {
                     CartRepository(this).fetchCartByUserId(true) {
                         with (CartFragment.carts) {
                             clear()
@@ -142,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                         main_srl.isRefreshing = false
                     }
                 }
-                R.id.search_icon -> {
+                Page.SEARCH -> {
                     CategoryRepository(this).fetchCategory(true) {
                         categories.clear()
                         categories.addAll(it)
@@ -150,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                         main_srl.isRefreshing = false
                     }
                 }
-                R.layout.fragment_browse_item -> {
+                Page.PRODUCTS -> {
                     ProductApi().getProductByCategoryId(categoryId) {
                         products.clear()
                         products.addAll(it)
@@ -158,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                         main_srl.isRefreshing = false
                     }
                 }
-                R.layout.fragment_product -> {
+                Page.PRODUCT -> {
                     ProductApi().getProductById(productId) {
                         with(ProductFragment.productView) {
                             item_name.text = it.Name
@@ -172,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     main_srl.isRefreshing = false
                 }
-                R.id.user_account -> {
+                Page.USER -> {
                     val user = UserSharedPreference(this).retrieveUser()
                     UserApi().getUser(user.Id ?: "") {
                         with(UserSettingFragment.userSettingView) {
@@ -184,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     main_srl.isRefreshing = false
                 }
-                R.id.img_setting_address -> {
+                Page.ADDRESS -> {
                     AddressRepository(this).fetchAddresses(true) {
                         with (AddressFragment) {
                             addresses.clear()
@@ -194,8 +183,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     main_srl.isRefreshing = false
                 }
-                R.id.user_purchase_list -> {
-
+                Page.PURCHASE -> {
+                    TransactionApi().getTransaction {
+                        with(UserPurchaseListFragment) {
+                            purchases.clear()
+                            purchases.addAll(it)
+                            userPurchaseAdapter.notifyDataSetChanged()
+                            main_srl.isRefreshing = false
+                        }
+                    }
                 }
                 else -> {
                     main_srl.isRefreshing = false

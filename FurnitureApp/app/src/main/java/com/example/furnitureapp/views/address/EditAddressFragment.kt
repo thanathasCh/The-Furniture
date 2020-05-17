@@ -12,7 +12,6 @@ import android.widget.ImageView
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
-import com.example.furnitureapp.models.Address
 import com.example.furnitureapp.models.AddressViewModel
 import com.example.furnitureapp.services.*
 import com.example.furnitureapp.views.main.MainActivity

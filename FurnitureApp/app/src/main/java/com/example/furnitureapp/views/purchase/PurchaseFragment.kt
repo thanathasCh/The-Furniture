@@ -10,9 +10,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.furnitureapp.R
-import com.example.furnitureapp.models.Product
-import com.example.furnitureapp.models.ProductController
-import com.example.furnitureapp.services.productData
 import com.example.furnitureapp.views.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_purchase.view.*
 
@@ -20,8 +17,6 @@ import kotlinx.android.synthetic.main.fragment_purchase.view.*
  * A simple [Fragment] subclass.
  */
 class PurchaseFragment : Fragment() {
-    val product = ProductController()
-    var currentProduct: Product? = null
     var id = ""
     var currentAmount = 1
     var productIndex: Int? = null

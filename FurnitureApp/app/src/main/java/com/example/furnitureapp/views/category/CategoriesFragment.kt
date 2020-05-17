@@ -19,6 +19,8 @@ import com.example.furnitureapp.data.api.ProductApi
 import com.example.furnitureapp.data.local.CartSharedPreference
 import com.example.furnitureapp.data.repository.CategoryRepository
 import com.example.furnitureapp.interfaces.Communicator
+import com.example.furnitureapp.interfaces.PageInterface
+import com.example.furnitureapp.services.Page
 import com.example.furnitureapp.services.hideKeyboard
 import com.example.furnitureapp.views.browseItem.BrowseItemFragment
 import com.example.furnitureapp.views.main.MainActivity
@@ -27,7 +29,7 @@ import com.example.furnitureapp.views.main.MainActivity
 /**
  * A simple [Fragment] subclass.
  */
-class CategoriesFragment : Fragment(),
+class CategoriesFragment : Fragment(), PageInterface,
     Communicator {
 
     //    var categories = CategoriesController()
@@ -51,6 +53,7 @@ class CategoriesFragment : Fragment(),
         val categoriesRelativeLayout = view.findViewById<View>(R.id.relative_categories) as RelativeLayout
         val searchedProduct = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
         searchedProduct.setText("")
+        initPageId(Page.SEARCH)
 
         categoriesRelativeLayout.setOnClickListener {
             view.hideKeyboard()
@@ -58,7 +61,6 @@ class CategoriesFragment : Fragment(),
 
         searchedProduct.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                activity?.let { it1 -> KeyBoardHidder().hideKeyboard(it1) }
                 searchItemCickerListener(searchedProduct)
                 view.hideKeyboard()
                 return@OnEditorActionListener true
@@ -68,7 +70,7 @@ class CategoriesFragment : Fragment(),
 
 
         back.setOnClickListener {
-            MainActivity.pageId = R.id.home
+            initPageId(Page.HOME)
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.popBackStack()
         }
@@ -154,7 +156,6 @@ class CategoriesFragment : Fragment(),
         }
         val fragmentManager = activity!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        MainActivity.pageId = R.layout.fragment_browse_item
         fragmentTransaction.replace(R.id.frame_layout, item)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() //To change body of created functions use File | Settings | File Templates.
