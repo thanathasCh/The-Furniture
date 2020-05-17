@@ -14,10 +14,10 @@ import kotlinx.android.synthetic.main.address_cell.view.*
 
 class AddressAdapter(
     val address: ArrayList<AddressViewModel>,
-    val context: AddressFragment
+    val context: AddressFragment,view: View
 ) : RecyclerView.Adapter<AddressAdapter.CustomViewHolder>() {
 
-
+    var view = view
     var bundle = Bundle()
     private val clickHandler: Communicator = context
 
@@ -59,7 +59,7 @@ class AddressAdapter(
         }
 
         holder.itemView.address_cell.setOnClickListener {
-            clickHandler.clickToSelect(it,position)
+            clickHandler.clickToSelect(it,position,view)
             notifyDataSetChanged()
         }
     }

@@ -32,8 +32,8 @@ class AlertBuilder {
             dismiss()
         }
 
-        dialogs.title.text = title
-        dialogs.description.text = description
+        dialogs.ok_title.text = title
+        dialogs.ok_description.text = description
 
         return dialogs
     }

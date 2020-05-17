@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,8 +48,13 @@ class CategoriesFragment : Fragment(),
 //        createCategories()
         val search = view.findViewById<View>(R.id.search_btn) as ImageView
         val back = view.findViewById<View>(R.id.back) as ImageView
+        val categoriesRelativeLayout = view.findViewById<View>(R.id.relative_categories) as RelativeLayout
         val searchedProduct = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
+        searchedProduct.setText("")
 
+        categoriesRelativeLayout.setOnClickListener {
+            view.hideKeyboard()
+        }
 
         searchedProduct.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -162,7 +164,7 @@ class CategoriesFragment : Fragment(),
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun clickToSelect(holder: View, id: Int) {
+    override fun clickToSelect(holder: View, id: Int,view: View) {
         TODO("Not yet implemented")
     }
 }

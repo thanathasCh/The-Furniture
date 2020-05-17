@@ -68,16 +68,23 @@ class ConfirmPurchaseFragment : Fragment() {
         val images = arguments?.getStringArrayList("image")
         val fromCart = arguments?.getBoolean("cart")
         val userSharePreference = UserSharedPreference(MainActivity.mainThis)
+        var checkAddress = false
 
         AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
             var address = it
-            addresses.clear()
-            addresses.addAll(it)
-            view.customer.text = addresses[0].Name
-            view.con_phone_number.text = addresses[0].TelephoneNumber
-            view.con_address_detail.text =
-                addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
-            MainActivity.mainSrl.isRefreshing = false
+            if (it.size == 0) {
+
+            } else {
+                addresses.clear()
+                addresses.addAll(it)
+                checkAddress = true
+                view.customer.text = addresses[0].Name
+                view.con_phone_number.text = addresses[0].TelephoneNumber
+                view.con_address_detail.text =
+                    addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
+                MainActivity.mainSrl.isRefreshing = false
+            }
+
         }
 
 
@@ -148,35 +155,49 @@ class ConfirmPurchaseFragment : Fragment() {
         placeOrder.setOnClickListener {
             var cartRepository = CartRepository(MainActivity.mainThis)
             val alertBuilder = AlertBuilder()
-            if (fromCart!!) {
-                cartRepository.purchaseCarts(PurchaseSharePreference(MainActivity.mainThis).retrievePurchase(), addresses[0].Id, isPickUp){
-                   e("purchase is ", it.toString())
-                }
-                alertBuilder.showOkAlertWithAction("Purchase",getString(R.string.login_required)).ok_btn.setOnClickListener {
-                    val home = HomeFragment()
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.frame_layout, home)
-                    fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.commit()
-                }
-            } else {
-                var alertBuilder = AlertBuilder()
-                cartRepository.purchaseProduct(id!!,amount!!,addresses[0].Id,isPickUp){
-                   if (it){
+            if (checkAddress) {
+                if (fromCart!!) {
+                    cartRepository.purchaseCarts(
+                        PurchaseSharePreference(MainActivity.mainThis).retrievePurchase(),
+                        addresses[0].Id,
+                        isPickUp
+                    ) {
+                        e("purchase is ", it.toString())
+                    }
+                    alertBuilder.showOkAlertWithAction(
+                        "Purchase",
+                        getString(R.string.login_required)
+                    ).ok_btn.setOnClickListener {
+                        val home = HomeFragment()
+                        val fragmentManager = activity!!.supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(R.id.frame_layout, home)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
+                    }
+                } else {
+                    var alertBuilder = AlertBuilder()
+                    cartRepository.purchaseProduct(id!!, amount!!, addresses[0].Id, isPickUp) {
+                        if (it) {
 
-                       alertBuilder.showOkAlertWithAction("Purchase",getString(R.string.login_required)).ok_btn.setOnClickListener{
-                           val home = HomeFragment()
-                           val fragmentManager = activity!!.supportFragmentManager
-                           val fragmentTransaction = fragmentManager.beginTransaction()
-                           fragmentTransaction.replace(R.id.frame_layout, home)
-                           fragmentTransaction.addToBackStack(null)
-                           fragmentTransaction.commit()
-                       }
-                   }else{
-                       alertBuilder.showOkAlert("Purchase","Purchase Failed")
-                   }
+                            alertBuilder.showOkAlertWithAction(
+                                "Purchase",
+                                getString(R.string.login_required)
+                            ).ok_btn.setOnClickListener {
+                                val home = HomeFragment()
+                                val fragmentManager = activity!!.supportFragmentManager
+                                val fragmentTransaction = fragmentManager.beginTransaction()
+                                fragmentTransaction.replace(R.id.frame_layout, home)
+                                fragmentTransaction.addToBackStack(null)
+                                fragmentTransaction.commit()
+                            }
+                        } else {
+                            alertBuilder.showOkAlert("Purchase", "Purchase Failed")
+                        }
+                    }
                 }
+            }else{
+                AlertBuilder().showOkAlert("Address Missing","Please fill your address")
             }
 
         }

@@ -8,6 +8,7 @@
     android:background="@color/background"
     tools:context=".views.category.CategoriesFragment">
     <RelativeLayout
+        android:id="@+id/relative_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

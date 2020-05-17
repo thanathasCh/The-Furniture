@@ -20,7 +20,9 @@ import com.example.furnitureapp.models.AddressViewModel
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.views.shared.SwipeToDeleteCallback
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_address.*
+import kotlinx.android.synthetic.main.fragment_address.view.*
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 
 /**
@@ -50,6 +52,7 @@ class AddressFragment : Fragment(),
         var back = view.findViewById<View>(R.id.address_back) as ImageView
         var add = view.findViewById<View>(R.id.add_address) as ImageView
         MainActivity.pageId = R.layout.fragment_address
+        var editCurrentAddress = view.findViewById<View>(R.id.current_next)
         val listOfAddress =  view.findViewById(R.id.recycler_view_address) as RecyclerView
         listOfAddress.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,true)
 
@@ -57,10 +60,31 @@ class AddressFragment : Fragment(),
         AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
             addresses.clear()
             addresses.addAll(it)
-            addressAdapter = AddressAdapter(addresses, this)
+            addressAdapter = AddressAdapter(addresses, this,view)
             listOfAddress.adapter = addressAdapter
             addressAdapter.notifyDataSetChanged()
             MainActivity.mainSrl.isRefreshing = false
+        }
+        AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+            if(it.size == 0){
+
+            }else{
+                var address = it
+                view.current_customer.setText(address[0].Name)
+                view.current_phone.setText(address[0].TelephoneNumber)
+                view.current_address_detail.setText( addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + ".")
+                editCurrentAddress.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString("id",Gson().toJson(address[0]))
+                    val editAddress = EditAddressFragment()
+                    val fragmentManager = activity!!.supportFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    editAddress.arguments = bundle
+                    fragmentTransaction.replace(R.id.frame_layout,editAddress)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }
+            }
         }
 
         back.setOnClickListener {
@@ -81,6 +105,8 @@ class AddressFragment : Fragment(),
             fragmentTransaction.commit()
         }
 
+
+
         val swipeHandler = object : SwipeToDeleteCallback(this.activity!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = recycler_view_address.adapter as AddressAdapter
@@ -93,24 +119,33 @@ class AddressFragment : Fragment(),
         return view
     }
 
-    override fun clickToSelect(holder: View, index: Int) {
+    override fun clickToSelect(holder: View, index: Int, view:View) {
         var alertBuilder = AlertBuilder()
-        alertBuilder.showYesNoAlert("Address","Set as Current Address").yes_btn.setOnClickListener {
-            AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
-                var address = it
-                var saveAddress = address[0]
-                address[0] = address[index]
-                address[index] = saveAddress
+        if (index == 0){
+            alertBuilder.showOkAlert("Address"," It's already your current address")
+        }else{
+            alertBuilder.showYesNoAlert("Address","Set as Current Address").yes_btn.setOnClickListener {
+                AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+                    var address = it
+                    var saveAddress = address[0]
+                    address[0] = address[index]
+                    address[index] = saveAddress
 
-                addresses.clear()
-                addresses.addAll(address)
-                addressAdapter.notifyDataSetChanged()
+                    addresses.clear()
+                    addresses.addAll(address)
+                    addressAdapter.notifyDataSetChanged()
 
-                AddressRepository(MainActivity.mainThis).saveAddresses(address)
-                MainActivity.mainSrl.isRefreshing = false
-                alertBuilder.dismiss()
+                    AddressRepository(MainActivity.mainThis).saveAddresses(address)
+                    view.current_customer.text = address[0].Name
+                    view.current_phone.text = address[0].TelephoneNumber
+                    view.current_address_detail.text = addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
+
+                    MainActivity.mainSrl.isRefreshing = false
+                    alertBuilder.dismiss()
+                }
             }
         }
+
     }
 
     override fun clickListener(holder: View, id: String?) {

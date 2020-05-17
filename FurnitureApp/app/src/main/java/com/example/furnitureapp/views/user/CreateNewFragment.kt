@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.models.Address
@@ -38,6 +39,7 @@ class CreateNewFragment : Fragment() {
 
         val back = view.findViewById<View>(R.id.back_btn)
         val back_text = view.findViewById<View>(R.id.back)
+        val relative_view = view.findViewById<View>(R.id.create_new_relative) as RelativeLayout
         var isMale: Boolean? = null
 
         back.setOnClickListener{
@@ -47,6 +49,9 @@ class CreateNewFragment : Fragment() {
             fragmentTransaction.replace(R.id.frame_layout,login)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
+        }
+        relative_view.setOnClickListener {
+            view.hideKeyboard()
         }
 
         view.male.setOnClickListener {

@@ -86,14 +86,16 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                                 MainActivity.mainSrl.isRefreshing = false
-                                alertBuilder.dismiss()
+
                             }
+                            alertBuilder.dismiss()
                             val home = HomeFragment()
                             val fragmentManager = activity!!.supportFragmentManager
                             val fragmentTransaction = fragmentManager.beginTransaction()
                             fragmentTransaction.replace(R.id.frame_layout, home)
                             fragmentTransaction.addToBackStack(null)
                             fragmentTransaction.commit()
+
                         }
                     } else {
                         alertBuilder.showOkAlertWithAction("Login",getString(R.string.login_successful)).ok_btn.setOnClickListener {
@@ -106,8 +108,9 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                                 MainActivity.mainSrl.isRefreshing = false
-                                alertBuilder.dismiss()
+
                             }
+                            alertBuilder.dismiss()
                             val fragment = activity!!.supportFragmentManager
                             fragment.popBackStack()
                         }

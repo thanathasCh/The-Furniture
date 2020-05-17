@@ -6,7 +6,7 @@
     <string name="added_cart">Added to cart.</string>
     <string name="product_not_available">Product is not available.</string>
     <string name="login_required">Login Required.</string>
-    <string name="verification_code">Verification Code is %1d.</string>
+    <string name="verification_code">Verification Code is</string>
     <string name="invalid_input">Invalid Input.</string>
     <string name="incorrect_code">Incorrect Code.</string>
     <string name="success">Success.</string>
@@ -25,4 +25,12 @@
     <string name="duplicate_username">Duplicate Username.</string>
     <string name="account_created">Account has been created.</string>
     <string name="email_invalid">Email is invalid.</string>
+    <string name="info_invalid">Invalid information.</string>
+    <string name="delete_address">Delete Address.</string>
+    <string name="con_delete">Confirm Delete.</string>
+    <string name="delete_fail">Delete Failed.</string>
+    <string name="update_address">Update Address.</string>
+    <string name="update_address_fail">Update Address Failed.</string>
+    <string name="save_address">Save Address.</string>
+    <string name="save_address_fail">Save Failed.</string>
 </resources>

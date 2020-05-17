@@ -59,14 +59,16 @@ class EditAddressFragment : Fragment() {
 
         view.edit_home.setOnClickListener {
             address.Type = 0
-            view.edit_office.setBackgroundResource(R.drawable.border)
-            view.edit_home.setBackgroundResource(R.drawable.grey_border)
+            view.edit_home.setBackgroundResource(R.drawable.border)
+            view.edit_office.setBackgroundResource(R.drawable.grey_border)
+
         }
 
         view.edit_office.setOnClickListener {
             address.Type = 1
-            view.edit_home.setBackgroundResource(R.drawable.border)
-            view.edit_office.setBackgroundResource(R.drawable.grey_border)
+            view.edit_office.setBackgroundResource(R.drawable.border)
+            view.edit_home.setBackgroundResource(R.drawable.grey_border)
+
         }
 
         //Save Button
@@ -82,26 +84,25 @@ class EditAddressFragment : Fragment() {
                 Province = province.text.toString()
             }
 
-            val alertBuilder = AlertBuilder()
 
             if (checkAddress(address)) {
                 MainActivity.mainSrl.isRefreshing = true
                 val alertBuilder = AlertBuilder()
                 alertBuilder.showYesNoAlert(
-                    "Save Address",
+                    getString(R.string.save_address),
                     getString(R.string.save_confirm)
                 ).yes_btn.setOnClickListener {
                     if (isAdd) {
                         AddressRepository(MainActivity.mainThis).addAddress(address) {
                             if (it) {
                                 alertBuilder.showOkAlert(
-                                    "Save Address",
+                                    getString(R.string.save_address),
                                     getString(R.string.success)
                                 )
                                 alertBuilder.dismiss()
                             } else {
                                 alertBuilder.showOkAlert(
-                                    "Save Failed",
+                                    getString(R.string.save_address_fail),
                                     getString(R.string.error_occurred)
                                 )
                                 alertBuilder.dismiss()
@@ -115,13 +116,13 @@ class EditAddressFragment : Fragment() {
                         AddressRepository(MainActivity.mainThis).updateAddress(address) {
                             if (it) {
                                 alertBuilder.showOkAlert(
-                                    "Update Address",
+                                    getString(R.string.update_address),
                                     getString(R.string.success)
                                 )
                                 alertBuilder.dismiss()
                             } else {
                                 alertBuilder.showOkAlert(
-                                    "Update Failed",
+                                    getString(R.string.update_address_fail),
                                     getString(R.string.error_occurred)
                                 )
                                 alertBuilder.dismiss()
@@ -135,7 +136,7 @@ class EditAddressFragment : Fragment() {
                 }
 
                 val alertBuilderWithAction = alertBuilder.showYesNoAlertWithAction(
-                    "Save Address",
+                    getString(R.string.save_address),
                     getString(R.string.save_confirm)
                 )
 
@@ -145,13 +146,13 @@ class EditAddressFragment : Fragment() {
                         AddressRepository(MainActivity.mainThis).addAddress(address) {
                             if (it) {
                                 alertBuilder.showOkAlert(
-                                    "Save Address",
+                                    getString(R.string.save_address),
                                     getString(R.string.success)
                                 )
                                 alertBuilder.dismiss()
                             } else {
                                 alertBuilder.showOkAlert(
-                                    "Save Failed",
+                                    getString(R.string.save_address_fail),
                                     getString(R.string.error_occurred)
                                 )
                                 alertBuilder.dismiss()
@@ -165,13 +166,13 @@ class EditAddressFragment : Fragment() {
                         AddressRepository(MainActivity.mainThis).updateAddress(address) {
                             if (it) {
                                 alertBuilder.showOkAlert(
-                                    "Update Address",
+                                    getString(R.string.update_address),
                                     getString(R.string.success)
                                 )
                                 alertBuilder.dismiss()
                             } else {
                                 alertBuilder.showOkAlert(
-                                    "Update Failed",
+                                    getString(R.string.update_address_fail),
                                     getString(R.string.error_occurred)
                                 )
                                 alertBuilder.dismiss()
@@ -196,18 +197,18 @@ class EditAddressFragment : Fragment() {
             MainActivity.mainSrl.isRefreshing = true
             val alertBuilder = AlertBuilder()
             val alertBuilderWithAction = alertBuilder.showYesNoAlertWithAction(
-                "Delete Address",
+                getString(R.string.delete_address),
                 getString(R.string.delete_confirm)
             )
 
             alertBuilderWithAction.yes_btn.setOnClickListener {
                 AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
                     if (it) {
-                        alertBuilder.showOkAlert("Delete Address", getString(R.string.success))
+                        alertBuilder.showOkAlert(getString(R.string.delete_address), getString(R.string.success))
                         alertBuilder.dismiss()
                     } else {
                         alertBuilder.showOkAlert(
-                            "Delete Failed",
+                            getString(R.string.delete_fail),
                             getString(R.string.error_occurred)
                         )
                         alertBuilder.dismiss()
@@ -218,17 +219,18 @@ class EditAddressFragment : Fragment() {
                 }
             }
             val alertBuilderWithYesNo = alertBuilder.showYesNoAlertWithAction(
-                "Confirm Delete",
+                getString(R.string.con_delete),
                 getString(R.string.delete_confirm)
             )
             alertBuilderWithYesNo.dismiss()
             alertBuilderWithYesNo.yes_btn.setOnClickListener {
                 AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
                     if (it) {
-                        alertBuilder.showOkAlert("Delete Address",getString(R.string.success))
+                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.success))
+
                         alertBuilder.dismiss()
                     } else {
-                        alertBuilder.showOkAlert("Delete Address",getString(R.string.error_occurred))
+                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.error_occurred))
                         alertBuilder.dismiss()
                     }
                     MainActivity.mainSrl.isRefreshing = false
@@ -257,7 +259,7 @@ class EditAddressFragment : Fragment() {
             || address.TelephoneNumber.isNullOrEmpty() || address.Road.isNullOrEmpty() || address.Subdistrict.isNullOrEmpty() || address.Type < 0
         ) {
             AlertBuilder().showOkAlert(
-                "Information Invalid",
+                getString(R.string.info_invalid),
                 getString(R.string.require_information)
             )
             AlertBuilder().dismiss()
