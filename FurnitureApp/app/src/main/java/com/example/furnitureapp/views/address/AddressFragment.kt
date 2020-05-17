@@ -43,7 +43,6 @@ class AddressFragment : Fragment(), PageInterface,
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private var colorDrawableBackground = ColorDrawable(parseColor("#f7f7f7"))
     private lateinit var deleteIcon: Drawable
-    lateinit var addressAdapter: AddressAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,22 +61,20 @@ class AddressFragment : Fragment(), PageInterface,
         AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
             addresses.clear()
             addresses.addAll(it)
-            addressAdapter = AddressAdapter(addresses, this,view)
+            addressAdapter = AddressAdapter(addresses, this, view)
             listOfAddress.adapter = addressAdapter
             addressAdapter.notifyDataSetChanged()
             MainActivity.mainSrl.isRefreshing = false
         }
         AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
-            if(it.size == 0){
-
-            }else{
+            if(it.isNotEmpty()){
                 var address = it
                 view.current_customer.setText(address[0].Name)
                 view.current_phone.setText(address[0].TelephoneNumber)
                 view.current_address_detail.setText( addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].Subdistrict + ", " + addresses[0].District + ", " + addresses[0].Province + ".")
                 editCurrentAddress.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putString("id",Gson().toJson(address[0]))
+                    bundle.putString("id", Gson().toJson(address[0]))
                     val editAddress = EditAddressFragment()
                     val fragmentManager = activity!!.supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()

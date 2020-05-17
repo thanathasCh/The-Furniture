@@ -46,8 +46,8 @@ class AddressAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val address = address[position]
-        if (position == 0){
-            holder.itemView.current_address.text = context.getString(R.string.current_address)
+        if (position == 0) {
+            holder.itemView.current_address.text = "Current Address"
         }
         holder.itemView.address_name.text  = address.Name
         holder.itemView.address_phone_number.text = address.TelephoneNumber

@@ -41,7 +41,7 @@ class EditAddressFragment : Fragment() {
         val district = view.edit_district
         val province = view.edit_province
 
-        val address = AddressViewModel()
+        var address = AddressViewModel()
 
         if (!isAdd) {
             val addressBuf = Gson().fromJson<AddressViewModel>(addressJson)
@@ -52,8 +52,7 @@ class EditAddressFragment : Fragment() {
             subDistrict.setText(addressBuf.Subdistrict)
             district.setText(addressBuf.District)
             province.setText(addressBuf.Province)
-        } else {
-
+            address = addressBuf
         }
 
         view.edit_home.setOnClickListener {
@@ -82,7 +81,6 @@ class EditAddressFragment : Fragment() {
                 District = district.text.toString()
                 Province = province.text.toString()
             }
-
 
             if (checkAddress(address)) {
                 MainActivity.mainSrl.isRefreshing = true
@@ -186,9 +184,7 @@ class EditAddressFragment : Fragment() {
                 alertBuilderWithAction.no_btn.setOnClickListener {
                     MainActivity.mainSrl.isRefreshing = false
                 }
-
             }
-
         }
 
         //Delete Button
@@ -201,7 +197,7 @@ class EditAddressFragment : Fragment() {
             )
 
             alertBuilderWithAction.yes_btn.setOnClickListener {
-                AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
+                AddressRepository(MainActivity.mainThis).removeAddress(address.Id) {
                     if (it) {
                         alertBuilder.showOkAlert(getString(R.string.delete_address), getString(R.string.success))
                         alertBuilder.dismiss()
@@ -223,10 +219,9 @@ class EditAddressFragment : Fragment() {
             )
             alertBuilderWithYesNo.dismiss()
             alertBuilderWithYesNo.yes_btn.setOnClickListener {
-                AddressRepository(MainActivity.mainThis).removeAddress(address.Id ?: "") {
+                AddressRepository(MainActivity.mainThis).removeAddress(address.Id) {
                     if (it) {
                         alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.success))
-
                         alertBuilder.dismiss()
                     } else {
                         alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.error_occurred))
@@ -240,8 +235,6 @@ class EditAddressFragment : Fragment() {
             alertBuilderWithYesNo.no_btn.setOnClickListener {
                 MainActivity.mainSrl.isRefreshing = false
             }
-
-
         }
 
         //Back Button

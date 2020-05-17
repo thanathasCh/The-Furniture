@@ -117,7 +117,6 @@ class ProductFragment : Fragment(), PageInterface {
                             )
                         )
                     }
-                    e("check exit,", exist.toString())
                     cartShare.saveCarts(carts)
                     ToastBuilder().createShortToast(getString(R.string.added_cart))
                 }
@@ -131,7 +130,7 @@ class ProductFragment : Fragment(), PageInterface {
 
             if (!available!!) {
 
-                alertBuilder.showOkAlert("Purchase Failed",getString(R.string.product_not_available))
+                alertBuilder.showOkAlert(getString(R.string.purchase_fail),getString(R.string.product_not_available))
                 alertBuilder.dismiss()
             } else {
                 MainActivity.mainSrl.isRefreshing = true

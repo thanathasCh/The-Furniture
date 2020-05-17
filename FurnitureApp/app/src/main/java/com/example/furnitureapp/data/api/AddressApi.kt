@@ -1,5 +1,6 @@
 package com.example.furnitureapp.data.api
 
+import android.util.Log
 import com.example.furnitureapp.models.AddressViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,7 +47,8 @@ class AddressApi(private val db: CollectionReference = FirebaseFirestore.getInst
     }
 
     fun updateAddress(address: AddressViewModel, callback: (Boolean) -> Unit) {
-        db.document(address.Id ?: "")
+        Log.d("DEBUG", address.toString())
+        db.document(address.Id)
             .update(address.toMap())
             .addOnSuccessListener {
                 callback(true)

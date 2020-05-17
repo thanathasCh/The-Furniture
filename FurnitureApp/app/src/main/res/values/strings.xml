@@ -3,7 +3,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="greeting_user">Hello, %1$s %2$s.</string>
-    <string name="x_quantity">x %d</string>
     <string name="added_cart">Added to cart.</string>
     <string name="product_not_available">Product is not available.</string>
     <string name="login_required">Login Required.</string>
@@ -26,7 +25,7 @@
     <string name="duplicate_username">Duplicate Username.</string>
     <string name="account_created">Account has been created.</string>
     <string name="email_invalid">Email is invalid.</string>
-    <string name="info_invalid">Invalid Information.</string>
+    <string name="info_invalid">Invalid information.</string>
     <string name="delete_address">Delete Address.</string>
     <string name="con_delete">Confirm Delete.</string>
     <string name="delete_fail">Delete Failed.</string>
@@ -34,9 +33,22 @@
     <string name="update_address_fail">Update Address Failed.</string>
     <string name="save_address">Save Address.</string>
     <string name="save_address_fail">Save Failed.</string>
-    <string name="current_address">Current Address</string>
-    <string name="create_account">Create Account</string>
-    <string name="invalid_password">Invalid Password</string>
-    <string name="invalid_email">Invalid Email</string>
+    <string name="purchase_fail">Purchase Failed.</string>
+    <string name="email_update">Email Update.</string>
     <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="password_invalid">Password invalid</string>
+    <string name="wrong_password">Wrong Password.</string>
+    <string name="length_not_enough">Password Must More than 8 character!</string>
+    <string name="pw_notmatch">Password Not Match</string>
+    <string name="ok">Ok</string>
+    <string name="pw_update">Password Updated</string>
+    <string name="update_failed">Updated Failed</string>
+    <string name="phone_update">PhoneNumber Updated</string>
+    <string name="phone_invalid">Invalid Phone Number</string>
+    <string name="update_name">Update Name</string>
+    <string name="name_require">Name and LastName are required!</string>
+    <string name="purchase_failed">Purchase Failed</string>
+    <string name="x_quantity">x %d</string>
+    <string name="product_quantity_not_available">%s is(are) not available at the moment.</string>
 </resources>

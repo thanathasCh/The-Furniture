@@ -53,7 +53,12 @@ class PurchaseFragment : Fragment() {
             .into(img)
         view.pur_name.text = name
         view.pur_code.text = code
-        view.pur_price.text = price.toString()
+        var currentAmount  = (amount.text.toString()).toInt()
+        if (price != null){
+            view.pur_price.text = (price!!*currentAmount).toString()
+        }
+
+
 
 
 

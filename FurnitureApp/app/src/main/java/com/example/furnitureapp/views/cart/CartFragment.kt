@@ -69,6 +69,7 @@ class CartFragment : Fragment(), PageInterface, ClickEventHandler {
         }
 
         delete.setOnClickListener {
+            MainActivity.mainSrl.isRefreshing = true
             val alertBuilder = AlertBuilder()
             val alert = alertBuilder.showYesNoAlert("Delete", getString(R.string.delete_confirm))
             val adapter = recycler_view_cart.adapter as CartAdapter
@@ -78,13 +79,13 @@ class CartFragment : Fragment(), PageInterface, ClickEventHandler {
                         adapter.removeAt(i)
                         cartShare.saveCarts(cartInLocal)
                     }
+                    MainActivity.mainSrl.isRefreshing = false
                 }else{
-                    for (i in adapter.selectProudctPosition){
-                        CartRepository(MainActivity.mainThis).removeCart(i.Id){
-                            e("delete? ", i.Product.toString())
-                            e("delete? ", it.toString())
+                    CartRepository(MainActivity.mainThis).removeCarts(ArrayList(adapter.selectProudctPosition.map { it.Id })) {
+                        for (i in adapter.selectProudctPosition) {
                             adapter.removeAt(i)
                         }
+                        MainActivity.mainSrl.isRefreshing = false
                     }
                 }
                 alertBuilder.dismiss()

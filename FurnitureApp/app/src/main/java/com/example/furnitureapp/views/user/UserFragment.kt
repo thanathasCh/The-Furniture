@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RelativeLayout
 import com.example.furnitureapp.views.main.MainActivity
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.AddressSharedPreference
@@ -15,6 +16,7 @@ import com.example.furnitureapp.data.local.PurchaseSharePreference
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.services.AlertBuilder
+import com.example.furnitureapp.services.hideKeyboard
 import com.example.furnitureapp.services.Page
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 import kotlinx.android.synthetic.main.yes_no_dialog.view.*
@@ -37,6 +39,12 @@ class UserFragment : Fragment(), PageInterface {
         val account = view.findViewById<View>(R.id.user_account) as EditText
         var purchaseList = view.findViewById<View>(R.id.user_purchase_list) as EditText
         var about = view.findViewById<View>(R.id.about) as EditText
+        val userFragment = view.findViewById<View>(R.id.user_fragment) as RelativeLayout
+
+        userFragment.setOnClickListener {
+            view.hideKeyboard()
+        }
+
         initPageId()
 
         // Account Button

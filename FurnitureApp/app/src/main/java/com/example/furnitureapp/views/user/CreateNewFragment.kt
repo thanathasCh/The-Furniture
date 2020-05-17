@@ -93,7 +93,7 @@ class CreateNewFragment : Fragment() {
                 now
             )
             val alertBuilder = AlertBuilder()
-            val alertBuilderWithAction = AlertBuilder().showOkAlertWithAction(getString(R.string.create_account), getString(R.string.account_created))
+            val alertBuilderWithAction = AlertBuilder().showOkAlertWithAction("Create Account", getString(R.string.account_created))
             val userApi = UserApi()
 
             if (checkUser(user, passwordLength, confirmPassowrd)) {
@@ -106,7 +106,7 @@ class CreateNewFragment : Fragment() {
                                     fragment.popBackStack()
                                 }
                             } else {
-                                alertBuilder.showOkAlert(getString(R.string.create_account), getString(R.string.error_occurred))
+                                alertBuilder.showOkAlert("Create Account", getString(R.string.error_occurred))
                                 alertBuilder.dismiss()
                             }
                             MainActivity.mainSrl.isRefreshing = false
@@ -132,13 +132,13 @@ class CreateNewFragment : Fragment() {
             alertBuilder.showOkAlert(getString(R.string.info_invalid), getString(R.string.require_information))
             alertBuilder.dismiss()
         } else if (passwordLength < 8) {
-            alertBuilder.showOkAlert(getString(R.string.invalid_password), getString(R.string.password_length))
+            alertBuilder.showOkAlert("Invalid Password", getString(R.string.password_length))
             alertBuilder.dismiss()
         } else if (!user.Password.equals(confirmPassword)) {
-            alertBuilder.showOkAlert(getString(R.string.invalid_password), getString(R.string.password_not_match))
+            alertBuilder.showOkAlert("Invalid Password", getString(R.string.password_not_match))
             alertBuilder.dismiss()
         } else if (!isEmailValid(user.Email)){
-            alertBuilder.showOkAlert(getString(R.string.invalid_email), getString(R.string.email_invalid))
+            alertBuilder.showOkAlert("Invalid Email", getString(R.string.email_invalid))
             alertBuilder.dismiss()
         } else {
             return true
