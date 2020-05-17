@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
@@ -33,7 +34,7 @@ class UserNameFragment : Fragment() {
         var firstName = view.findViewById<View>(R.id.user_name_firstname) as EditText
         var lastName = view.findViewById<View>(R.id.user_name_lastname) as EditText
         var password = view.findViewById<View>(R.id.user_name_password) as EditText
-        val userNameFragment = view.findViewById<View>(R.id.user_fragment) as RelativeLayout
+        val userNameFragment = view.findViewById<View>(R.id.user_name_fragment) as RelativeLayout
 
         userNameFragment.setOnClickListener {
             view.hideKeyboard()

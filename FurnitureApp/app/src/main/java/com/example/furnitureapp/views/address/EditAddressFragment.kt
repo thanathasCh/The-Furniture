@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -40,6 +41,11 @@ class EditAddressFragment : Fragment() {
         val subDistrict = view.edit_subdistrict
         val district = view.edit_district
         val province = view.edit_province
+        val addressFragment = view.findViewById<View>(R.id.address_detail_fragment) as RelativeLayout
+
+         addressFragment.setOnClickListener {
+             view.hideKeyboard()
+         }
 
         var address = AddressViewModel()
 

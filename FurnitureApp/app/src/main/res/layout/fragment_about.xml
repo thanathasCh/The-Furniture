@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".storeDetail.AboutFragment">
+
+    <ImageView
+        android:id="@+id/about_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/about_back"
+        android:text="About"
+        android:textSize="25dp"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/custom"
+        android:textColor="@color/black"/>
+
+    <com.custom.sliderimage.logic.SliderImage
+        android:id="@+id/about_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/about_back"
+        android:layout_margin="10dp"
+        android:background="@drawable/border" />
+    <TextView
+        android:id="@+id/location_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Where to find our store"
+        android:layout_below="@id/about_back"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/custom"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/location_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location_title"
+        android:text=" 38 หมู่ที่ 6 Kanchanaphisek Rd, Bang Kaeo, Bang Phli District, Samut Prakan 10540."
+        android:layout_marginLeft="25dp"
+        android:fontFamily="@font/custom"
+        android:textSize="18dp"
+        android:lineSpacingExtra="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/follow_us_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Also follow us on:"
+        android:layout_below="@id/location_info"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/custom"
+        android:textSize="20dp"/>
+    <ImageView
+        android:id="@+id/facebook"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/facebook"
+        android:layout_below="@id/follow_us_title"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:fontFamily="@font/custom"
+        android:text="The Furniture"
+        android:layout_toRightOf="@id/facebook"
+        android:layout_below="@id/follow_us_title"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+    <ImageView
+        android:id="@+id/insta"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/insta"
+        android:layout_below="@id/facebook"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:fontFamily="@font/custom"
+        android:text="the.furniture"
+        android:layout_toRightOf="@id/facebook"
+        android:layout_below="@id/facebook"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+
+
+
+
+</RelativeLayout>

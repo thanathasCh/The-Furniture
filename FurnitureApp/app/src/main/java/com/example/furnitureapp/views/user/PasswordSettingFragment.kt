@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import com.example.furnitureapp.*
 import com.example.furnitureapp.data.api.UserApi
 import com.example.furnitureapp.data.local.UserSharedPreference
@@ -34,9 +35,9 @@ class PasswordSettingFragment : Fragment() {
         val newPasswordEditText = view.findViewById<View>(R.id.password_new_password) as EditText
         val confirmPasswordEditText =
             view.findViewById<View>(R.id.password_confirm_password) as EditText
-        val emailSettingFragment  = view.findViewById<View>(R.id.email_fragment) as RelativeLayout
+        val passwordFragment  = view.findViewById<View>(R.id.password_fragement) as RelativeLayout
 
-        emailSettingFragment.setOnClickListener {
+        passwordFragment.setOnClickListener {
             view.hideKeyboard()
         }
 

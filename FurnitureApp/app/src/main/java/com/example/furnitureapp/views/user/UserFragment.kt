@@ -18,6 +18,7 @@ import com.example.furnitureapp.interfaces.PageInterface
 import com.example.furnitureapp.services.AlertBuilder
 import com.example.furnitureapp.services.hideKeyboard
 import com.example.furnitureapp.services.Page
+import com.example.furnitureapp.storeDetail.AboutFragment
 import kotlinx.android.synthetic.main.yes_no_dialog.*
 import kotlinx.android.synthetic.main.yes_no_dialog.view.*
 import kotlinx.android.synthetic.main.yes_no_dialog.view.yes_btn
@@ -39,11 +40,7 @@ class UserFragment : Fragment(), PageInterface {
         val account = view.findViewById<View>(R.id.user_account) as EditText
         var purchaseList = view.findViewById<View>(R.id.user_purchase_list) as EditText
         var about = view.findViewById<View>(R.id.about) as EditText
-        val userFragment = view.findViewById<View>(R.id.user_fragment) as RelativeLayout
 
-        userFragment.setOnClickListener {
-            view.hideKeyboard()
-        }
 
         initPageId()
 
@@ -64,6 +61,17 @@ class UserFragment : Fragment(), PageInterface {
             val fragmentTransaction = fragmentManager.beginTransaction()
 
             fragmentTransaction.replace(R.id.frame_layout, purchaseListFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        //About Fragment
+        about.setOnClickListener {
+            val aboutFragment = AboutFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+
+            fragmentTransaction.replace(R.id.frame_layout, aboutFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
