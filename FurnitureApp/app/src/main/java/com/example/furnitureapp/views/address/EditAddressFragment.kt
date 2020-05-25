@@ -216,28 +216,32 @@ class EditAddressFragment : Fragment() {
                     fragmentManager.popBackStack()
                 }
             }
-            val alertBuilderWithYesNo = alertBuilder.showYesNoAlertWithAction(
-                getString(R.string.con_delete),
-                getString(R.string.delete_confirm)
-            )
-            alertBuilderWithYesNo.dismiss()
-            alertBuilderWithYesNo.yes_btn.setOnClickListener {
-                AddressRepository(MainActivity.mainThis).removeAddress(address.Id) {
-                    if (it) {
-                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.success))
-                        alertBuilder.dismiss()
-                    } else {
-                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.error_occurred))
-                        alertBuilder.dismiss()
-                    }
-                    MainActivity.mainSrl.isRefreshing = false
-                    val fragmentManager = activity!!.supportFragmentManager
-                    fragmentManager.popBackStack()
-                }
+            alertBuilderWithAction.no_btn.setOnClickListener {
+                alertBuilder.dismiss()
             }
-            alertBuilderWithYesNo.no_btn.setOnClickListener {
-                MainActivity.mainSrl.isRefreshing = false
-            }
+
+//            val alertBuilderWithYesNo = alertBuilder.showYesNoAlertWithAction(
+//                getString(R.string.con_delete),
+//                getString(R.string.delete_confirm)
+//            )
+//            alertBuilderWithYesNo.dismiss()
+//            alertBuilderWithYesNo.yes_btn.setOnClickListener {
+//                AddressRepository(MainActivity.mainThis).removeAddress(address.Id) {
+//                    if (it) {
+//                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.success))
+//                        alertBuilder.dismiss()
+//                    } else {
+//                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.error_occurred))
+//                        alertBuilder.dismiss()
+//                    }
+//                    MainActivity.mainSrl.isRefreshing = false
+//                    val fragmentManager = activity!!.supportFragmentManager
+//                    fragmentManager.popBackStack()
+//                }
+//            }
+//            alertBuilderWithYesNo.no_btn.setOnClickListener {
+//                MainActivity.mainSrl.isRefreshing = false
+//            }
         }
 
         //Back Button

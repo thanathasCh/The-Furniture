@@ -29,6 +29,7 @@ import com.example.furnitureapp.views.user.UserPurchaseListFragment
 import com.example.furnitureapp.views.user.UserSettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.cart_cell.*
 import kotlinx.android.synthetic.main.fragment_product.view.*
 import kotlinx.android.synthetic.main.fragment_user_setting.view.*
 
@@ -133,6 +134,7 @@ class MainActivity : AppCompatActivity(), PageInterface {
                 }
                 Page.SEARCH -> {
                     CategoryRepository(this).fetchCategory(true) {
+                        it.reverse()
                         categories.clear()
                         categories.addAll(it)
                         CategoriesFragment.categoryAdapter.notifyDataSetChanged()

@@ -166,7 +166,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -176,6 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Total: "
+            android:layout_marginLeft="5dp"
             android:textColor="@color/orange"
             android:textSize="20dp" />
 
@@ -197,6 +197,7 @@
             android:fontFamily="@font/custom"
             android:text="Place Order"
             android:textAllCaps="false"
+            android:layout_marginRight="5dp"
             android:textColor="@color/white" />
     </RelativeLayout>
 

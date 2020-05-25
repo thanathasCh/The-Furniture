@@ -63,7 +63,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/border"
             android:fontFamily="@font/custom"
-            android:hint="Address"
+            android:hint="Name"
             android:paddingLeft="10dp" />
 
         <EditText
