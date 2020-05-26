@@ -72,11 +72,7 @@ class CreateNewFragment : Fragment() {
             val lastName = view.last_name.text.toString()
             val email = view.email.text.toString()
             val telephoneNumber = view.phone_number.text.toString()
-//            val house = view.create_new_house_number.text.toString()
-//            val road = view.create_new_road.text.toString()
-//            val subDistrict = view.create_new_subdistrict.text.toString()
-//            val district = view.create_new_district.text.toString()
-//            val province = view.create_new_province.text.toString()
+
 
             val now = Date()
             val user = UserViewModel (
@@ -104,6 +100,7 @@ class CreateNewFragment : Fragment() {
                                 alertBuilderWithAction.ok_btn.setOnClickListener {
                                     val fragment = activity!!.supportFragmentManager
                                     fragment.popBackStack()
+                                    alertBuilderWithAction.dismiss()
                                 }
                             } else {
                                 alertBuilder.showOkAlert("Create Account", getString(R.string.error_occurred))

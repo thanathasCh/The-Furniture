@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.core.view.isGone
 import com.example.furnitureapp.R
 import com.example.furnitureapp.data.local.UserSharedPreference
 import com.example.furnitureapp.data.repository.AddressRepository
@@ -56,6 +57,8 @@ class EditAddressFragment : Fragment() {
             district.setText(addressBuf.District)
             province.setText(addressBuf.Province)
             address = addressBuf
+        }else{
+            view.edit_delete.visibility = View.GONE
         }
 
         view.edit_home.setOnClickListener {
@@ -134,61 +137,10 @@ class EditAddressFragment : Fragment() {
                         }
                     }
                 }
-
-                val alertBuilderWithAction = alertBuilder.showYesNoAlertWithAction(
-                    getString(R.string.save_address),
-                    getString(R.string.save_confirm)
-                )
-
-
-                alertBuilderWithAction.yes_btn.setOnClickListener {
-                    if (isAdd) {
-                        AddressRepository(MainActivity.mainThis).addAddress(address) {
-                            if (it) {
-                                alertBuilder.showOkAlert(
-                                    getString(R.string.save_address),
-                                    getString(R.string.success)
-                                )
-                                alertBuilder.dismiss()
-                            } else {
-                                alertBuilder.showOkAlert(
-                                    getString(R.string.save_address_fail),
-                                    getString(R.string.error_occurred)
-                                )
-                                alertBuilder.dismiss()
-                            }
-
-                            MainActivity.mainSrl.isRefreshing = false
-                            val fragmentManager = activity!!.supportFragmentManager
-                            fragmentManager.popBackStack()
-                        }
-                    } else {
-                        AddressRepository(MainActivity.mainThis).updateAddress(address) {
-                            if (it) {
-                                alertBuilder.showOkAlert(
-                                    getString(R.string.update_address),
-                                    getString(R.string.success)
-                                )
-                                alertBuilder.dismiss()
-                            } else {
-                                alertBuilder.showOkAlert(
-                                    getString(R.string.update_address_fail),
-                                    getString(R.string.error_occurred)
-                                )
-                                alertBuilder.dismiss()
-                            }
-
-                            MainActivity.mainSrl.isRefreshing = false
-                            val fragmentManager = activity!!.supportFragmentManager
-                            fragmentManager.popBackStack()
-                        }
-                    }
-                }
-                alertBuilderWithAction.no_btn.setOnClickListener {
-                    MainActivity.mainSrl.isRefreshing = false
-                }
             }
         }
+
+
 
         //Delete Button
         view.edit_delete.setOnClickListener {
@@ -219,29 +171,6 @@ class EditAddressFragment : Fragment() {
             alertBuilderWithAction.no_btn.setOnClickListener {
                 alertBuilder.dismiss()
             }
-
-//            val alertBuilderWithYesNo = alertBuilder.showYesNoAlertWithAction(
-//                getString(R.string.con_delete),
-//                getString(R.string.delete_confirm)
-//            )
-//            alertBuilderWithYesNo.dismiss()
-//            alertBuilderWithYesNo.yes_btn.setOnClickListener {
-//                AddressRepository(MainActivity.mainThis).removeAddress(address.Id) {
-//                    if (it) {
-//                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.success))
-//                        alertBuilder.dismiss()
-//                    } else {
-//                        alertBuilder.showOkAlert(getString(R.string.delete_address),getString(R.string.error_occurred))
-//                        alertBuilder.dismiss()
-//                    }
-//                    MainActivity.mainSrl.isRefreshing = false
-//                    val fragmentManager = activity!!.supportFragmentManager
-//                    fragmentManager.popBackStack()
-//                }
-//            }
-//            alertBuilderWithYesNo.no_btn.setOnClickListener {
-//                MainActivity.mainSrl.isRefreshing = false
-//            }
         }
 
         //Back Button
@@ -252,6 +181,8 @@ class EditAddressFragment : Fragment() {
 
         return view
     }
+
+
 
     private fun checkAddress(address: AddressViewModel): Boolean {
         if (address.Address.isNullOrEmpty() || address.District.isNullOrEmpty() || address.Name.isNullOrEmpty() || address.Province.isNullOrEmpty()
