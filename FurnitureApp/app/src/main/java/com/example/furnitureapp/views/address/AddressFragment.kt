@@ -65,12 +65,12 @@ class AddressFragment : Fragment(), PageInterface,
             addressAdapter.notifyDataSetChanged()
             MainActivity.mainSrl.isRefreshing = false
         }
-        AddressRepository(MainActivity.mainThis).fetchAddresses(false) {
+        AddressRepository(MainActivity.mainThis).fetchAddresses( false) {
             if(it.isNotEmpty()){
                 var address = it
                 view.current_customer.setText(address[0].Name)
                 view.current_phone.setText(address[0].TelephoneNumber)
-                view.current_address_detail.setText( addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].SubDistrict + ", " + addresses[0].District + ", " + addresses[0].Province + ".")
+                view.current_address_detail.setText( address[0].getFullAddress())
                 editCurrentAddress.setOnClickListener {
                     val bundle = Bundle()
                     bundle.putString("id", Gson().toJson(address[0]))
@@ -136,7 +136,7 @@ class AddressFragment : Fragment(), PageInterface,
                     AddressRepository(MainActivity.mainThis).saveAddresses(address)
                     view.current_customer.text = address[0].Name
                     view.current_phone.text = address[0].TelephoneNumber
-                    view.current_address_detail.text = addresses[0].Road + ", " + addresses[0].Address + ", " + addresses[0].SubDistrict + ", " + addresses[0].District + ", " + addresses[0].Province + "."
+                    view.current_address_detail.text =  address[0].getFullAddress()
 
                     MainActivity.mainSrl.isRefreshing = false
                     alertBuilder.dismiss()
