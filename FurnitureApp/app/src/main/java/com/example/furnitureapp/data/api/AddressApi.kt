@@ -47,7 +47,6 @@ class AddressApi(private val db: CollectionReference = FirebaseFirestore.getInst
     }
 
     fun updateAddress(address: AddressViewModel, callback: (Boolean) -> Unit) {
-        Log.d("DEBUG", address.toString())
         db.document(address.Id)
             .update(address.toMap())
             .addOnSuccessListener {

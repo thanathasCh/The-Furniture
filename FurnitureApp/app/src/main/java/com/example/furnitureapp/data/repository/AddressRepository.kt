@@ -32,8 +32,10 @@ class AddressRepository(private val context: Context) {
     fun addAddress(address: AddressViewModel, callback: (Boolean) -> Unit) {
         AddressApi().addAddress(address) {
             if (it) {
-                AddressSharedPreference(context).addAddress(address)
-                callback(true)
+                fetchAddresses(true) {
+                    AddressSharedPreference(context).addAddress(address)
+                    callback(true)
+                }
             } else {
                 callback(false)
             }
