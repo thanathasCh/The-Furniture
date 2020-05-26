@@ -33,7 +33,6 @@ class AddressRepository(private val context: Context) {
         AddressApi().addAddress(address) {
             if (it) {
                 fetchAddresses(true) {
-                    AddressSharedPreference(context).addAddress(address)
                     callback(true)
                 }
             } else {
