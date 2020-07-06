@@ -30,12 +30,49 @@ The new screenshots will be taken once I finish integration to .NET Core API.
 
 * Login Page
 
-![]()
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/login.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/login1.png?raw=true)
 
 * Sign up page
 
-![]()
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/create_account.png?raw=true)
 
 * Announcement Page
 
-![]()
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/first_page.png?raw=true)
+
+* Search Product
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/search.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/products.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/product_detail.png?raw=true)
+
+* Purchase Product
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/purchase_product.png?raw=true)
+
+* Cart
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/cart.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/checkout.png?raw=true)
+
+* User Information
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/user_information.png?raw=true)
+
+* Edit Information
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_informatio.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_username.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_password.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_phoneNumber.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_email.png?raw=true)
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/edit_address.png?raw=true)
+
+* Purchase List
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/purchase_list.png?raw=true)
+
+* About
+
+![](https://github.com/thanathasCh/The-Furniture/blob/master/screenshots/about.png?raw=true)
